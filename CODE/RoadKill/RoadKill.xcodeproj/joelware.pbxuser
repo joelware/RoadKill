@@ -1,0 +1,147 @@
+// !$*UTF8*$!
+{
+	1D6058900D05DD3D006BFB54 /* RoadKill */ = {
+		activeExec = 0;
+		executables = (
+			58602A7F12518036005597C6 /* RoadKill */,
+		);
+	};
+	28C286DF0D94DF7D0034E888 /* RootViewController.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {519, 416}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 309}";
+		};
+	};
+	28C286E00D94DF7D0034E888 /* RootViewController.m */ = {
+		uiCtxt = {
+			sepNavFolds = "{\n    c =     (\n                {\n            l = DetailViewController;\n            r = \"{6021, 24}\";\n            s = 1;\n        },\n                {\n            l = DetailViewController;\n            r = \"{6072, 24}\";\n            s = 1;\n        },\n                {\n            l = \"Nib name\";\n            r = \"{6122, 12}\";\n            s = 1;\n        }\n    );\n    r = \"{0, 12014}\";\n    s = 0;\n}";
+			sepNavIntBoundsRect = "{{0, 0}, {519, 5568}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 306}";
+		};
+	};
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeExecutable = 58602A7F12518036005597C6 /* RoadKill */;
+		activeTarget = 1D6058900D05DD3D006BFB54 /* RoadKill */;
+		codeSenseManager = 58602A9B12518047005597C6 /* Code sense */;
+		executables = (
+			58602A7F12518036005597C6 /* RoadKill */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXExecutablesDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXExecutablesDataSource_NameID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					22,
+					300,
+					229,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXExecutablesDataSource_ActiveFlagID,
+					PBXExecutablesDataSource_NameID,
+					PBXExecutablesDataSource_CommentsID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					341,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 307391043;
+			PBXWorkspaceStateSaveDate = 307391043;
+		};
+		perUserProjectItems = {
+			58D6420312526B0A001A4E83 /* PBXTextBookmark */ = 58D6420312526B0A001A4E83 /* PBXTextBookmark */;
+			58D6420412526B0A001A4E83 /* PBXBookmark */ = 58D6420412526B0A001A4E83 /* PBXBookmark */;
+			58D6421812526B59001A4E83 /* PBXTextBookmark */ = 58D6421812526B59001A4E83 /* PBXTextBookmark */;
+		};
+		sourceControlManager = 58602A9A12518047005597C6 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	58602A7F12518036005597C6 /* RoadKill */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = RoadKill;
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+	};
+	58602A9A12518047005597C6 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+	};
+	58602A9B12518047005597C6 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	58D6420312526B0A001A4E83 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 28C286DF0D94DF7D0034E888 /* RootViewController.h */;
+		name = "RootViewController.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 309;
+		vrLoc = 0;
+	};
+	58D6420412526B0A001A4E83 /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 28C286E00D94DF7D0034E888 /* RootViewController.m */;
+	};
+	58D6421812526B59001A4E83 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 28C286E00D94DF7D0034E888 /* RootViewController.m */;
+		name = "RootViewController.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 306;
+		vrLoc = 0;
+	};
+}
