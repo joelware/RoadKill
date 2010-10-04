@@ -1,296 +1,0 @@
-TRoadKill
-v7
-r0
-t307331142.139814
-cCheck dependencies
-cProcessInfoPlistFile /Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app/Info.plist RoadKill-Info.plist
-cCompileXIB /Users/joelware/CP130B-Summer2010/RoadKill/MainWindow.xib
-cCompileXIB /Users/joelware/CP130B-Summer2010/RoadKill/RootViewController.xib
-cProcessPCH /var/folders/lh/lh765QvBGQaqyPphIxIwp++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/RoadKill_Prefix-eoadqykykqnjowgypbuzwqnemkpn/RoadKill_Prefix.pch.gch RoadKill_Prefix.pch normal i386 objective-c com.apple.compilers.gcc.4_2
-cDataModelVersionCompile /Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app/RoadKill.momd /Users/joelware/CP130B-Summer2010/RoadKill/RoadKill.xcdatamodeld
-cCompileC build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/Objects-normal/i386/main.o /Users/joelware/CP130B-Summer2010/RoadKill/main.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/Objects-normal/i386/RoadKillAppDelegate.o /Users/joelware/CP130B-Summer2010/RoadKill/Classes/RoadKillAppDelegate.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/Objects-normal/i386/RootViewController.o /Users/joelware/CP130B-Summer2010/RoadKill/Classes/RootViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cLd /Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app/RoadKill normal i386
-cGenerateDSYMFile /Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app.dSYM /Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app/RoadKill
-cTouch /Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk
-c000000004C492EAD0000000000000132
-t1279864493
-s306
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/System/Library/Frameworks/CoreData.framework/CoreData
-c000000004BFDFEB400000000001CFA90
-t1274937012
-s1899152
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/System/Library/Frameworks/CoreData.framework/Headers/CoreData.h
-c000000004BFDFEA8000000000000046B
-t1274937000
-s1131
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics
-c000000004BFDFE39000000000027C7D0
-t1274936889
-s2607056
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/System/Library/Frameworks/Foundation.framework/Foundation
-c000000004BFDFE7C000000000029D5D0
-t1274936956
-s2741712
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/System/Library/Frameworks/Foundation.framework/Headers/Foundation.h
-c000000004BFDFE6E0000000000001466
-t1274936942
-s5222
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIKit.h
-c000000004C0470BB00000000000009CD
-t1275359419
-s2509
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/System/Library/Frameworks/UIKit.framework/UIKit
-c000000004C0471620000000001D47210
-t1275359586
-s30700048
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/usr/include/Availability.h
-c000000004BF4CBF90000000000001A3B
-t1274334201
-s6715
-
-N/Users/joelware/CP130B-Summer2010/RoadKill/Classes/RoadKillAppDelegate.h
-c000000004CA148B500000000000003DC
-t1285638325
-s988
-i<UIKit/UIKit.h>
-i<CoreData/CoreData.h>
-
-N/Users/joelware/CP130B-Summer2010/RoadKill/Classes/RoadKillAppDelegate.m
-c000000004CA148B50000000000001F41
-t1285638325
-s8001
-i"RoadKillAppDelegate.h"
-i"RootViewController.h"
-
-N/Users/joelware/CP130B-Summer2010/RoadKill/Classes/RootViewController.h
-c000000004CA148B5000000000000024C
-t1285638325
-s588
-i<UIKit/UIKit.h>
-i<CoreData/CoreData.h>
-
-N/Users/joelware/CP130B-Summer2010/RoadKill/Classes/RootViewController.m
-c000000004CA148B50000000000002EEE
-t1285638325
-s12014
-i"RootViewController.h"
-
-N/Users/joelware/CP130B-Summer2010/RoadKill/MainWindow.xib
-c000000004CA148B60000000000005FF8
-t1285638326
-s24568
-
-N/Users/joelware/CP130B-Summer2010/RoadKill/RoadKill.xcdatamodeld
-c000000004CA148B60000000000000088
-t1285638326
-s136
-
-N/Users/joelware/CP130B-Summer2010/RoadKill/RoadKill_Prefix.pch
-c000000004CA148B60000000000000165
-t1285638326
-s357
-i<Availability.h>
-i<Foundation/Foundation.h>
-i<UIKit/UIKit.h>
-i<CoreData/CoreData.h>
-
-N/Users/joelware/CP130B-Summer2010/RoadKill/RootViewController.xib
-c000000004CA148B60000000000004453
-t1285638326
-s17491
-
-N/Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app
-t1285638342
-s272
-
-N/Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app.dSYM
-t1285638342
-s102
-
-N/Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app/Info.plist
-t1285638337
-s595
-
-N/Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app/MainWindow.nib
-t1285638339
-s1510
-
-N/Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app/PkgInfo
-t1285638337
-s8
-
-N/Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app/RoadKill
-t1285638341
-s31232
-
-N/Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app/RoadKill.momd
-t1285638341
-s136
-
-N/Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app/RootViewController.nib
-t1285638339
-s979
-
-N/Users/joelware/CP130B-Summer2010/RoadKill/build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/Objects-normal/i386/RoadKill.LinkFileList
-c000000004CA148C1000000000000019D
-t1285638337
-s413
-
-N/Users/joelware/CP130B-Summer2010/RoadKill/build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/Objects-normal/i386/RoadKillAppDelegate.o
-t1285638341
-s64604
-
-N/Users/joelware/CP130B-Summer2010/RoadKill/build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/Objects-normal/i386/RootViewController.o
-t1285638341
-s64344
-
-N/Users/joelware/CP130B-Summer2010/RoadKill/build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/Objects-normal/i386/main.o
-t1285638341
-s6312
-
-N/Users/joelware/CP130B-Summer2010/RoadKill/main.m
-c000000004CA148B6000000000000016E
-t1285638326
-s366
-i<UIKit/UIKit.h>
-
-N/var/folders/lh/lh765QvBGQaqyPphIxIwp++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/RoadKill_Prefix-eoadqykykqnjowgypbuzwqnemkpn/RoadKill_Prefix.pch.gch
-t1285638340
-s16097072
-
-NRoadKill-Info.plist
-c000000004CA148B6000000000000038D
-t1285638326
-s909
-
-CCheck dependencies
-r0
-lSLF07#2@18"Check dependencies307331137#307331137#0(0"0(0#1#0"3343187568374212096#0"0#
-
-CCompileC build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/Objects-normal/i386/RoadKillAppDelegate.o /Users/joelware/CP130B-Summer2010/RoadKill/Classes/RoadKillAppDelegate.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s307331141.337963
-e307331141.443253
-r1
-xCompileC
-xbuild/RoadKill.build/Debug-iphonesimulator/RoadKill.build/Objects-normal/i386/RoadKillAppDelegate.o
-x/Users/joelware/CP130B-Summer2010/RoadKill/Classes/RoadKillAppDelegate.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@80"Compile /Users/joelware/CP130B-Summer2010/RoadKill/Classes/RoadKillAppDelegate.m307331141#307331141#0(0"0(0#0#72"/Users/joelware/CP130B-Summer2010/RoadKill/Classes/RoadKillAppDelegate.m8609157216#2003"    cd /Users/joelware/CP130B-Summer2010/RoadKill    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/joelware/CP130B-Summer2010/RoadKill/build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/RoadKill-generated-files.hmap -I/Users/joelware/CP130B-Summer2010/RoadKill/build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/RoadKill-own-target-headers.hmap -I/Users/joelware/CP130B-Summer2010/RoadKill/build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/RoadKill-all-target-headers.hmap -iquote /Users/joelware/CP130B-Summer2010/RoadKill/build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/RoadKill-project-headers.hmap -F/Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator -I/Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/include -I/Users/joelware/CP130B-Summer2010/RoadKill/build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/DerivedSources/i386 -I/Users/joelware/CP130B-Summer2010/RoadKill/build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/DerivedSources -include /var/folders/lh/lh765QvBGQaqyPphIxIwp++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/RoadKill_Prefix-eoadqykykqnjowgypbuzwqnemkpn/RoadKill_Prefix.pch -c /Users/joelware/CP130B-Summer2010/RoadKill/Classes/RoadKillAppDelegate.m -o /Users/joelware/CP130B-Summer2010/RoadKill/build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/Objects-normal/i386/RoadKillAppDelegate.o0#
-
-CCompileC build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/Objects-normal/i386/RootViewController.o /Users/joelware/CP130B-Summer2010/RoadKill/Classes/RootViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s307331141.379900
-e307331141.497674
-r1
-xCompileC
-xbuild/RoadKill.build/Debug-iphonesimulator/RoadKill.build/Objects-normal/i386/RootViewController.o
-x/Users/joelware/CP130B-Summer2010/RoadKill/Classes/RootViewController.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@79"Compile /Users/joelware/CP130B-Summer2010/RoadKill/Classes/RootViewController.m307331141#307331141#0(0"0(0#0#71"/Users/joelware/CP130B-Summer2010/RoadKill/Classes/RootViewController.m8608199392#2001"    cd /Users/joelware/CP130B-Summer2010/RoadKill    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/joelware/CP130B-Summer2010/RoadKill/build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/RoadKill-generated-files.hmap -I/Users/joelware/CP130B-Summer2010/RoadKill/build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/RoadKill-own-target-headers.hmap -I/Users/joelware/CP130B-Summer2010/RoadKill/build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/RoadKill-all-target-headers.hmap -iquote /Users/joelware/CP130B-Summer2010/RoadKill/build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/RoadKill-project-headers.hmap -F/Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator -I/Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/include -I/Users/joelware/CP130B-Summer2010/RoadKill/build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/DerivedSources/i386 -I/Users/joelware/CP130B-Summer2010/RoadKill/build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/DerivedSources -include /var/folders/lh/lh765QvBGQaqyPphIxIwp++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/RoadKill_Prefix-eoadqykykqnjowgypbuzwqnemkpn/RoadKill_Prefix.pch -c /Users/joelware/CP130B-Summer2010/RoadKill/Classes/RootViewController.m -o /Users/joelware/CP130B-Summer2010/RoadKill/build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/Objects-normal/i386/RootViewController.o0#
-
-CCompileC build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/Objects-normal/i386/main.o /Users/joelware/CP130B-Summer2010/RoadKill/main.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s307331141.049398
-e307331141.337849
-r1
-xCompileC
-xbuild/RoadKill.build/Debug-iphonesimulator/RoadKill.build/Objects-normal/i386/main.o
-x/Users/joelware/CP130B-Summer2010/RoadKill/main.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@57"Compile /Users/joelware/CP130B-Summer2010/RoadKill/main.m307331141#307331141#0(0"0(0#0#49"/Users/joelware/CP130B-Summer2010/RoadKill/main.m8609729760#1965"    cd /Users/joelware/CP130B-Summer2010/RoadKill    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/joelware/CP130B-Summer2010/RoadKill/build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/RoadKill-generated-files.hmap -I/Users/joelware/CP130B-Summer2010/RoadKill/build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/RoadKill-own-target-headers.hmap -I/Users/joelware/CP130B-Summer2010/RoadKill/build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/RoadKill-all-target-headers.hmap -iquote /Users/joelware/CP130B-Summer2010/RoadKill/build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/RoadKill-project-headers.hmap -F/Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator -I/Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/include -I/Users/joelware/CP130B-Summer2010/RoadKill/build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/DerivedSources/i386 -I/Users/joelware/CP130B-Summer2010/RoadKill/build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/DerivedSources -include /var/folders/lh/lh765QvBGQaqyPphIxIwp++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/RoadKill_Prefix-eoadqykykqnjowgypbuzwqnemkpn/RoadKill_Prefix.pch -c /Users/joelware/CP130B-Summer2010/RoadKill/main.m -o /Users/joelware/CP130B-Summer2010/RoadKill/build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/Objects-normal/i386/main.o0#
-
-CCompileXIB /Users/joelware/CP130B-Summer2010/RoadKill/MainWindow.xib
-s307331137.371613
-e307331139.512001
-r1
-xCompileXIB
-x/Users/joelware/CP130B-Summer2010/RoadKill/MainWindow.xib
-oCouldn't open shared capabilities memory GSCapabilities (No such file or directory)
-lSLF07#2@25"CompileXIB MainWindow.xib307331137#307331139#0(84"Couldn't open shared capabilities memory GSCapabilities (No such file or directory)0(0#0#57"/Users/joelware/CP130B-Summer2010/RoadKill/MainWindow.xib8609222144#583"    cd /Users/joelware/CP130B-Summer2010/RoadKill    setenv IBC_MINIMUM_COMPATIBILITY_VERSION 4.0    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/usr/bin/ibtool --errors --warnings --notices --output-format human-readable-text --compile /Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app/MainWindow.nib /Users/joelware/CP130B-Summer2010/RoadKill/MainWindow.xib --sdk /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk0#
-
-CCompileXIB /Users/joelware/CP130B-Summer2010/RoadKill/RootViewController.xib
-s307331137.399797
-e307331139.512226
-r1
-xCompileXIB
-x/Users/joelware/CP130B-Summer2010/RoadKill/RootViewController.xib
-oCouldn't open shared capabilities memory GSCapabilities (No such file or directory)
-lSLF07#2@33"CompileXIB RootViewController.xib307331137#307331139#0(84"Couldn't open shared capabilities memory GSCapabilities (No such file or directory)0(0#0#65"/Users/joelware/CP130B-Summer2010/RoadKill/RootViewController.xib8608614176#599"    cd /Users/joelware/CP130B-Summer2010/RoadKill    setenv IBC_MINIMUM_COMPATIBILITY_VERSION 4.0    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/usr/bin/ibtool --errors --warnings --notices --output-format human-readable-text --compile /Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app/RootViewController.nib /Users/joelware/CP130B-Summer2010/RoadKill/RootViewController.xib --sdk /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk0#
-
-CDataModelVersionCompile /Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app/RoadKill.momd /Users/joelware/CP130B-Summer2010/RoadKill/RoadKill.xcdatamodeld
-s307331141.048585
-e307331141.379794
-r1
-xDataModelVersionCompile
-x/Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app/RoadKill.momd
-x/Users/joelware/CP130B-Summer2010/RoadKill/RoadKill.xcdatamodeld
-lSLF07#2@100"DataModelVersionCompile build/Debug-iphonesimulator/RoadKill.app/RoadKill.momd RoadKill.xcdatamodeld307331141#307331141#0(0"0(0#0#64"/Users/joelware/CP130B-Summer2010/RoadKill/RoadKill.xcdatamodeld8609937024#401"    cd /Users/joelware/CP130B-Summer2010/RoadKill    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/usr/bin/momc -XD_MOMC_TARGET_VERSION=10.6 /Users/joelware/CP130B-Summer2010/RoadKill/RoadKill.xcdatamodeld /Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app/RoadKill.momd0#
-
-CGenerateDSYMFile /Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app.dSYM /Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app/RoadKill
-s307331141.979808
-e307331142.112662
-r1
-xGenerateDSYMFile
-x/Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app.dSYM
-x/Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app/RoadKill
-lSLF07#2@112"GenerateDSYMFile build/Debug-iphonesimulator/RoadKill.app.dSYM build/Debug-iphonesimulator/RoadKill.app/RoadKill307331141#307331142#0(0"0(0#0#92"/Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app/RoadKill8609741760#398"    cd /Users/joelware/CP130B-Summer2010/RoadKill    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/usr/bin/dsymutil /Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app/RoadKill -o /Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app.dSYM0#
-
-CLd /Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app/RoadKill normal i386
-s307331141.497768
-e307331141.979576
-r1
-xLd
-x/Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app/RoadKill
-xnormal
-xi386
-lSLF07#2@97"Link /Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app/RoadKill307331141#307331141#0(0"0(0#0#0"8593817504#945"    cd /Users/joelware/CP130B-Summer2010/RoadKill    setenv MACOSX_DEPLOYMENT_TARGET 10.6    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -arch i386 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -L/Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator -F/Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator -filelist /Users/joelware/CP130B-Summer2010/RoadKill/build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/Objects-normal/i386/RoadKill.LinkFileList -mmacosx-version-min=10.6 -Xlinker -objc_abi_version -Xlinker 2 -framework Foundation -framework UIKit -framework CoreGraphics -framework CoreData -o /Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app/RoadKill0#
-
-CProcessInfoPlistFile /Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app/Info.plist RoadKill-Info.plist
-s307331137.337175
-e307331137.371511
-r1
-xProcessInfoPlistFile
-x/Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app/Info.plist
-xRoadKill-Info.plist
-lSLF07#2@27"Process RoadKill-Info.plist307331137#307331137#0(0"0(0#0#62"/Users/joelware/CP130B-Summer2010/RoadKill/RoadKill-Info.plist12666816341278818#494"    cd /Users/joelware/CP130B-Summer2010/RoadKill    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    builtin-infoPlistUtility RoadKill-Info.plist -genpkginfo /Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -o /Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app/Info.plist0#
-
-CProcessPCH /var/folders/lh/lh765QvBGQaqyPphIxIwp++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/RoadKill_Prefix-eoadqykykqnjowgypbuzwqnemkpn/RoadKill_Prefix.pch.gch RoadKill_Prefix.pch normal i386 objective-c com.apple.compilers.gcc.4_2
-s307331139.512356
-e307331141.048430
-r1
-xProcessPCH
-x/var/folders/lh/lh765QvBGQaqyPphIxIwp++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/RoadKill_Prefix-eoadqykykqnjowgypbuzwqnemkpn/RoadKill_Prefix.pch.gch
-xRoadKill_Prefix.pch
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@30"Precompile RoadKill_Prefix.pch307331139#307331141#0(0"0(0#0#62"/Users/joelware/CP130B-Summer2010/RoadKill/RoadKill_Prefix.pch8599081056#1852"    cd /Users/joelware/CP130B-Summer2010/RoadKill    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c-header -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/joelware/CP130B-Summer2010/RoadKill/build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/RoadKill-generated-files.hmap -I/Users/joelware/CP130B-Summer2010/RoadKill/build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/RoadKill-own-target-headers.hmap -I/Users/joelware/CP130B-Summer2010/RoadKill/build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/RoadKill-all-target-headers.hmap -iquote /Users/joelware/CP130B-Summer2010/RoadKill/build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/RoadKill-project-headers.hmap -F/Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator -I/Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/include -I/Users/joelware/CP130B-Summer2010/RoadKill/build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/DerivedSources/i386 -I/Users/joelware/CP130B-Summer2010/RoadKill/build/RoadKill.build/Debug-iphonesimulator/RoadKill.build/DerivedSources -c /Users/joelware/CP130B-Summer2010/RoadKill/RoadKill_Prefix.pch -o /var/folders/lh/lh765QvBGQaqyPphIxIwp++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/RoadKill_Prefix-eoadqykykqnjowgypbuzwqnemkpn/RoadKill_Prefix.pch.gch0#
-
-CTouch /Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app
-s307331142.112749
-e307331142.139758
-r1
-xTouch
-x/Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app
-lSLF07#2@89"Touch /Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app307331142#307331142#0(0"0(0#0#0"8608685984#287"    cd /Users/joelware/CP130B-Summer2010/RoadKill    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /usr/bin/touch -c /Users/joelware/CP130B-Summer2010/RoadKill/build/Debug-iphonesimulator/RoadKill.app0#
-
