@@ -13,34 +13,45 @@
 @synthesize connection;
 @synthesize responseData;
 
-- (void)authenticateWithUsername:(NSString *)username password:(NSString *)password
++ (NSMutableURLRequest *)authenticationRequestWithUsername:(NSString *)username password:(NSString *)password
 {
-	NSURL *url = [[NSURL alloc] initWithScheme:@"http" 
+	NSURL *url = [[[NSURL alloc] initWithScheme:@"http" 
 										  host:RKProductionServer 
 										  path:[NSString stringWithFormat:@"/california/node?name=%@&pass=%@d&op=Log+in&form_id=user_login_block",
-												username, password]];
-	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+												username, password]] autorelease];
+	NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] initWithURL:url] autorelease];
 	request.HTTPMethod = @"POST";
 	
+	return request;
+}
+
+- (void)authenticateWithUsername:(NSString *)username password:(NSString *)password
+{
+	NSMutableURLRequest *request = [[self class] authenticationRequestWithUsername:username
+																		  password:password];
 	if (self.connection)
 		[self.connection cancel];
 	self.responseData = [NSMutableData data];
 	self.connection = [NSURLConnection connectionWithRequest:request
 													delegate:self];
-	[url release];
-	[request release];
+}
+
+- (void)doSomethingWithResponse:(NSURLResponse *)response
+{
+	// break this into a separate method so it can be tested synchronously
+	NSAssert([response isKindOfClass:[NSHTTPURLResponse class]], 
+			 @"should be NSHTTPURLResponse");
+	NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+	NSLog(@"status %d: %@", httpResponse.statusCode, [NSHTTPURLResponse localizedStringForStatusCode:httpResponse.statusCode]);
+	NSLog(@"headers %@", httpResponse.allHeaderFields);
 }
 
 #pragma mark -
 #pragma mark NSURLConnection delegate
 - (void)connection:(NSURLConnection *)theConnection didReceiveResponse:(NSURLResponse *)response
 {
-	NSAssert([response isKindOfClass:[NSHTTPURLResponse class]], 
-			 @"should be NSHTTPURLResponse");
 	NSAssert(theConnection == self.connection, @"connection error");
-	NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-	NSLog(@"status %d: %@", httpResponse.statusCode, [NSHTTPURLResponse localizedStringForStatusCode:httpResponse.statusCode]);
-	NSLog(@"headers %@", httpResponse.allHeaderFields);
+	[self doSomethingWithResponse:response];
 }
 
 - (void)connection:(NSURLConnection *)theConnection didReceiveData:(NSData *)data
@@ -64,7 +75,7 @@
 {
 	NSString *responseString = [[NSString alloc] initWithData:self.responseData
 													 encoding:NSUTF8StringEncoding];
-	NSLog(@"response: %@", responseString);
+	NSLog(@"server said: %@", responseString);
 	[responseString release];
 }
 

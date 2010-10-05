@@ -14,7 +14,9 @@
 }
 
 @property (nonatomic, retain) NSURLConnection *connection;
-@property (nonatomic, retain) NSMutableData *responseData;
+@property (nonatomic, copy) NSMutableData *responseData;
 
++ (NSMutableURLRequest *)authenticationRequestWithUsername:(NSString *)username password:(NSString *)password;
 - (void)authenticateWithUsername:(NSString *)username password:(NSString *)password;
+- (void)doSomethingWithResponse:(NSURLResponse *)response;
 @end

@@ -35,4 +35,24 @@
 	
 }
 
+- (void)testSessionAuthentication
+{
+	NSMutableURLRequest *request = [RKCROSSession authenticationRequestWithUsername:RKTestUsername
+																		   password:RKTestPassword];
+	NSHTTPURLResponse *response;
+	NSError *error;
+	NSMutableData *responseData = (NSMutableData *)[NSURLConnection sendSynchronousRequest:request
+																		 returningResponse:&response
+																					 error:&error];
+	STAssertTrue(response.statusCode == 320, @"status code %d", response.statusCode);
+	STAssertNotNil(responseData, @"responseData");
+	STAssertTrue(responseData.length > 0, @"responseData");
+	RKCROSSession *session = [[[RKCROSSession alloc] init] autorelease];
+
+	[session doSomethingWithResponse:response];
+	session.responseData = responseData;
+	[session connectionDidFinishLoading:nil];
+	
+
+}
 @end
