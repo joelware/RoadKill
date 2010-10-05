@@ -4,6 +4,10 @@
 //
 //  Created by Hal Mueller on 10/4/10.
 //
+//  Note: OCUnit runs synchronously, without a run loop. Asynchronous web transactions 
+//  will fail in OCUnit. Construct the API, and the unit tests, so that all pieces can
+//  be tested using NSURLConnection's sendSynchronousRequest:returningResponse:error:.
+//  
 
 #import "WebAPITestCase.h"
 #import "RKConstants.h"
