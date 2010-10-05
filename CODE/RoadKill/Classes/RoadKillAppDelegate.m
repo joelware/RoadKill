@@ -9,6 +9,8 @@
 #import "RoadKillAppDelegate.h"
 #import "RootViewController.h"
 
+#import "RKConstants.h"
+#import "RKCROSSession.h"
 
 @implementation RoadKillAppDelegate
 
@@ -65,6 +67,12 @@
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
+
+	// this is here just to test RKCROSSession. There has to be a better place for it.
+	RKCROSSession *session = [[RKCROSSession alloc] init];
+	[session authenticateWithUsername:RKTestUsername password:RKTestPassword];
+	NSLog(@"%@", session);
+	
 }
 
 
