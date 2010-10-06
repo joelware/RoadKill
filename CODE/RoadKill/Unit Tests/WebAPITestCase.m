@@ -49,7 +49,7 @@
 	NSData *responseData = [NSURLConnection sendSynchronousRequest:request
 														returningResponse:&response
 																	error:&error];
-	STAssertTrue(response.statusCode == 320, @"status code %d", response.statusCode);
+	STAssertTrue(response.statusCode == 302, @"status code %d", response.statusCode);
 	STAssertNotNil(responseData, @"responseData");
 	STAssertTrue(responseData.length > 0, @"responseData length %d", responseData.length);
 
