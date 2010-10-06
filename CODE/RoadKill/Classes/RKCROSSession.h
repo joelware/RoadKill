@@ -10,11 +10,22 @@
 // encapsulate the credentials for a session with the CROS server
 @interface RKCROSSession : NSObject {
 	NSURLConnection *connection;
+	NSUInteger sessionState;
 	NSMutableData *receivedData;
 	NSString *receivedString;
 }
 
+typedef enum {
+	RKCROSSessionUnitialized = 0,
+	RKCROSSessionAuthenticated,
+	RKCROSSessionFormTokenObtained,
+	RKCROSSessionObservationSubmitted,
+	RKCROSSessionObservationComplete
+	
+} RKCROSSessionState;
+
 @property (nonatomic, retain) NSURLConnection *connection;
+@property (nonatomic) NSUInteger sessionState;
 @property (nonatomic, retain) NSMutableData *receivedData;
 @property (nonatomic, retain) NSString *receivedString;
 

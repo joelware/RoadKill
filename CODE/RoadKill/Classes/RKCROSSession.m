@@ -11,6 +11,7 @@
 @implementation RKCROSSession
 
 @synthesize connection;
+@synthesize sessionState;
 @synthesize receivedData;
 @synthesize receivedString;
 
