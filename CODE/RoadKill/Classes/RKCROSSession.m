@@ -25,17 +25,23 @@
 
 + (NSMutableURLRequest *)authenticationRequestWithUsername:(NSString *)username password:(NSString *)password
 {
-	NSURL *url = [[[NSURL alloc] initWithScheme:@"http" 
+	NSURL *url = [[NSURL alloc] initWithScheme:@"http" 
 										  host:RKProductionServer 
-										  path:[NSString stringWithFormat:@"/california/node?name=%@&pass=%@d&op=Log+in&form_id=user_login_block",
-												username, password]] autorelease];
+										  path:@"/california/node"];
 	RKLog(@"requesting URL %@", url);
 	NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] initWithURL:url] autorelease];
 	request.HTTPMethod = @"POST";
 	request.cachePolicy = NSURLRequestReloadIgnoringLocalAndRemoteCacheData;
 	// added cachePolicy to try to force reload, but it has no effect. Maybe need to clear cookies?
 	[request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+	NSString *stringForBody = [NSString stringWithFormat:@"name=%@&pass=%@&op=Log+in&form_id=user_login_block",
+							   username, password];
+	[request setHTTPBody:[stringForBody dataUsingEncoding:NSUTF8StringEncoding]];
+	[request setValue:[NSString stringWithFormat:@"%d", request.HTTPBody.length]
+   forHTTPHeaderField:@"Content-Length"];
 	RKLog(@"request %@ headers %@", request, request.allHTTPHeaderFields);
+	RKLog(@"request body string %@", stringForBody);
+	RKLog(@"request body %@", request.HTTPBody);
 	return request;
 }
 
@@ -74,8 +80,10 @@
 	
 	NSArray *cookies = [NSHTTPCookie cookiesWithResponseHeaderFields:httpResponse.allHeaderFields
 															  forURL:[[self class] baseURL]];
-	RKLog(@"response received cookie: %@", cookies.lastObject);
-	RKLog(@"persisted cookie: %@", [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[[self class] baseURL]]);
+	for (id theCookie in cookies) {
+		RKLog(@"response received cookie: %@", theCookie);
+	}
+	RKLog(@"persisted cookies: %@", [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[[self class] baseURL]]);
 }
 
 - (NSMutableURLRequest *)formTokenRequest
@@ -134,7 +142,8 @@
 {
 	self.receivedString = [[[NSString alloc] initWithData:self.receivedData
 												 encoding:NSUTF8StringEncoding] autorelease];
-	//RKLog(@"%@", self.receivedString);
+	LogMethod();
+	RKLog(@"%@", self.receivedString);
 }
 
 @end

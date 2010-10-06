@@ -73,7 +73,7 @@
 	[session authenticateWithUsername:RKTestUsername password:RKCorrectTestPassword];
 	RKLog(@"%@", session);
 	LogMethod();
-	[session obtainFormToken];
+	//[session obtainFormToken];
 }
 
 
