@@ -14,3 +14,14 @@
     #import <UIKit/UIKit.h>
     #import <CoreData/CoreData.h>
 #endif
+
+#if DEBUG
+#define RKLog(args...)    NSLog( @"%@", [NSString stringWithFormat: args])
+#define LogMethod() NSLog(@"%@ %@ %s (line %d)", NSStringFromSelector(_cmd), self, __PRETTY_FUNCTION__, __LINE__)
+
+#else  
+
+#define RKLog(args...)
+#define LogMethod() 
+
+#endif
