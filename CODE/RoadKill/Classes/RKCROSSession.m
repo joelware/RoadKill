@@ -29,11 +29,13 @@
 										  host:RKProductionServer 
 										  path:[NSString stringWithFormat:@"/california/node?name=%@&pass=%@d&op=Log+in&form_id=user_login_block",
 												username, password]] autorelease];
+	RKLog(@"requesting URL %@", url);
 	NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] initWithURL:url] autorelease];
 	request.HTTPMethod = @"POST";
 	request.cachePolicy = NSURLRequestReloadIgnoringLocalAndRemoteCacheData;
 	// added cachePolicy to try to force reload, but it has no effect. Maybe need to clear cookies?
-	
+	[request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+	RKLog(@"request %@ headers %@", request, request.allHTTPHeaderFields);
 	return request;
 }
 
@@ -62,8 +64,8 @@
 	NSAssert([response isKindOfClass:[NSHTTPURLResponse class]], 
 			 @"should be NSHTTPURLResponse");
 	NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-	RKLog(@"status %d: %@", httpResponse.statusCode, [NSHTTPURLResponse localizedStringForStatusCode:httpResponse.statusCode]);
-	RKLog(@"headers %@", httpResponse.allHeaderFields);
+	RKLog(@"response status %d: %@", httpResponse.statusCode, [NSHTTPURLResponse localizedStringForStatusCode:httpResponse.statusCode]);
+	RKLog(@"response headers %@", httpResponse.allHeaderFields);
 	
 	long long contentLength = httpResponse.expectedContentLength;
 	if (contentLength == NSURLResponseUnknownLength)
@@ -72,7 +74,7 @@
 	
 	NSArray *cookies = [NSHTTPCookie cookiesWithResponseHeaderFields:httpResponse.allHeaderFields
 															  forURL:[[self class] baseURL]];
-	RKLog(@"received cookie: %@", cookies.lastObject);
+	RKLog(@"response received cookie: %@", cookies.lastObject);
 	RKLog(@"persisted cookie: %@", [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[[self class] baseURL]]);
 }
 
@@ -132,7 +134,7 @@
 {
 	self.receivedString = [[[NSString alloc] initWithData:self.receivedData
 												 encoding:NSUTF8StringEncoding] autorelease];
-	RKLog(@"%@", self.receivedString);
+	//RKLog(@"%@", self.receivedString);
 }
 
 @end
