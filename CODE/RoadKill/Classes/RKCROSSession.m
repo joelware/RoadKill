@@ -12,6 +12,7 @@
 
 @synthesize connection;
 @synthesize receivedData;
+@synthesize receivedString;
 
 - (void)dealloc
 {
@@ -46,8 +47,6 @@
 																		  password:password];
 	if (self.connection)
 		[self.connection cancel];
-	self.receivedData.length = 0;
-	RKLog(@"%@", self.receivedData.class);
 	self.connection = [NSURLConnection connectionWithRequest:request
 													delegate:self];
 }
@@ -76,11 +75,36 @@
 	RKLog(@"persisted cookie: %@", [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[[self class] baseURL]]);
 }
 
+- (NSMutableURLRequest *)formTokenRequest
+{
+	LogMethod();
+	NSURL *formTokenURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/california/node/add/roadkill",
+												[[self class] baseURL]]];
+	RKLog(@"%@", formTokenURL);
+	NSMutableURLRequest *result = [NSMutableURLRequest requestWithURL:formTokenURL];
+	
+	NSDictionary *headers = [NSHTTPCookie requestHeaderFieldsWithCookies:[[NSHTTPCookieStorage sharedHTTPCookieStorage] 
+																		  cookiesForURL:[[self class] baseURL]]];
+	RKLog(@"headers: %@", headers);
+	[result setAllHTTPHeaderFields:headers]; // I am not sure that this is safe. What am I overwriting?
+	return result;
+}
+
+- (void)obtainFormToken
+{
+	NSMutableURLRequest *request = [self formTokenRequest];
+	if (self.connection)
+		[self.connection cancel];
+	self.connection = [NSURLConnection connectionWithRequest:request
+													delegate:self];
+}
+
 #pragma mark -
 #pragma mark NSURLConnection delegate
 - (void)connection:(NSURLConnection *)theConnection didReceiveResponse:(NSURLResponse *)response
 {
 	NSAssert(theConnection == self.connection, @"connection error");
+	self.receivedData.length = 0;
 	[self doSomethingWithResponse:response];
 }
 
@@ -101,6 +125,13 @@
     // inform the user
     RKLog(@"Connection failed! Error - %@",
           [error localizedDescription]);
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)theConnection
+{
+	self.receivedString = [[[NSString alloc] initWithData:self.receivedData
+												 encoding:NSUTF8StringEncoding] autorelease];
+	RKLog(@"%@", self.receivedString);
 }
 
 @end

@@ -43,18 +43,38 @@
 	NSMutableURLRequest *request = [RKCROSSession authenticationRequestWithUsername:RKTestUsername
 																		   password:RKCorrectTestPassword];
 	RKCROSSession *session = [[[RKCROSSession alloc] init] autorelease];
-
+	
 	NSHTTPURLResponse *response;
 	NSError *error;
 	NSData *responseData = [NSURLConnection sendSynchronousRequest:request
-														returningResponse:&response
-																	error:&error];
+												 returningResponse:&response
+															 error:&error];
 	STAssertTrue(response.statusCode == 302, @"status code %d", response.statusCode);
 	STAssertNotNil(responseData, @"responseData");
 	STAssertTrue(responseData.length > 0, @"responseData length %d", responseData.length);
-
+	
 	STAssertNoThrow([session doSomethingWithResponse:response], @"doSomethingWithResponse");
-	session.receivedData = [responseData mutableCopy];
-	STAssertNoThrow([session connectionDidFinishLoading:nil], @"connectionDidFinishLoading");
+	STAssertNoThrow(session.receivedData = [responseData mutableCopy], @"copy");
+//	STAssertNoThrow([session connectionDidFinishLoading:nil], @"connectionDidFinishLoading");
+}
+
+- (void)testObtainFormToken
+{
+	NSMutableURLRequest *request = [RKCROSSession authenticationRequestWithUsername:RKTestUsername
+																		   password:RKCorrectTestPassword];
+	RKCROSSession *session = [[[RKCROSSession alloc] init] autorelease];
+	
+	NSHTTPURLResponse *response;
+	NSError *error;
+	NSData *responseData = [NSURLConnection sendSynchronousRequest:request
+												 returningResponse:&response
+															 error:&error];
+	STAssertTrue(responseData.length > 0, @"responseData length %d", responseData.length);
+	
+	NSMutableURLRequest *tokenRequest = [session formTokenRequest];
+	NSData *tokenRequestData = [NSURLConnection sendSynchronousRequest:tokenRequest
+													 returningResponse:&response
+																 error:&error];
+	STAssertTrue(tokenRequestData.length > 0, @"tokenRequestData length %d %@", tokenRequestData.length, error.localizedDescription);
 }
 @end
