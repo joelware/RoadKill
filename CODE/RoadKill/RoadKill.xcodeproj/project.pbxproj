@@ -17,6 +17,8 @@
 		28AD73600D9D9599002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD735F0D9D9599002E5188 /* MainWindow.xib */; };
 		28C286E10D94DF7D0034E888 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C286E00D94DF7D0034E888 /* RootViewController.m */; };
 		28D3F202112F7DC200FD0661 /* RoadKill.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 28D3F201112F7DC200FD0661 /* RoadKill.xcdatamodeld */; };
+		2B244433125BE720005152E6 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B244431125BE720005152E6 /* Icon.png */; };
+		2B244434125BE720005152E6 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B244432125BE720005152E6 /* Icon@2x.png */; };
 		2B64723A125A8BDD00ED5161 /* WebAPITestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B647238125A8BDD00ED5161 /* WebAPITestCase.m */; };
 		2B6472A3125A910300ED5161 /* Xcode324iOS41TestSuiteWorkaround.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B6472A2125A910300ED5161 /* Xcode324iOS41TestSuiteWorkaround.m */; };
 		2B790BA2125AA00F00EB101D /* RKCROSSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B790BA1125AA00F00EB101D /* RKCROSSession.m */; };
@@ -38,6 +40,8 @@
 		28C286DF0D94DF7D0034E888 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		28C286E00D94DF7D0034E888 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2B244431125BE720005152E6 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = Graphics/Icon.png; sourceTree = "<group>"; };
+		2B244432125BE720005152E6 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "Graphics/Icon@2x.png"; sourceTree = "<group>"; };
 		2B64721C125A8ADA00ED5161 /* Unit Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Unit Tests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B647237125A8BDD00ED5161 /* WebAPITestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebAPITestCase.h; path = "Unit Tests/WebAPITestCase.h"; sourceTree = "<group>"; };
 		2B647238125A8BDD00ED5161 /* WebAPITestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebAPITestCase.m; path = "Unit Tests/WebAPITestCase.m"; sourceTree = "<group>"; };
@@ -108,9 +112,9 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				2B647284125A8E5100ED5161 /* RKConstants.h */,
 				28A0AAE50D9B0CCF005BE974 /* RoadKill_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
-				2B647284125A8E5100ED5161 /* RKConstants.h */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -122,6 +126,8 @@
 				2899E55F0DE3E45000AC0155 /* RootViewController.xib */,
 				28AD735F0D9D9599002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* RoadKill-Info.plist */,
+				2B244431125BE720005152E6 /* Icon.png */,
+				2B244432125BE720005152E6 /* Icon@2x.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -229,6 +235,8 @@
 			files = (
 				28AD73600D9D9599002E5188 /* MainWindow.xib in Resources */,
 				2899E5600DE3E45000AC0155 /* RootViewController.xib in Resources */,
+				2B244433125BE720005152E6 /* Icon.png in Resources */,
+				2B244434125BE720005152E6 /* Icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,6 +332,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREFIX_HEADER = RoadKill_Prefix.pch;
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "Unit Tests-Info.plist";
 				OTHER_LDFLAGS = (
@@ -354,6 +363,7 @@
 				);
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PREFIX_HEADER = RoadKill_Prefix.pch;
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "Unit Tests-Info.plist";
 				OTHER_LDFLAGS = (
@@ -378,6 +388,8 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
@@ -393,6 +405,8 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";

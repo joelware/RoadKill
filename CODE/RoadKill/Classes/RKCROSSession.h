@@ -10,11 +10,11 @@
 // encapsulate the credentials for a session with the CROS server
 @interface RKCROSSession : NSObject {
 	NSURLConnection *connection;
-	NSMutableData *responseData;
+	NSMutableData *receivedData;
 }
 
 @property (nonatomic, retain) NSURLConnection *connection;
-@property (nonatomic, copy) NSMutableData *responseData;
+@property (nonatomic, retain) NSMutableData *receivedData;
 
 + (NSMutableURLRequest *)authenticationRequestWithUsername:(NSString *)username password:(NSString *)password;
 - (void)authenticateWithUsername:(NSString *)username password:(NSString *)password;

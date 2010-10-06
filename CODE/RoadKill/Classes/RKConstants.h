@@ -10,4 +10,5 @@
 #define RKTestServer RKProductionServer
 
 #define RKTestUsername @"halmueller"
-#define RKTestPassword @"JhPs3rtYtU"
+#define RKCorrectTestPassword @"JhPs3rtYtU"
+#define RKFailingTestPassword @"xyzzy"
