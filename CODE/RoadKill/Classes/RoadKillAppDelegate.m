@@ -73,7 +73,10 @@
 	[session authenticateWithUsername:RKTestUsername password:RKCorrectTestPassword];
 	RKLog(@"%@", session);
 	LogMethod();
-	//[session obtainFormToken];
+	[session performSelector:@selector(obtainFormToken)
+				  withObject:nil
+				  afterDelay:5.];
+	// FIXME: this 5 second delay is really brittle, instead need to use notifications to trigger next step
 }
 
 

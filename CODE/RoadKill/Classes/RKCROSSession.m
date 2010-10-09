@@ -14,6 +14,7 @@
 @synthesize sessionState;
 @synthesize receivedData;
 @synthesize receivedString;
+@synthesize formToken;
 
 - (id)init
 {
@@ -115,11 +116,33 @@
 
 - (void)obtainFormToken
 {
+	NSAssert((self.sessionState == RKCROSSessionAuthenticated), @"session not authenticated");
 	NSMutableURLRequest *request = [self formTokenRequest];
 	if (self.connection)
 		[self.connection cancel];
 	self.connection = [NSURLConnection connectionWithRequest:request
 													delegate:self];
+}
+
+- (BOOL)extractFormTokenFromReceivedString
+{
+	// <input type="hidden" name="form_token" id="edit-roadkill-node-form-form-token" value="014bed2bec533edbae01c14ebac6e174"  />
+
+	NSRange tokenFormElementRange = [self.receivedString rangeOfString:@"<input type=\"hidden\" name=\"form_token\".*>"
+													options:NSRegularExpressionSearch];
+	if (tokenFormElementRange.length > 0) {
+		RKLog(@"found %@", [self.receivedString substringWithRange:tokenFormElementRange]);
+		NSScanner *scanner = [NSScanner scannerWithString:[self.receivedString substringWithRange:tokenFormElementRange]];
+		[scanner scanUpToString:@"value=\"" intoString:NULL];
+		[scanner scanUpToString:@"\"" intoString:NULL];
+		scanner.scanLocation++;
+		NSString *theToken;
+		[scanner scanUpToString:@"\"" intoString:&theToken];
+		self.formToken = theToken;
+		RKLog(@"token %@", self.formToken);
+		return YES;
+	}
+	return NO;
 }
 
 #pragma mark -
@@ -132,6 +155,7 @@
 		case RKCROSSessionConnecting:
 			if (redirectResponse) 
 				return nil;
+			break;
 	} 
 	return request;
 }
@@ -167,7 +191,16 @@
 	self.receivedString = [[[NSString alloc] initWithData:self.receivedData
 												 encoding:NSUTF8StringEncoding] autorelease];
 	LogMethod();
-//	RKLog(@"%@", self.receivedString);
+	switch (self.sessionState) {
+		case RKCROSSessionConnecting:
+			self.sessionState = RKCROSSessionAuthenticated;
+			break;
+		case RKCROSSessionAuthenticated:
+			if ([self extractFormTokenFromReceivedString])
+				self.sessionState = RKCROSSessionFormTokenObtained;
+			break;
+	}
+
 }
 
 @end

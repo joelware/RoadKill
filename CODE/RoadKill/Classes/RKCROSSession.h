@@ -13,6 +13,7 @@
 	NSUInteger sessionState;
 	NSMutableData *receivedData;
 	NSString *receivedString;
+	NSString *formToken;
 }
 
 typedef enum {
@@ -28,10 +29,13 @@ typedef enum {
 @property (nonatomic) NSUInteger sessionState;
 @property (nonatomic, retain) NSMutableData *receivedData;
 @property (nonatomic, retain) NSString *receivedString;
+@property (nonatomic, retain) NSString *formToken;
 
 + (NSMutableURLRequest *)authenticationRequestWithUsername:(NSString *)username password:(NSString *)password;
 - (void)authenticateWithUsername:(NSString *)username password:(NSString *)password;
 - (void)doSomethingWithResponse:(NSURLResponse *)response;
 - (NSMutableURLRequest *)formTokenRequest;
 - (void)obtainFormToken;
+- (BOOL)extractFormTokenFromReceivedString;
+
 @end

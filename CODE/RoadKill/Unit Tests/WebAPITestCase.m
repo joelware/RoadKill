@@ -49,6 +49,10 @@
 	NSData *responseData = [NSURLConnection sendSynchronousRequest:request
 												 returningResponse:&response
 															 error:&error];
+	// FIXME: we're relying on the connection's delegate methods in order to get correct behavior,
+	// but sendSynchronousRequest doesn't let us provide a delegate. Synchronous testing of the
+	// web API is doomed to failure.
+	
 	STAssertTrue(response.statusCode == 302, @"status code %d", response.statusCode);
 	STAssertNotNil(responseData, @"responseData");
 	STAssertTrue(responseData.length > 0, @"responseData length %d", responseData.length);
