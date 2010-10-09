@@ -15,6 +15,14 @@
 @synthesize receivedData;
 @synthesize receivedString;
 
+- (id)init
+{
+	if (self = [super init]) {
+		sessionState = RKCROSSessionConnecting;
+	}
+	return self;
+}
+
 - (void)dealloc
 {
     self.connection = nil;
@@ -31,17 +39,20 @@
 	RKLog(@"requesting URL %@", url);
 	NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] initWithURL:url] autorelease];
 	request.HTTPMethod = @"POST";
+//	request.HTTPShouldHandleCookies = NO;
 	request.cachePolicy = NSURLRequestReloadIgnoringLocalAndRemoteCacheData;
 	// added cachePolicy to try to force reload, but it has no effect. Maybe need to clear cookies?
 	[request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+
 	NSString *stringForBody = [NSString stringWithFormat:@"name=%@&pass=%@&op=Log+in&form_id=user_login_block",
 							   username, password];
-	[request setHTTPBody:[stringForBody dataUsingEncoding:NSUTF8StringEncoding]];
-	[request setValue:[NSString stringWithFormat:@"%d", request.HTTPBody.length]
-   forHTTPHeaderField:@"Content-Length"];
+	request.HTTPBody = [stringForBody dataUsingEncoding:NSUTF8StringEncoding];
+	[request setValue:[NSString stringWithFormat:@"%d", request.HTTPBody.length] forHTTPHeaderField:@"Content-Length"];
+	
 	RKLog(@"request %@ headers %@", request, request.allHTTPHeaderFields);
 	RKLog(@"request body string %@", stringForBody);
 	RKLog(@"request body %@", request.HTTPBody);
+
 	return request;
 }
 
@@ -80,10 +91,11 @@
 	
 	NSArray *cookies = [NSHTTPCookie cookiesWithResponseHeaderFields:httpResponse.allHeaderFields
 															  forURL:[[self class] baseURL]];
+	RKLog(@"Response contained %d cookies", cookies.count);
 	for (id theCookie in cookies) {
-		RKLog(@"response received cookie: %@", theCookie);
+		RKLog(@"  received cookie: %@", theCookie);
 	}
-	RKLog(@"persisted cookies: %@", [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[[self class] baseURL]]);
+	RKLog(@"Persisted cookies: %@", [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[[self class] baseURL]]);
 }
 
 - (NSMutableURLRequest *)formTokenRequest
@@ -112,6 +124,18 @@
 
 #pragma mark -
 #pragma mark NSURLConnection delegate
+- (NSURLRequest *)connection:(NSURLConnection *)theConnection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse
+{
+	LogMethod();
+	RKLog(@"%@ %@ %@", theConnection, request, redirectResponse);
+	switch (self.sessionState) {
+		case RKCROSSessionConnecting:
+			if (redirectResponse) 
+				return nil;
+	} 
+	return request;
+}
+
 - (void)connection:(NSURLConnection *)theConnection didReceiveResponse:(NSURLResponse *)response
 {
 	NSAssert(theConnection == self.connection, @"connection error");
@@ -143,7 +167,7 @@
 	self.receivedString = [[[NSString alloc] initWithData:self.receivedData
 												 encoding:NSUTF8StringEncoding] autorelease];
 	LogMethod();
-	RKLog(@"%@", self.receivedString);
+//	RKLog(@"%@", self.receivedString);
 }
 
 @end

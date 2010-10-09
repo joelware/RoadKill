@@ -16,7 +16,7 @@
 }
 
 typedef enum {
-	RKCROSSessionUnitialized = 0,
+	RKCROSSessionConnecting = 0,
 	RKCROSSessionAuthenticated,
 	RKCROSSessionFormTokenObtained,
 	RKCROSSessionObservationSubmitted,
