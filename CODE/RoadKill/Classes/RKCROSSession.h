@@ -37,6 +37,7 @@ typedef enum {
 - (void)doSomethingWithResponse:(NSURLResponse *)response;
 - (NSMutableURLRequest *)formTokenRequest;
 - (void)obtainFormToken;
++ (NSURL *)baseURLForWildlifeServer;
 - (BOOL)extractFormTokenFromReceivedString;
 - (BOOL)submitObservationReport:(RKObservation *)report;
 

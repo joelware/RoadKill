@@ -22,7 +22,7 @@
 - (void)addFieldName:(NSString *)fieldName
 			   value:(NSString *)fieldValue;
 {
-	[self appendFormat:@"Content-Disposition: form-data; name=\"%@\"\n\n%@\n%@",
+	[self appendFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n%@\r\n%@\r\n",
 	 fieldName, fieldValue, kFormBoundaryString];
 }
 @end
@@ -81,23 +81,41 @@
 										  host:RKWebServer 
 										  path:@"/california/node/add/roadkill"];
 	NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] initWithURL:url] autorelease];
+	request.HTTPMethod = @"POST";
 	[request setValue:[NSString stringWithFormat:@"multipart/form-data; boundary=%@", kFormBoundaryString]
    forHTTPHeaderField:@"Content-Type"];
 	
+	NSDictionary *headers = [NSHTTPCookie requestHeaderFieldsWithCookies:[[NSHTTPCookieStorage sharedHTTPCookieStorage] 
+																		  cookiesForURL:[[self class] baseURLForWildlifeServer]]];
+	RKLog(@"headers: %@", headers);
+	[request setAllHTTPHeaderFields:headers]; // I am not sure that this is safe. What am I overwriting?
+
 	NSMutableString *stringForBody = [NSMutableString stringWithCapacity:kSaveObservationStringLength];
+	[stringForBody appendString:@"\r\n"];
 	[stringForBody appendString:kFormBoundaryString];
+	[stringForBody appendString:@"\r\n"];
+
 	// field by field:
 	[stringForBody addFieldName:@"taxonomy[1]" value:[NSString stringWithFormat:@"%d",
 													  obs.taxonomy]];
 	//[stringForBody addFieldName:@"field_taxon_ref[0][nid][nid]" value:obs.fieldTaxon];
+	[stringForBody addFieldName:@"field_taxon_freetext[0][value]" value:obs.freeText];
 	NSAssert(self.formToken, @"formToken not set");
 	[stringForBody addFieldName:@"form_token" value:self.formToken];
 	[stringForBody addFieldName:@"form_id" value:@"roadkill_node_form"];
-	[stringForBody addFieldName:@"field_taxon_freetext[0][value]" value:obs.freeText];
 	[stringForBody addFieldName:@"field_id_confidence[value]" value:obs.formIdConfidence];
-	// FIXME: these date/time fields are wrong
-	[stringForBody addFieldName:@"field_date_observation[0][value][date]" value:@"2010-10-10"];
-	[stringForBody addFieldName:@"field_date_observation[0][value][time]" value:@"13:14"];
+	[stringForBody addFieldName:@"field_geography[0][street]" value:obs.street];
+
+	NSDateFormatter *obsDateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+	[obsDateFormatter setDateFormat:@"YYYY-MM-dd"];
+	[stringForBody addFieldName:@"field_date_observation[0][value][date]" 
+						  value:[obsDateFormatter stringFromDate:obs.observationDate]];
+	[obsDateFormatter setDateFormat:@"kk:mm"];
+	[stringForBody addFieldName:@"field_date_observation[0][value][time]" 
+						  value:[obsDateFormatter stringFromDate:obs.observationDate]];
+	[stringForBody addFieldName:@"field_date_observation[0][value][time]" 
+						  value:@"16:15"];
+	
 	[stringForBody addFieldName:@"field_decay_duration" value:[NSString stringWithFormat:@"%d",
 															   obs.decayDurationHours]];
 	[stringForBody addFieldName:@"field_observer[0][value]" value:obs.observerName];
@@ -117,7 +135,7 @@
 	return request;
 }
 
-+ (NSURL *)baseURL
++ (NSURL *)baseURLForWildlifeServer
 {
 	return [NSURL URLWithString:[NSString stringWithFormat:@"http://%@", RKWebServer]];
 }
@@ -151,24 +169,24 @@
 	self.receivedData = [NSMutableData dataWithCapacity:contentLength];
 	
 	NSArray *cookies = [NSHTTPCookie cookiesWithResponseHeaderFields:httpResponse.allHeaderFields
-															  forURL:[[self class] baseURL]];
+															  forURL:[[self class] baseURLForWildlifeServer]];
 	RKLog(@"Response contained %d cookies", cookies.count);
 	for (id theCookie in cookies) {
 		RKLog(@"  received cookie: %@", theCookie);
 	}
-	RKLog(@"Persisted cookies: %@", [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[[self class] baseURL]]);
+	RKLog(@"Persisted cookies: %@", [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[[self class] baseURLForWildlifeServer]]);
 }
 
 - (NSMutableURLRequest *)formTokenRequest
 {
 	LogMethod();
 	NSURL *formTokenURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/california/node/add/roadkill",
-												[[self class] baseURL]]];
+												[[self class] baseURLForWildlifeServer]]];
 	RKLog(@"%@", formTokenURL);
 	NSMutableURLRequest *result = [NSMutableURLRequest requestWithURL:formTokenURL];
 	
 	NSDictionary *headers = [NSHTTPCookie requestHeaderFieldsWithCookies:[[NSHTTPCookieStorage sharedHTTPCookieStorage] 
-																		  cookiesForURL:[[self class] baseURL]]];
+																		  cookiesForURL:[[self class] baseURLForWildlifeServer]]];
 	RKLog(@"headers: %@", headers);
 	[result setAllHTTPHeaderFields:headers]; // I am not sure that this is safe. What am I overwriting?
 	return result;
@@ -214,6 +232,7 @@
 	if (self.connection)
 		[self.connection cancel];
 	self.connection = [NSURLConnection connectionWithRequest:reportSubmissionRequest delegate:self];
+	self.sessionState = RKCROSSessionObservationSubmitted;
 	return YES;
 }
 
@@ -270,6 +289,9 @@
 		case RKCROSSessionAuthenticated:
 			if ([self extractFormTokenFromReceivedString])
 				self.sessionState = RKCROSSessionFormTokenObtained;
+			break;
+		case RKCROSSessionObservationSubmitted:
+			RKLog(@"%@", self.receivedString);
 			break;
 	}
 
