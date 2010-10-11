@@ -26,7 +26,7 @@
 - (void) testTaxonomyReference
 {
 	NSURL *duckURL = [[[NSURL alloc] initWithScheme:@"http" 
-											   host:RKTestServer 
+											   host:RKWebServer 
 											   path:@"/california/nodereference/autocomplete/field_taxon_ref/duck"]
 					  autorelease];
 	NSError *error;

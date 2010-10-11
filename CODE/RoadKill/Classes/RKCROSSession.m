@@ -5,8 +5,27 @@
 //  Created by Hal Mueller on 10/4/10.
 //
 
-#import "RKCROSSession.h"
 #import "RKConstants.h"
+#import "RKCROSSession.h"
+#import "RKObservation.h"
+
+#define kSaveObservationStringLength 3500
+#define kFormBoundaryString @"---------------------------1184049667376"
+#define kURLResponseSWAGLength 1000
+
+@interface NSMutableString (RKCROSSession)
+// this category is used by -observationSubmissionRequestForObservation:
+- (void)addFieldName:(NSString *)fieldName
+			   value:(NSString *)fieldValue;
+@end
+@implementation NSMutableString (RKCROSSession)
+- (void)addFieldName:(NSString *)fieldName
+			   value:(NSString *)fieldValue;
+{
+	[self appendFormat:@"Content-Disposition: form-data; name=\"%@\"\n\n%@\n%@",
+	 fieldName, fieldValue, kFormBoundaryString];
+}
+@end
 
 @implementation RKCROSSession
 
@@ -35,12 +54,11 @@
 + (NSMutableURLRequest *)authenticationRequestWithUsername:(NSString *)username password:(NSString *)password
 {
 	NSURL *url = [[NSURL alloc] initWithScheme:@"http" 
-										  host:RKProductionServer 
+										  host:RKWebServer 
 										  path:@"/california/node"];
 	RKLog(@"requesting URL %@", url);
 	NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] initWithURL:url] autorelease];
 	request.HTTPMethod = @"POST";
-//	request.HTTPShouldHandleCookies = NO;
 	request.cachePolicy = NSURLRequestReloadIgnoringLocalAndRemoteCacheData;
 	// added cachePolicy to try to force reload, but it has no effect. Maybe need to clear cookies?
 	[request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
@@ -57,9 +75,51 @@
 	return request;
 }
 
+- (NSMutableURLRequest *)observationSubmissionRequestForObservation:(RKObservation *)obs
+{
+	NSURL *url = [[NSURL alloc] initWithScheme:@"http" 
+										  host:RKWebServer 
+										  path:@"/california/node/add/roadkill"];
+	NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] initWithURL:url] autorelease];
+	[request setValue:[NSString stringWithFormat:@"multipart/form-data; boundary=%@", kFormBoundaryString]
+   forHTTPHeaderField:@"Content-Type"];
+	
+	NSMutableString *stringForBody = [NSMutableString stringWithCapacity:kSaveObservationStringLength];
+	[stringForBody appendString:kFormBoundaryString];
+	// field by field:
+	[stringForBody addFieldName:@"taxonomy[1]" value:[NSString stringWithFormat:@"%d",
+													  obs.taxonomy]];
+	//[stringForBody addFieldName:@"field_taxon_ref[0][nid][nid]" value:obs.fieldTaxon];
+	NSAssert(self.formToken, @"formToken not set");
+	[stringForBody addFieldName:@"form_token" value:self.formToken];
+	[stringForBody addFieldName:@"form_id" value:@"roadkill_node_form"];
+	[stringForBody addFieldName:@"field_taxon_freetext[0][value]" value:obs.freeText];
+	[stringForBody addFieldName:@"field_id_confidence[value]" value:obs.formIdConfidence];
+	// FIXME: these date/time fields are wrong
+	[stringForBody addFieldName:@"field_date_observation[0][value][date]" value:@"2010-10-10"];
+	[stringForBody addFieldName:@"field_date_observation[0][value][time]" value:@"13:14"];
+	[stringForBody addFieldName:@"field_decay_duration" value:[NSString stringWithFormat:@"%d",
+															   obs.decayDurationHours]];
+	[stringForBody addFieldName:@"field_observer[0][value]" value:obs.observerName];
+	
+	[stringForBody addFieldName:@"log" value:@"test log message Seattle iPhone Team"];
+	[stringForBody addFieldName:@"op" value:@"Save"];
+	RKLog(@"**********");
+	RKLog(@"%@", stringForBody);
+	RKLog(@"**********");
+	request.HTTPBody = [stringForBody dataUsingEncoding:NSUTF8StringEncoding];
+	[request setValue:[NSString stringWithFormat:@"%d", request.HTTPBody.length] forHTTPHeaderField:@"Content-Length"];
+	
+	RKLog(@"request %@ headers %@", request, request.allHTTPHeaderFields);
+	RKLog(@"request body string %@", stringForBody);
+	RKLog(@"request body %@", request.HTTPBody);
+	
+	return request;
+}
+
 + (NSURL *)baseURL
 {
-	return [NSURL URLWithString:[NSString stringWithFormat:@"http://%@", RKProductionServer]];
+	return [NSURL URLWithString:[NSString stringWithFormat:@"http://%@", RKWebServer]];
 }
 			
 - (void)authenticateWithUsername:(NSString *)username password:(NSString *)password
@@ -87,7 +147,7 @@
 	
 	long long contentLength = httpResponse.expectedContentLength;
 	if (contentLength == NSURLResponseUnknownLength)
-		contentLength = 1000;
+		contentLength = kURLResponseSWAGLength; 
 	self.receivedData = [NSMutableData dataWithCapacity:contentLength];
 	
 	NSArray *cookies = [NSHTTPCookie cookiesWithResponseHeaderFields:httpResponse.allHeaderFields
@@ -120,8 +180,7 @@
 	NSMutableURLRequest *request = [self formTokenRequest];
 	if (self.connection)
 		[self.connection cancel];
-	self.connection = [NSURLConnection connectionWithRequest:request
-													delegate:self];
+	self.connection = [NSURLConnection connectionWithRequest:request delegate:self];
 }
 
 - (BOOL)extractFormTokenFromReceivedString
@@ -143,6 +202,19 @@
 		return YES;
 	}
 	return NO;
+}
+
+- (BOOL)submitObservationReport:(RKObservation *)report
+{
+	// FIXME: this submits only the bare minimum required form info
+	LogMethod();
+	NSAssert(self.sessionState = RKCROSSessionFormTokenObtained, @"need RKCROSSessionFormTokenObtained");
+	NSMutableURLRequest *reportSubmissionRequest = 
+	[self observationSubmissionRequestForObservation:report];
+	if (self.connection)
+		[self.connection cancel];
+	self.connection = [NSURLConnection connectionWithRequest:reportSubmissionRequest delegate:self];
+	return YES;
 }
 
 #pragma mark -

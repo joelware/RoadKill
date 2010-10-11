@@ -4,10 +4,11 @@
 //
 //  Created by Hal Mueller on 10/4/10.
 //
+// encapsulate the credentials for a session with the CROS server
 
 #import <Foundation/Foundation.h>
 
-// encapsulate the credentials for a session with the CROS server
+@class RKObservation;
 @interface RKCROSSession : NSObject {
 	NSURLConnection *connection;
 	NSUInteger sessionState;
@@ -37,5 +38,6 @@ typedef enum {
 - (NSMutableURLRequest *)formTokenRequest;
 - (void)obtainFormToken;
 - (BOOL)extractFormTokenFromReceivedString;
+- (BOOL)submitObservationReport:(RKObservation *)report;
 
 @end

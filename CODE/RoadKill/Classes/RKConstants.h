@@ -6,8 +6,7 @@
  *
  */
 
-#define RKProductionServer @"www.wildlifecrossing.net"
-#define RKTestServer RKProductionServer
+#define RKWebServer @"www.wildlifecrossing.net"
 
 #define RKTestUsername @"halmueller"
 #define RKCorrectTestPassword @"JhPs3rtYtU"

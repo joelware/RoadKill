@@ -11,6 +11,7 @@
 
 #import "RKConstants.h"
 #import "RKCROSSession.h"
+#import "RKObservation.h"
 
 @implementation RoadKillAppDelegate
 
@@ -76,7 +77,10 @@
 	[session performSelector:@selector(obtainFormToken)
 				  withObject:nil
 				  afterDelay:5.];
-	// FIXME: this 5 second delay is really brittle, instead need to use notifications to trigger next step
+	// FIXME: these 5 second delays are really brittle, instead need to use notifications to trigger next step
+	[session performSelector:@selector(submitObservationReport:)
+				  withObject:[RKObservation dummyObservation]
+				  afterDelay:10.];
 }
 
 
