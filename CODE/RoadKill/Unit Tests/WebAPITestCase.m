@@ -8,6 +8,11 @@
 //  will fail in OCUnit. Construct the API, and the unit tests, so that all pieces can
 //  be tested using NSURLConnection's sendSynchronousRequest:returningResponse:error:.
 //  
+//  URL's for some solutions to the async testing problem:
+//      http://gist.github.com/506353
+//      http://blog.clickablebliss.com/2006/02/08/asynchronous-unit-testing/
+//      http://www.cocoabuilder.com/archive/xcode/247124-asynchronous-unit-testing.html
+//
 
 #import "WebAPITestCase.h"
 #import "RKConstants.h"
