@@ -7,7 +7,7 @@
 
 #import "RKConstants.h"
 #import "RKCROSSession.h"
-#import "RKObservation.h"
+#import "Observation.h"
 
 #define kSaveObservationStringLength 3500
 #define kFormBoundaryString @"---------------------------1184049667376"
@@ -75,7 +75,7 @@
 	return request;
 }
 
-- (NSMutableURLRequest *)observationSubmissionRequestForObservation:(RKObservation *)obs
+- (NSMutableURLRequest *)observationSubmissionRequestForObservation:(Observation *)obs
 {
 	NSURL *url = [[NSURL alloc] initWithScheme:@"http" 
 										  host:RKWebServer 
@@ -103,16 +103,16 @@
 	NSAssert(self.formToken, @"formToken not set");
 	[stringForBody addFieldName:@"form_token" value:self.formToken];
 	[stringForBody addFieldName:@"form_id" value:@"roadkill_node_form"];
-	[stringForBody addFieldName:@"field_id_confidence[value]" value:obs.formIdConfidence];
+	[stringForBody addFieldName:@"field_id_confidence[value]" value:obs.formIDConfidence];
 	[stringForBody addFieldName:@"field_geography[0][street]" value:obs.street];
 
 	NSDateFormatter *obsDateFormatter = [[[NSDateFormatter alloc] init] autorelease];
 	[obsDateFormatter setDateFormat:@"YYYY-MM-dd"];
 	[stringForBody addFieldName:@"field_date_observation[0][value][date]" 
-						  value:[obsDateFormatter stringFromDate:obs.observationDate]];
+						  value:[obsDateFormatter stringFromDate:obs.observationTimestamp]];
 	[obsDateFormatter setDateFormat:@"kk:mm"];
 	[stringForBody addFieldName:@"field_date_observation[0][value][time]" 
-						  value:[obsDateFormatter stringFromDate:obs.observationDate]];
+						  value:[obsDateFormatter stringFromDate:obs.observationTimestamp]];
 	[stringForBody addFieldName:@"field_date_observation[0][value][time]" 
 						  value:@"16:15"];
 	
@@ -222,7 +222,7 @@
 	return NO;
 }
 
-- (BOOL)submitObservationReport:(RKObservation *)report
+- (BOOL)submitObservationReport:(Observation *)report
 {
 	// FIXME: this submits only the bare minimum required form info
 	LogMethod();

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class RKObservation;
+@class Observation;
 @interface RKCROSSession : NSObject {
 	NSURLConnection *connection;
 	NSUInteger sessionState;
@@ -39,6 +39,6 @@ typedef enum {
 - (void)obtainFormToken;
 + (NSURL *)baseURLForWildlifeServer;
 - (BOOL)extractFormTokenFromReceivedString;
-- (BOOL)submitObservationReport:(RKObservation *)report;
+- (BOOL)submitObservationReport:(Observation *)report;
 
 @end
