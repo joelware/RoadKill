@@ -92,6 +92,11 @@
 
 	// FIXME: this should be done with NSMutableData, not NSMutableString!
 	// http://lists.apple.com/archives/web-dev/2007/Dec/msg00017.html appears to have the answer
+	// hmm, no it's the Content-Disposition/Content-Type that I'm missing
+	// http://cocoadev.com/index.pl?HTTPFileUpload
+	//
+	// This one really wraps it nicely: http://cocoadev.com/forums/comments.php?DiscussionID=1402
+	//
 	NSMutableString *stringForBody = [NSMutableString stringWithCapacity:kSaveObservationStringLength];
 	[stringForBody appendString:@"\r\n"];
 	[stringForBody appendString:kFormBoundaryString];
