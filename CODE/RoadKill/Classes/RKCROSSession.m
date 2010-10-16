@@ -90,6 +90,8 @@
 	RKLog(@"headers: %@", headers);
 	[request setAllHTTPHeaderFields:headers]; // I am not sure that this is safe. What am I overwriting?
 
+	// FIXME: this should be done with NSMutableData, not NSMutableString!
+	// http://lists.apple.com/archives/web-dev/2007/Dec/msg00017.html appears to have the answer
 	NSMutableString *stringForBody = [NSMutableString stringWithCapacity:kSaveObservationStringLength];
 	[stringForBody appendString:@"\r\n"];
 	[stringForBody appendString:kFormBoundaryString];
