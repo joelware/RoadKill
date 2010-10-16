@@ -24,8 +24,8 @@
 		2B6472A3125A910300ED5161 /* Xcode324iOS41TestSuiteWorkaround.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B6472A2125A910300ED5161 /* Xcode324iOS41TestSuiteWorkaround.m */; };
 		2B790BA2125AA00F00EB101D /* RKCROSSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B790BA1125AA00F00EB101D /* RKCROSSession.m */; };
 		2B790BA3125AA06B00EB101D /* RKCROSSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B790BA1125AA00F00EB101D /* RKCROSSession.m */; };
-		2B9325E3126120FA00BADFA7 /* RKObservation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B9325E2126120FA00BADFA7 /* RKObservation.m */; };
-		2B9325E4126120FA00BADFA7 /* RKObservation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B9325E2126120FA00BADFA7 /* RKObservation.m */; };
+		2B9327BD126568FE00BADFA7 /* Observation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B9327BC126568FE00BADFA7 /* Observation.m */; };
+		2B9327BE126568FE00BADFA7 /* Observation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B9327BC126568FE00BADFA7 /* Observation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,8 +55,8 @@
 		2B6472A2125A910300ED5161 /* Xcode324iOS41TestSuiteWorkaround.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Xcode324iOS41TestSuiteWorkaround.m; sourceTree = "<group>"; };
 		2B790BA0125AA00F00EB101D /* RKCROSSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKCROSSession.h; sourceTree = "<group>"; };
 		2B790BA1125AA00F00EB101D /* RKCROSSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKCROSSession.m; sourceTree = "<group>"; };
-		2B9325E1126120FA00BADFA7 /* RKObservation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKObservation.h; sourceTree = "<group>"; };
-		2B9325E2126120FA00BADFA7 /* RKObservation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKObservation.m; sourceTree = "<group>"; };
+		2B9327BB126568FE00BADFA7 /* Observation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Observation.h; sourceTree = "<group>"; };
+		2B9327BC126568FE00BADFA7 /* Observation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Observation.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* RoadKill-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RoadKill-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -106,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				080E96DDFE201D6D7F000001 /* Classes */,
+				2B9327E312656C8100BADFA7 /* Core Data */,
 				2B647342125A9F9300ED5161 /* Web Transactions */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -129,7 +130,6 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				28D3F201112F7DC200FD0661 /* RoadKill.xcdatamodeld */,
 				2899E55F0DE3E45000AC0155 /* RootViewController.xib */,
 				28AD735F0D9D9599002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* RoadKill-Info.plist */,
@@ -168,10 +168,19 @@
 			children = (
 				2B790BA0125AA00F00EB101D /* RKCROSSession.h */,
 				2B790BA1125AA00F00EB101D /* RKCROSSession.m */,
-				2B9325E1126120FA00BADFA7 /* RKObservation.h */,
-				2B9325E2126120FA00BADFA7 /* RKObservation.m */,
 			);
 			name = "Web Transactions";
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		2B9327E312656C8100BADFA7 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				2B9327BB126568FE00BADFA7 /* Observation.h */,
+				2B9327BC126568FE00BADFA7 /* Observation.m */,
+				28D3F201112F7DC200FD0661 /* RoadKill.xcdatamodeld */,
+			);
+			name = "Core Data";
 			path = Classes;
 			sourceTree = "<group>";
 		};
@@ -286,7 +295,7 @@
 				28C286E10D94DF7D0034E888 /* RootViewController.m in Sources */,
 				28D3F202112F7DC200FD0661 /* RoadKill.xcdatamodeld in Sources */,
 				2B790BA3125AA06B00EB101D /* RKCROSSession.m in Sources */,
-				2B9325E4126120FA00BADFA7 /* RKObservation.m in Sources */,
+				2B9327BE126568FE00BADFA7 /* Observation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,8 +306,8 @@
 				2B64723A125A8BDD00ED5161 /* WebAPITestCase.m in Sources */,
 				2B6472A3125A910300ED5161 /* Xcode324iOS41TestSuiteWorkaround.m in Sources */,
 				2B790BA2125AA00F00EB101D /* RKCROSSession.m in Sources */,
-				2B9325E3126120FA00BADFA7 /* RKObservation.m in Sources */,
 				2B0DD123126920FE0034E084 /* DataModelTestCase.m in Sources */,
+				2B9327BD126568FE00BADFA7 /* Observation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,7 +479,8 @@
 				28860B760F44E54D00985440 /* RoadKill.xcdatamodel */,
 			);
 			currentVersion = 28860B760F44E54D00985440 /* RoadKill.xcdatamodel */;
-			path = RoadKill.xcdatamodeld;
+			name = RoadKill.xcdatamodeld;
+			path = ../RoadKill.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
