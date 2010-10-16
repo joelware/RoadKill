@@ -79,7 +79,7 @@
 				  afterDelay:5.];
 	// FIXME: these 5 second delays are really brittle, instead need to use notifications to trigger next step
 	[session performSelector:@selector(submitObservationReport:)
-				  withObject:[Observation dummyObservation]
+				  withObject:[Observation dummyObservationInContext:self.managedObjectContext]
 				  afterDelay:10.];
 }
 

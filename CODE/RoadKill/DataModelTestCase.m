@@ -3,11 +3,13 @@
 //  RoadKill
 //
 //  Created by Hal Mueller on 10/15/10.
-//  Copyright 2010 Mobile Geographics. All rights reserved.
 //
 
 #import "DataModelTestCase.h"
 
+#import "Observation.h"
+#import "User.h"
+#import "State.h"
 
 @implementation DataModelTestCase
 
@@ -25,25 +27,25 @@
                    @"FAILURE");
 }
 
+- (void) testMath {
+    
+    STAssertTrue((1+1)==2, @"Compiler isn't feeling well today :-(" );
+	STAssertFalse((1+1)==3, @"Compiler isn't feeling well today :-(" );
+	
+}
+
 - (void)setUp
 {
-//	STAssertNoThrow([CelestialBody addPlanetsToContext:self.managedObjectContext],
-//					@"planet insertion failure");
-//	STAssertNoThrow([CelestialBody addNavigationalStarsToContext:self.managedObjectContext],
-//					@"star insertion failure");
-//	
 }
 
 - (void)tearDown
 {
 }
 
-- (void)testRKObObservationInsertion
+- (void)testObservationInsertion
 {
-//	STAssertNoThrow([CelestialBody addPlanetsToContext:self.managedObjectContext],
-//					@"planet insertion failure");
-//	STAssertNoThrow([CelestialBody addNavigationalStarsToContext:self.managedObjectContext],
-//					@"star insertion failure");
+	STAssertNoThrow([Observation dummyObservationInContext:self.managedObjectContext],
+					@"observation insertion failure");
 }
 
 #pragma mark -
@@ -122,7 +124,7 @@
 
 - (NSString *)persistentStorePath
 {
-	return [NSTemporaryDirectory() stringByAppendingPathComponent:@"CelestNavUnitTests.sqlite"];
+	return [NSTemporaryDirectory() stringByAppendingPathComponent:@"RKObservationsUnitTests.sqlite"];
 }
 
 

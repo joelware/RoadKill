@@ -3,13 +3,13 @@
 //  RoadKill
 //
 //  Created by Hal Mueller on 10/12/10.
-//  Copyright 2010 Mobile Geographics. All rights reserved.
 //
 
 #import "Observation.h"
 
 #import "State.h"
 #import "User.h"
+#import "RKConstants.h"
 
 @implementation Observation 
 
@@ -25,17 +25,18 @@
 @dynamic user;
 @dynamic state;
 
-	//+ (Observation *)dummyObservation
-	//{
-	//	Observation *result = 
-	//	result.taxonomy = 5;
-	//	result.freeText = @"TEST";
-	//	result.formIdConfidence = @"100% Certain";
-	//	result.street = @"Middle Road";
-	//	result.observationDate = [NSDate date];
-	//	result.decayDurationHours = 1;
-	//	result.observerName = @"Loudon Wainwright III";
-	//	return result;
-	//}
-	//
++ (Observation *)dummyObservationInContext:(NSManagedObjectContext *)moc
+{
+	Observation *result = (Observation *)[NSEntityDescription insertNewObjectForEntityForName:RKObservationEntity
+										  inManagedObjectContext:moc];
+	result.taxonomy = [NSNumber numberWithUnsignedInt:5];
+	result.freeText = @"TEST";
+	result.formIDConfidence = @"100% Certain";
+	result.street = @"Middle Road";
+	result.observationTimestamp = [NSDate date];
+	result.decayDurationHours = [NSNumber numberWithUnsignedInt:1];
+	result.observerName = @"Loudon Wainwright III";
+	return result;
+}
+
 @end

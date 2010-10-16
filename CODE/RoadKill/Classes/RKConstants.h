@@ -11,3 +11,5 @@
 #define RKTestUsername @"halmueller"
 #define RKCorrectTestPassword @"JhPs3rtYtU"
 #define RKFailingTestPassword @"xyzzy"
+
+#define RKObservationEntity @"Observation"

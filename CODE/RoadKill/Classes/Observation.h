@@ -3,7 +3,6 @@
 //  RoadKill
 //
 //  Created by Hal Mueller on 10/12/10.
-//  Copyright 2010 Mobile Geographics. All rights reserved.
 //
 
 #import <CoreData/CoreData.h>
@@ -27,7 +26,7 @@
 @property (nonatomic, retain) User * user;
 @property (nonatomic, retain) State * state;
 
-	//+ (Observation *)dummyObservation;
++ (Observation *)dummyObservationInContext:(NSManagedObjectContext *)moc;
 
 @end
 
