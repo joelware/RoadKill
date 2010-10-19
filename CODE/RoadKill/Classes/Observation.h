@@ -25,7 +25,9 @@
 @property (nonatomic, retain) NSNumber * latitude;
 @property (nonatomic, retain) NSString * observationID;
 @property (nonatomic, retain) NSString * freeText;
-@property (nonatomic, retain) NSNumber * taxonomy;
+	//TODO: delete this once Hal has OK'd the new SpeciesCategory code
+	//@property (nonatomic, retain) NSNumber * taxonomy;
+	//TODO: also delete the taxonomy attribute from the data model graph
 @property (nonatomic, retain) NSDate * observationTimestamp;
 @property (nonatomic, retain) State * state;
 @property (nonatomic, retain) Species * species;

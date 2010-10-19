@@ -29,6 +29,7 @@
 
 @implementation RKCROSSession
 
+@synthesize speciesCategory;
 @synthesize connection;
 @synthesize sessionState;
 @synthesize receivedData;
@@ -45,6 +46,7 @@
 
 - (void)dealloc
 {
+	[speciesCategory release], speciesCategory = nil;
     self.connection = nil;
     self.receivedData = nil;
 	
@@ -103,8 +105,11 @@
 	[stringForBody appendString:@"\r\n"];
 
 	// field by field:
-	[stringForBody addFieldName:@"taxonomy[1]" value:[NSString stringWithFormat:@"%d",
-													  obs.taxonomy]];
+	
+		//TODO: Hal, please delete this line if everythig is ok with the new line (changed from taxonomy attribute to speciesCategory)
+		//[stringForBody addFieldName:@"taxonomy[1]" value:[NSString stringWithFormat:@"%d", obs.taxonomy]];
+	[stringForBody addFieldName:@"taxonomy[1]" value:[NSString stringWithFormat:@"%d", [obs.speciesCategory valueForKey:@"code"]]];
+
 	//[stringForBody addFieldName:@"field_taxon_ref[0][nid][nid]" value:obs.fieldTaxon];
 	[stringForBody addFieldName:@"field_taxon_freetext[0][value]" value:obs.freeText];
 	NSAssert(self.formToken, @"formToken not set");

@@ -32,8 +32,8 @@
 		2B790BA3125AA06B00EB101D /* RKCROSSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B790BA1125AA00F00EB101D /* RKCROSSession.m */; };
 		2B9327BD126568FE00BADFA7 /* Observation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B9327BC126568FE00BADFA7 /* Observation.m */; };
 		2B9327BE126568FE00BADFA7 /* Observation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B9327BC126568FE00BADFA7 /* Observation.m */; };
-		8D8FE371126BFA4700336686 /* SpeciesCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8FE36E126BFA4700336686 /* SpeciesCategory.m */; };
 		8D8FE372126BFA4700336686 /* Species.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8FE370126BFA4700336686 /* Species.m */; };
+		8D8FE4BE126D1A4600336686 /* SpeciesCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8FE4BD126D1A4600336686 /* SpeciesCategory.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,10 +70,10 @@
 		2B9327BB126568FE00BADFA7 /* Observation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Observation.h; sourceTree = "<group>"; };
 		2B9327BC126568FE00BADFA7 /* Observation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Observation.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* RoadKill-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RoadKill-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
-		8D8FE36D126BFA4700336686 /* SpeciesCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeciesCategory.h; sourceTree = "<group>"; };
-		8D8FE36E126BFA4700336686 /* SpeciesCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeciesCategory.m; sourceTree = "<group>"; };
 		8D8FE36F126BFA4700336686 /* Species.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Species.h; sourceTree = "<group>"; };
 		8D8FE370126BFA4700336686 /* Species.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Species.m; sourceTree = "<group>"; };
+		8D8FE4BC126D1A4600336686 /* SpeciesCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeciesCategory.h; sourceTree = "<group>"; };
+		8D8FE4BD126D1A4600336686 /* SpeciesCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeciesCategory.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,10 +199,10 @@
 				2B7365D61269266E00E3CE18 /* State.m */,
 				2B7365D71269266E00E3CE18 /* User.h */,
 				2B7365D81269266E00E3CE18 /* User.m */,
-				8D8FE36D126BFA4700336686 /* SpeciesCategory.h */,
-				8D8FE36E126BFA4700336686 /* SpeciesCategory.m */,
 				8D8FE36F126BFA4700336686 /* Species.h */,
 				8D8FE370126BFA4700336686 /* Species.m */,
+				8D8FE4BC126D1A4600336686 /* SpeciesCategory.h */,
+				8D8FE4BD126D1A4600336686 /* SpeciesCategory.m */,
 				28D3F201112F7DC200FD0661 /* RoadKill.xcdatamodeld */,
 			);
 			name = "Core Data";
@@ -323,8 +323,8 @@
 				2B9327BE126568FE00BADFA7 /* Observation.m in Sources */,
 				2B7365D91269266E00E3CE18 /* State.m in Sources */,
 				2B7365DA1269266E00E3CE18 /* User.m in Sources */,
-				8D8FE371126BFA4700336686 /* SpeciesCategory.m in Sources */,
 				8D8FE372126BFA4700336686 /* Species.m in Sources */,
+				8D8FE4BE126D1A4600336686 /* SpeciesCategory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

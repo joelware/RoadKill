@@ -9,7 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @class Observation;
+@class SpeciesCategory;
 @interface RKCROSSession : NSObject {
+	SpeciesCategory *speciesCategory;
 	NSURLConnection *connection;
 	NSUInteger sessionState;
 	NSMutableData *receivedData;
@@ -26,6 +28,7 @@ typedef enum {
 	
 } RKCROSSessionState;
 
+@property (nonatomic, retain) SpeciesCategory *speciesCategory;
 @property (nonatomic, retain) NSURLConnection *connection;
 @property (nonatomic) NSUInteger sessionState;
 @property (nonatomic, retain) NSMutableData *receivedData;

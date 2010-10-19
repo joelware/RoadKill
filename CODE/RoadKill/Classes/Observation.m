@@ -24,7 +24,9 @@
 @dynamic latitude;
 @dynamic observationID;
 @dynamic freeText;
-@dynamic taxonomy;
+	//TODO: delete this once Hal has OK'd the new SpeciesCategory code
+	//@dynamic taxonomy;
+	//TODO: also delete the taxonomy attribute from the data model graph
 @dynamic observationTimestamp;
 @dynamic state;
 @dynamic species;
@@ -35,7 +37,11 @@
 {
 	Observation *result = (Observation *)[NSEntityDescription insertNewObjectForEntityForName:RKObservationEntity
 										  inManagedObjectContext:moc];
-	result.taxonomy = [NSNumber numberWithUnsignedInt:5];
+	
+		//TODO: Hal, please delete this line if everythig is ok with the new line (changed from taxonomy attribute to speciesCategory)
+		//result.taxonomy = [NSNumber numberWithUnsignedInt:5];
+	result.speciesCategory.code = [NSNumber numberWithUnsignedInt:5];
+	
 	result.freeText = @"TEST";
 	result.formIDConfidence = @"100% Certain";
 	result.street = @"Middle Road";
