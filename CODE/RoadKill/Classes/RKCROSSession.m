@@ -75,20 +75,41 @@
 	return request;
 }
 
+- (NSString*) multipartMIMEStringWithDictionary: (NSDictionary*) dict 
+{
+	NSString* result = [NSString string];
+	
+	for (NSString *theKey in dict) {
+		NSString *theValue = [dict valueForKey:theKey];
+		RKLog(@"key %@ %@", theKey, theValue);
+		if (theValue)
+			result = [result stringByAppendingFormat:
+					  @"%@\r\nContent-Disposition: form-data; name=\"%@\"\r\n\r\n%@\r\n",
+					  kFormBoundaryString, theKey, theValue];
+	}
+	result = [result stringByAppendingFormat:@"\r\n%@--\r\n", kFormBoundaryString];
+	return result;
+}
+
+
 - (NSMutableURLRequest *)observationSubmissionRequestForObservation:(Observation *)obs
 {
-	NSURL *url = [[NSURL alloc] initWithScheme:@"http" 
+	NSURL *url = [[[NSURL alloc] initWithScheme:@"http" 
 										  host:RKWebServer 
-										  path:@"/california/node/add/roadkill"];
-	NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] initWithURL:url] autorelease];
-	request.HTTPMethod = @"POST";
-	[request setValue:[NSString stringWithFormat:@"multipart/form-data; boundary=%@", kFormBoundaryString]
-   forHTTPHeaderField:@"Content-Type"];
+										  path:@"/california/node/add/roadkill"] autorelease];
+	NSMutableURLRequest *postRequest = [[[NSMutableURLRequest alloc] initWithURL:url] autorelease];
+	postRequest.HTTPMethod = @"POST";
+	[postRequest setValue:[NSString stringWithFormat:@"multipart/form-data; boundary=%@", kFormBoundaryString]
+	   forHTTPHeaderField:@"Content-Type"];
 	
 	NSDictionary *headers = [NSHTTPCookie requestHeaderFieldsWithCookies:[[NSHTTPCookieStorage sharedHTTPCookieStorage] 
 																		  cookiesForURL:[[self class] baseURLForWildlifeServer]]];
-	RKLog(@"headers: %@", headers);
-	[request setAllHTTPHeaderFields:headers]; // I am not sure that this is safe. What am I overwriting?
+	RKLog(@"my headers: %@", headers);
+	RKLog(@"default headers: %@", postRequest.allHTTPHeaderFields);
+	[postRequest setAllHTTPHeaderFields:headers]; // I am not sure that this is safe. What am I overwriting?
+	[postRequest addValue:@"8bit" forHTTPHeaderField:@"Content-Transfer-Encoding"];
+	[postRequest addValue: [NSString stringWithFormat:@"multipart/form-data; boundary=%@", kFormBoundaryString] 
+	   forHTTPHeaderField: @"Content-Type"];
 
 	// FIXME: this should be done with NSMutableData, not NSMutableString!
 	// http://lists.apple.com/archives/web-dev/2007/Dec/msg00017.html appears to have the answer
@@ -97,49 +118,47 @@
 	//
 	// This one really wraps it nicely: http://cocoadev.com/forums/comments.php?DiscussionID=1402
 	//
-	NSMutableString *stringForBody = [NSMutableString stringWithCapacity:kSaveObservationStringLength];
-	[stringForBody appendString:@"\r\n"];
-	[stringForBody appendString:kFormBoundaryString];
-	[stringForBody appendString:@"\r\n"];
-
-	// field by field:
-	[stringForBody addFieldName:@"taxonomy[1]" value:[NSString stringWithFormat:@"%d",
-													  obs.taxonomy]];
-	//[stringForBody addFieldName:@"field_taxon_ref[0][nid][nid]" value:obs.fieldTaxon];
-	[stringForBody addFieldName:@"field_taxon_freetext[0][value]" value:obs.freeText];
 	NSAssert(self.formToken, @"formToken not set");
-	[stringForBody addFieldName:@"form_token" value:self.formToken];
-	[stringForBody addFieldName:@"form_id" value:@"roadkill_node_form"];
-	[stringForBody addFieldName:@"field_id_confidence[value]" value:obs.formIDConfidence];
-	[stringForBody addFieldName:@"field_geography[0][street]" value:obs.street];
-
+	NSMutableDictionary *arguments = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+									  obs.taxonomy, @"taxonomy[1]",
+									  @"5: Mammal (large)", @"field_taxon_ref[0][nid][nid]",
+									  
+									  obs.freeText, @"field_taxon_freetext[0][value]",
+									  self.formToken, @"form_token", 
+									  @"roadkill_node_form", @"form_id",
+									  obs.formIDConfidence, @"field_id_confidence[value]",
+									  obs.street, @"field_geography[0][street]", 
+									  obs.decayDurationHours, @"field_decay_duration",
+									  obs.observerName, @"field_observer[0][value]", 
+									  @"test log message Seattle iPhone Team",	@"log", 
+									  @"Save", @"op",
+									  nil];
+	
 	NSDateFormatter *obsDateFormatter = [[[NSDateFormatter alloc] init] autorelease];
 	[obsDateFormatter setDateFormat:@"YYYY-MM-dd"];
-	[stringForBody addFieldName:@"field_date_observation[0][value][date]" 
-						  value:[obsDateFormatter stringFromDate:obs.observationTimestamp]];
+	[arguments setObject:[obsDateFormatter stringFromDate:obs.observationTimestamp]
+				  forKey:@"field_date_observation[0][value][date]"];
 	[obsDateFormatter setDateFormat:@"kk:mm"];
-	[stringForBody addFieldName:@"field_date_observation[0][value][time]" 
-						  value:[obsDateFormatter stringFromDate:obs.observationTimestamp]];
-	[stringForBody addFieldName:@"field_date_observation[0][value][time]" 
-						  value:@"16:15"];
+	[arguments setObject:[obsDateFormatter stringFromDate:obs.observationTimestamp]
+				  forKey:@"field_date_observation[0][value][time]" ];
+						  
+#ifdef DEBUG
+	[arguments setObject:@"Fulvous Whistling-Duck [nid:122]" forKey:@"field_taxon_ref[0][nid][nid]"];
+	[arguments setObject:@"8" forKey:@"taxonomy[1]"];
+	NSLog(@"#################\nWarning: I'm using dummy data\n");
+#endif
 	
-	[stringForBody addFieldName:@"field_decay_duration" value:[NSString stringWithFormat:@"%d",
-															   obs.decayDurationHours]];
-	[stringForBody addFieldName:@"field_observer[0][value]" value:obs.observerName];
-	
-	[stringForBody addFieldName:@"log" value:@"test log message Seattle iPhone Team"];
-	[stringForBody addFieldName:@"op" value:@"Save"];
+	NSString *stringForBody = [self multipartMIMEStringWithDictionary:arguments];
+
 	RKLog(@"**********");
 	RKLog(@"%@", stringForBody);
 	RKLog(@"**********");
-	request.HTTPBody = [stringForBody dataUsingEncoding:NSUTF8StringEncoding];
-	[request setValue:[NSString stringWithFormat:@"%d", request.HTTPBody.length] forHTTPHeaderField:@"Content-Length"];
+	postRequest.HTTPBody = [stringForBody dataUsingEncoding:NSUTF8StringEncoding];
+	[postRequest setValue:[NSString stringWithFormat:@"%d", postRequest.HTTPBody.length] forHTTPHeaderField:@"Content-Length"];
 	
-	RKLog(@"request %@ headers %@", request, request.allHTTPHeaderFields);
-	RKLog(@"request body string %@", stringForBody);
-	RKLog(@"request body %@", request.HTTPBody);
+	RKLog(@"request %@ headers %@", postRequest, postRequest.allHTTPHeaderFields);
 	
-	return request;
+	return postRequest;
 }
 
 + (NSURL *)baseURLForWildlifeServer
