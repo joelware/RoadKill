@@ -8,6 +8,8 @@
 #import "DataModelTestCase.h"
 
 #import "Observation.h"
+#import "Species.h"
+#import "SpeciesCategory.h"
 #import "User.h"
 #import "State.h"
 
@@ -42,10 +44,38 @@
 {
 }
 
+- (void)testSpeciesInsertion
+{
+	STAssertNoThrow([Species findOrCreateSpeciesWithCommonName:@"Fulvous Whistling-Duck"
+													 latinName:@"Dendrocygna bicolor" 
+													   nidCode:@"122"
+													 inContext:self.managedObjectContext],
+					@"Species insertion failure");
+}
+
+- (void)testSpeciesCategoryInsertion
+{
+	STAssertNoThrow([SpeciesCategory findOrCreateSpeciesCategoryWithName:@"Mammal (Large)" 
+															 codeInteger:3 
+															   inContext:self.managedObjectContext],
+					@"SpeciesCategory insertion failure");
+}
+
 - (void)testObservationInsertion
 {
-	STAssertNoThrow([Observation dummyObservationInContext:self.managedObjectContext],
+	Species *species122 = [Species findOrCreateSpeciesWithCommonName:@"Fulvous Whistling-Duck"
+														   latinName:@"Dendrocygna bicolor" 
+															 nidCode:@"122"
+														   inContext:self.managedObjectContext];
+	SpeciesCategory *birds = [SpeciesCategory findOrCreateSpeciesCategoryWithName:@"Bird" 
+																	  codeInteger:6 
+																		inContext:self.managedObjectContext];
+	Observation *testObservation;
+	STAssertNoThrow(testObservation = [Observation addObservationInContext:self.managedObjectContext],
 					@"observation insertion failure");
+	STAssertNoThrow([testObservation markAsTestObservation], @"couldn't mark as test observation");
+	STAssertNoThrow(testObservation.species = species122, @"couldn't set species");
+	STAssertNoThrow(testObservation.speciesCategory = birds, @"couldn't set species");
 }
 
 #pragma mark -

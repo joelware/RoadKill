@@ -30,25 +30,21 @@
 @dynamic speciesCategory;
 @dynamic user;
 
-+ (Observation *)dummyObservationInContext:(NSManagedObjectContext *)moc
++ (Observation *)addObservationInContext:(NSManagedObjectContext *)moc
 {
 	Observation *result = (Observation *)[NSEntityDescription insertNewObjectForEntityForName:RKObservationEntity
 																	   inManagedObjectContext:moc];
-		
-	SpeciesCategory *newSpeciesCategory = (SpeciesCategory *)[NSEntityDescription insertNewObjectForEntityForName:RKSpeciesCategoryEntity inManagedObjectContext:moc];
-	
-	result.speciesCategory = newSpeciesCategory;
-	result.speciesCategory.code = [NSNumber numberWithUnsignedInt:5];	
-	RKLog(@"CHECK: value for result.speciesCategory.code = %@", result.speciesCategory.code);
-	
-	result.freeText = @"TEST";
-	result.formIDConfidence = @"100% Certain";
-	result.street = @"Middle Road";
 	result.observationTimestamp = [NSDate date];
-	result.decayDurationHours = [NSNumber numberWithUnsignedInt:1];
-	result.observerName = @"Loudon Wainwright III";
-		
+	result.decayDurationHours = [NSNumber numberWithUnsignedInt:0];
 	return result;
+}
+
+- (void)markAsTestObservation
+{
+	self.freeText = @"TEST";
+	self.formIDConfidence = @"100% Certain";
+	self.street = @"Middle Road";
+	self.observerName = @"Loudon Wainwright III";
 }
 
 @end

@@ -3,7 +3,6 @@
 //  RoadKill
 //
 //  Created by Pamela on 10/17/10.
-//  Copyright 2010 Pamela DeBriere. All rights reserved.
 //
 
 #import <CoreData/CoreData.h>
@@ -19,6 +18,10 @@
 @property (nonatomic, retain) NSString * commonName;
 @property (nonatomic, retain) NSSet* observations;
 
++ (Species *)findOrCreateSpeciesWithCommonName:(NSString *)theCommonName
+									 latinName:(NSString *)theLatinName
+									   nidCode:(NSString *)theNidCode
+									 inContext:(NSManagedObjectContext *)moc;
 @end
 
 

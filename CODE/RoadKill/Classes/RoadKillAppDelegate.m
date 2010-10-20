@@ -13,6 +13,7 @@
 #import "RKCROSSession.h"
 #import "Observation.h"
 #import "SpeciesCategory.h"
+#import "Species.h"
 
 @implementation RoadKillAppDelegate
 
@@ -55,6 +56,18 @@
      Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
      If your application supports background execution, called instead of applicationWillTerminate: when the user quits.
      */
+    NSError *error = nil;
+    if (managedObjectContext_ != nil) {
+        if ([managedObjectContext_ hasChanges] && ![managedObjectContext_ save:&error]) {
+            /*
+             Replace this implementation with code to handle the error appropriately.
+             
+             abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
+             */
+            RKLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        } 
+    }
 }
 
 
@@ -79,8 +92,19 @@
 				  withObject:nil
 				  afterDelay:5.];
 	// FIXME: these 5 second delays are really brittle, instead need to use notifications to trigger next step
+	Species *species122 = [Species findOrCreateSpeciesWithCommonName:@"Fulvous Whistling-Duck"
+														   latinName:@"Dendrocygna bicolor" 
+															 nidCode:@"122"
+														   inContext:self.managedObjectContext];
+	SpeciesCategory *birds = [SpeciesCategory findOrCreateSpeciesCategoryWithName:@"Bird" 
+																	  codeInteger:6 
+																		inContext:self.managedObjectContext];
+	Observation *testObservation = [Observation addObservationInContext:self.managedObjectContext];
+	[testObservation markAsTestObservation];
+	testObservation.species = species122;
+	testObservation.speciesCategory = birds;
 	[session performSelector:@selector(submitObservationReport:)
-				  withObject:[Observation dummyObservationInContext:self.managedObjectContext]
+				  withObject:testObservation
 				  afterDelay:10.];
 }
 
@@ -90,18 +114,6 @@
  */
 - (void)applicationWillTerminate:(UIApplication *)application {
     
-    NSError *error = nil;
-    if (managedObjectContext_ != nil) {
-        if ([managedObjectContext_ hasChanges] && ![managedObjectContext_ save:&error]) {
-            /*
-             Replace this implementation with code to handle the error appropriately.
-             
-             abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
-             */
-            RKLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        } 
-    }
 }
 
 

@@ -18,6 +18,10 @@
 @property (nonatomic, retain) NSNumber * code;
 @property (nonatomic, retain) NSSet* observations;
 
+
++ (SpeciesCategory *)findOrCreateSpeciesCategoryWithName:(NSString *)theName
+											 codeInteger:(NSInteger)codeInteger
+											   inContext:(NSManagedObjectContext *)moc;
 @end
 
 
@@ -26,9 +30,5 @@
 - (void)removeObservationsObject:(Observation *)value;
 - (void)addObservations:(NSSet *)value;
 - (void)removeObservations:(NSSet *)value;
-
-+ (SpeciesCategory *)findOrCreateSpeciesCategoryWithName:(NSString *)theName
-											 codeInteger:(NSInteger)codeInteger
-											   inContext:(NSManagedObjectContext *)moc;
 @end
 

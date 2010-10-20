@@ -31,7 +31,8 @@
 @property (nonatomic, retain) SpeciesCategory * speciesCategory;
 @property (nonatomic, retain) User * user;
 
-+ (Observation *)dummyObservationInContext:(NSManagedObjectContext *)moc;
++ (Observation *)addObservationInContext:(NSManagedObjectContext *)moc;
+- (void)markAsTestObservation;
 
 @end
 

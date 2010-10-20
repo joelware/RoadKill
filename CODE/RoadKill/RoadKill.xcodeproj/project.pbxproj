@@ -20,7 +20,6 @@
 		2B0DD152126923470034E084 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28860BE40F44EE6400985440 /* CoreData.framework */; };
 		2B244433125BE720005152E6 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B244431125BE720005152E6 /* Icon.png */; };
 		2B244434125BE720005152E6 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B244432125BE720005152E6 /* Icon@2x.png */; };
-		2B64723A125A8BDD00ED5161 /* WebAPITestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B647238125A8BDD00ED5161 /* WebAPITestCase.m */; };
 		2B6472A3125A910300ED5161 /* Xcode324iOS41TestSuiteWorkaround.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B6472A2125A910300ED5161 /* Xcode324iOS41TestSuiteWorkaround.m */; };
 		2B7365B61269255500E3CE18 /* DataModelTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B0DD117126920250034E084 /* DataModelTestCase.m */; };
 		2B7365D91269266E00E3CE18 /* State.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B7365D61269266E00E3CE18 /* State.m */; };
@@ -28,6 +27,8 @@
 		2B73660D126928CC00E3CE18 /* State.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B7365D61269266E00E3CE18 /* State.m */; };
 		2B73660E126928D000E3CE18 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B7365D81269266E00E3CE18 /* User.m */; };
 		2B73661612692A5E00E3CE18 /* RoadKill.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 28860B760F44E54D00985440 /* RoadKill.xcdatamodel */; };
+		2B73677D126F6E0700E3CE18 /* Species.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8FE370126BFA4700336686 /* Species.m */; };
+		2B73677E126F6E0800E3CE18 /* SpeciesCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8FE4BD126D1A4600336686 /* SpeciesCategory.m */; };
 		2B790BA2125AA00F00EB101D /* RKCROSSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B790BA1125AA00F00EB101D /* RKCROSSession.m */; };
 		2B790BA3125AA06B00EB101D /* RKCROSSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B790BA1125AA00F00EB101D /* RKCROSSession.m */; };
 		2B9327BD126568FE00BADFA7 /* Observation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B9327BC126568FE00BADFA7 /* Observation.m */; };
@@ -252,6 +253,9 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "Seattle RoadKill Team";
+			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "RoadKill" */;
 			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
@@ -332,7 +336,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2B64723A125A8BDD00ED5161 /* WebAPITestCase.m in Sources */,
 				2B6472A3125A910300ED5161 /* Xcode324iOS41TestSuiteWorkaround.m in Sources */,
 				2B790BA2125AA00F00EB101D /* RKCROSSession.m in Sources */,
 				2B9327BD126568FE00BADFA7 /* Observation.m in Sources */,
@@ -340,6 +343,8 @@
 				2B73660D126928CC00E3CE18 /* State.m in Sources */,
 				2B73660E126928D000E3CE18 /* User.m in Sources */,
 				2B73661612692A5E00E3CE18 /* RoadKill.xcdatamodel in Sources */,
+				2B73677D126F6E0700E3CE18 /* Species.m in Sources */,
+				2B73677E126F6E0800E3CE18 /* SpeciesCategory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -467,7 +472,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_CFLAGS = "-D__IPHONE_OS_VERSION_MIN_REQUIRED=040100";
 				PREBINDING = NO;
-				RUN_CLANG_STATIC_ANALYZER = NO;
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos4.1;
 				VALIDATE_PRODUCT = YES;
 			};
