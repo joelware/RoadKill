@@ -8,6 +8,7 @@
 #import "RKConstants.h"
 #import "RKCROSSession.h"
 #import "Observation.h"
+#import "SpeciesCategory.h"
 
 #define kSaveObservationStringLength 3500
 #define kFormBoundaryString @"---------------------------1184049667376"
@@ -122,7 +123,7 @@
 	//
 	NSAssert(self.formToken, @"formToken not set");
 	NSMutableDictionary *arguments = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-									  obs.taxonomy, @"taxonomy[1]",
+									  obs.speciesCategory.code, @"taxonomy[1]",
 									  @"5: Mammal (large)", @"field_taxon_ref[0][nid][nid]",
 									  
 									  obs.freeText, @"field_taxon_freetext[0][value]",
