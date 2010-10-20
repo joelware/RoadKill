@@ -16,7 +16,7 @@
 @dynamic code;
 @dynamic observations;
 
-- (SpeciesCategory *)findOrCreateSpeciesCategoryWithName:(NSString *)theName
++ (SpeciesCategory *)findOrCreateSpeciesCategoryWithName:(NSString *)theName
 											 codeInteger:(NSInteger)codeInteger
 												 inContext:(NSManagedObjectContext *)moc
 {

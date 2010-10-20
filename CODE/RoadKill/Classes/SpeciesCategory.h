@@ -27,5 +27,8 @@
 - (void)addObservations:(NSSet *)value;
 - (void)removeObservations:(NSSet *)value;
 
++ (SpeciesCategory *)findOrCreateSpeciesCategoryWithName:(NSString *)theName
+											 codeInteger:(NSInteger)codeInteger
+											   inContext:(NSManagedObjectContext *)moc;
 @end
 

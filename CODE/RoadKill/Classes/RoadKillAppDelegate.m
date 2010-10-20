@@ -12,6 +12,7 @@
 #import "RKConstants.h"
 #import "RKCROSSession.h"
 #import "Observation.h"
+#import "SpeciesCategory.h"
 
 @implementation RoadKillAppDelegate
 
@@ -208,6 +209,33 @@
      */
 }
 
+- (void)putSpeciesCategoriesIntoDatastore
+{
+	[SpeciesCategory findOrCreateSpeciesCategoryWithName:@"Amphibian"
+											 codeInteger:8
+											   inContext:self.managedObjectContext];
+		[SpeciesCategory findOrCreateSpeciesCategoryWithName:@"Bird"
+											 codeInteger:6
+											   inContext:self.managedObjectContext];
+	[SpeciesCategory findOrCreateSpeciesCategoryWithName:@"Mammal (Large)"
+											 codeInteger:3
+											   inContext:self.managedObjectContext];
+		[SpeciesCategory findOrCreateSpeciesCategoryWithName:@"Mammal (Medium)"
+											 codeInteger:4
+											   inContext:self.managedObjectContext];
+		[SpeciesCategory findOrCreateSpeciesCategoryWithName:@"Mammal (Small)"
+											 codeInteger:5
+											   inContext:self.managedObjectContext];
+	[SpeciesCategory findOrCreateSpeciesCategoryWithName:@"Reptile"
+											 codeInteger:7
+											   inContext:self.managedObjectContext];
+	
+}
+
+- (void)populateInitialDatastore
+{
+	[self putSpeciesCategoriesIntoDatastore];
+}
 
 - (void)dealloc {
     
