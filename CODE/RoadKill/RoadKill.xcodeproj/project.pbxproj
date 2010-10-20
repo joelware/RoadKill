@@ -29,6 +29,7 @@
 		2B73661612692A5E00E3CE18 /* RoadKill.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 28860B760F44E54D00985440 /* RoadKill.xcdatamodel */; };
 		2B73677D126F6E0700E3CE18 /* Species.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8FE370126BFA4700336686 /* Species.m */; };
 		2B73677E126F6E0800E3CE18 /* SpeciesCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8FE4BD126D1A4600336686 /* SpeciesCategory.m */; };
+		2B73682B126F837D00E3CE18 /* WebAPITestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B647238125A8BDD00ED5161 /* WebAPITestCase.m */; };
 		2B790BA2125AA00F00EB101D /* RKCROSSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B790BA1125AA00F00EB101D /* RKCROSSession.m */; };
 		2B790BA3125AA06B00EB101D /* RKCROSSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B790BA1125AA00F00EB101D /* RKCROSSession.m */; };
 		2B9327BD126568FE00BADFA7 /* Observation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B9327BC126568FE00BADFA7 /* Observation.m */; };
@@ -345,6 +346,7 @@
 				2B73661612692A5E00E3CE18 /* RoadKill.xcdatamodel in Sources */,
 				2B73677D126F6E0700E3CE18 /* Species.m in Sources */,
 				2B73677E126F6E0800E3CE18 /* SpeciesCategory.m in Sources */,
+				2B73682B126F837D00E3CE18 /* WebAPITestCase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

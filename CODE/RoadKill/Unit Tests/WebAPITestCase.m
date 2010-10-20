@@ -40,10 +40,21 @@
 													error:&error];
 	STAssertNotNil(results, @"duck download returned error %d %@ %@",
 				   error.code, error.localizedDescription, error.localizedFailureReason);
-	STAssertTrue(results.length , @"duck download returned empty string");
+	STAssertTrue((results.length > 0), @"duck download returned empty string");
+	
+	NSURL *wildcardURL = [[[NSURL alloc] initWithScheme:@"http" 
+												   host:RKWebServer 
+												   path:@"/california/nodereference/autocomplete/field_taxon_ref/"]
+						  autorelease];
+	NSString *wildcardResults = [NSString stringWithContentsOfURL:wildcardURL
+												 encoding:NSUTF8StringEncoding
+															error:&error];
+	STAssertNotNil(wildcardResults, @"wildcard download returned error %d %@ %@",
+				   error.code, error.localizedDescription, error.localizedFailureReason);
+	STAssertTrue((wildcardResults.length >0), @"wildcard download returned empty string");
 }
 
-- (void)testSessionAuthentication
+- (void)dontTestSessionAuthentication
 {
 	NSMutableURLRequest *request = [RKCROSSession authenticationRequestWithUsername:RKTestUsername
 																		   password:RKCorrectTestPassword];

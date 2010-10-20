@@ -9,8 +9,8 @@
 #import "RKCROSSession.h"
 #import "Observation.h"
 #import "SpeciesCategory.h"
+#import "Species.h"
 
-#define kSaveObservationStringLength 3500
 #define kFormBoundaryString @"---------------------------1184049667376"
 #define kURLResponseSWAGLength 1000
 
@@ -98,9 +98,10 @@
 {
 	if (![obs isValidForSubmission]) {
 		RKLog(@"observation %@ not valid for submission");
+		NSAssert(NO, @"observation not valid for submission");
 		return nil;
 	}
-	RKLog(@"@@@@@@@@@@@@ yay! Validation passed");
+	NSAssert(self.formToken, @"formToken not set");
 	
 	NSURL *url = [[[NSURL alloc] initWithScheme:@"http" 
 										  host:RKWebServer 
@@ -119,17 +120,12 @@
 	[postRequest addValue: [NSString stringWithFormat:@"multipart/form-data; boundary=%@", kFormBoundaryString] 
 	   forHTTPHeaderField: @"Content-Type"];
 
-	// FIXME: this should be done with NSMutableData, not NSMutableString!
-	// http://lists.apple.com/archives/web-dev/2007/Dec/msg00017.html appears to have the answer
-	// hmm, no it's the Content-Disposition/Content-Type that I'm missing
-	// http://cocoadev.com/index.pl?HTTPFileUpload
 	//
-	// This one really wraps it nicely: http://cocoadev.com/forums/comments.php?DiscussionID=1402
+	// This approach to form data taken from http://cocoadev.com/forums/comments.php?DiscussionID=1402
 	//
-	NSAssert(self.formToken, @"formToken not set");
 	NSMutableDictionary *arguments = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 									  obs.speciesCategory.code, @"taxonomy[1]",
-									  obs.speciesCategory.name, @"field_taxon_ref[0][nid][nid]",
+									  obs.species.commonName, @"field_taxon_ref[0][nid][nid]",
 									  obs.freeText, @"field_taxon_freetext[0][value]",
 									  self.formToken, @"form_token", 
 									  @"roadkill_node_form", @"form_id",
@@ -151,7 +147,7 @@
 						  
 	NSString *stringForBody = [self multipartMIMEStringWithDictionary:arguments];
 
-	RKLog(@"**********");
+	RKLog(@"\n**********");
 	RKLog(@"%@", stringForBody);
 	RKLog(@"**********");
 	postRequest.HTTPBody = [stringForBody dataUsingEncoding:NSUTF8StringEncoding];
