@@ -7,7 +7,10 @@
 //
 
 #import "RootViewController.h"
-
+#import "RKConstants.h"
+#import "Observation.h"
+#import "Species.h"
+#import "SpeciesCategory.h"
 
 @interface RootViewController ()
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
@@ -67,8 +70,11 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     
-    NSManagedObject *managedObject = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = [[managedObject valueForKey:@"observationTimestamp"] description];
+    Observation *theObservation = (Observation *)[self.fetchedResultsController objectAtIndexPath:indexPath];
+    cell.textLabel.text = [theObservation.observationTimestamp descriptionWithLocale:nil];
+	cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ (%@) %@", 
+								 theObservation.species.commonName, theObservation.species.latinName,
+								 theObservation.species.nidCode];
 }
 
 
@@ -120,7 +126,7 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
     
     // Configure the cell.
@@ -200,7 +206,7 @@
     // Create the fetch request for the entity.
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Observation" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:RKObservationEntity inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
     
     // Set the batch size to a suitable number.
