@@ -124,8 +124,7 @@
 	NSAssert(self.formToken, @"formToken not set");
 	NSMutableDictionary *arguments = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 									  obs.speciesCategory.code, @"taxonomy[1]",
-									  @"5: Mammal (large)", @"field_taxon_ref[0][nid][nid]",
-									  
+									  obs.speciesCategory.name, @"field_taxon_ref[0][nid][nid]",
 									  obs.freeText, @"field_taxon_freetext[0][value]",
 									  self.formToken, @"form_token", 
 									  @"roadkill_node_form", @"form_id",
@@ -157,7 +156,8 @@
 	RKLog(@"%@", stringForBody);
 	RKLog(@"**********");
 	postRequest.HTTPBody = [stringForBody dataUsingEncoding:NSUTF8StringEncoding];
-	[postRequest setValue:[NSString stringWithFormat:@"%d", postRequest.HTTPBody.length] forHTTPHeaderField:@"Content-Length"];
+	[postRequest setValue:[NSString stringWithFormat:@"%d", postRequest.HTTPBody.length] 
+	   forHTTPHeaderField:@"Content-Length"];
 	
 	RKLog(@"request %@ headers %@", postRequest, postRequest.allHTTPHeaderFields);
 	
