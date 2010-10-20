@@ -20,9 +20,7 @@
 											 codeInteger:(NSInteger)codeInteger
 												 inContext:(NSManagedObjectContext *)moc
 {
-	NSString *searchName;
-	
-	NSDictionary *predicateVariables = [NSDictionary dictionaryWithObject:searchName
+	NSDictionary *predicateVariables = [NSDictionary dictionaryWithObject:theName
 																   forKey:@"NAME"];
 	NSPredicate *localPredicate = [[NSPredicate predicateWithFormat:@"name == $NAME"]
 								   predicateWithSubstitutionVariables:predicateVariables];
@@ -35,7 +33,7 @@
 	NSError *error = nil;
 	NSArray *matchingCategories = [moc executeFetchRequest:fetchRequest error:&error];
 	NSAssert2(1 >= matchingCategories.count, @"found too many species categories for name %@ (%d found)",
-			  searchName, matchingCategories.count);
+			  theName, matchingCategories.count);
 	if (1 == matchingCategories.count)
 		return [matchingCategories objectAtIndex:0];
 	

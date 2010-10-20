@@ -56,9 +56,9 @@
 
 + (NSMutableURLRequest *)authenticationRequestWithUsername:(NSString *)username password:(NSString *)password
 {
-	NSURL *url = [[NSURL alloc] initWithScheme:@"http" 
+	NSURL *url = [[[NSURL alloc] initWithScheme:@"http" 
 										  host:RKWebServer 
-										  path:@"/california/node"];
+										  path:@"/california/node"] autorelease];
 	RKLog(@"requesting URL %@", url);
 	NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] initWithURL:url] autorelease];
 	request.HTTPMethod = @"POST";
