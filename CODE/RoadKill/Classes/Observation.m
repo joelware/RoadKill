@@ -47,9 +47,7 @@
 	result.observationTimestamp = [NSDate date];
 	result.decayDurationHours = [NSNumber numberWithUnsignedInt:1];
 	result.observerName = @"Loudon Wainwright III";
-	
-	[newSpeciesCategory release];
-	
+		
 	return result;
 }
 
