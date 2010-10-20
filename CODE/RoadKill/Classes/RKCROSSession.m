@@ -29,6 +29,7 @@
 
 @implementation RKCROSSession
 
+@synthesize speciesCategory;
 @synthesize connection;
 @synthesize sessionState;
 @synthesize receivedData;
@@ -45,6 +46,7 @@
 
 - (void)dealloc
 {
+	[speciesCategory release], speciesCategory = nil;
     self.connection = nil;
     self.receivedData = nil;
 	

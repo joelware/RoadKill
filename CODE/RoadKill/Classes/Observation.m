@@ -7,29 +7,41 @@
 
 #import "Observation.h"
 
+#import "Species.h"
+#import "SpeciesCategory.h"
 #import "State.h"
 #import "User.h"
 #import "RKConstants.h"
 
 @implementation Observation 
 
-@dynamic street;
-@dynamic decayDurationHours;
+@dynamic formIDConfidence;
 @dynamic sentStatus;
 @dynamic observerName;
+@dynamic longitude;
+@dynamic decayDurationHours;
+@dynamic street;
+@dynamic latitude;
 @dynamic observationID;
-@dynamic formIDConfidence;
-@dynamic observationTimestamp;
 @dynamic freeText;
-@dynamic taxonomy;
-@dynamic user;
+	//TODO: delete this once Hal has OK'd the new SpeciesCategory code
+	//@dynamic taxonomy;
+	//TODO: also delete the taxonomy attribute from the data model graph
+@dynamic observationTimestamp;
 @dynamic state;
+@dynamic species;
+@dynamic speciesCategory;
+@dynamic user;
 
 + (Observation *)dummyObservationInContext:(NSManagedObjectContext *)moc
 {
 	Observation *result = (Observation *)[NSEntityDescription insertNewObjectForEntityForName:RKObservationEntity
 										  inManagedObjectContext:moc];
-	result.taxonomy = [NSNumber numberWithUnsignedInt:5];
+	
+		//TODO: Hal, please delete this line if everythig is ok with the new line (changed from taxonomy attribute to speciesCategory)
+		//result.taxonomy = [NSNumber numberWithUnsignedInt:5];
+	result.speciesCategory.code = [NSNumber numberWithUnsignedInt:5];
+	
 	result.freeText = @"TEST";
 	result.formIDConfidence = @"100% Certain";
 	result.street = @"Middle Road";
