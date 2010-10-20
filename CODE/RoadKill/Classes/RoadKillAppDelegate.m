@@ -83,17 +83,6 @@
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
 
-	NSURL *wildcardURL = [[[NSURL alloc] initWithScheme:@"http" 
-												   host:RKWebServer 
-												   path:@"/california/nodereference/autocomplete/field_taxon_ref/e"]
-						  autorelease];
-	NSError *error;
-	NSString *wildcardResults = [NSString stringWithContentsOfURL:wildcardURL
-														 encoding:NSUTF8StringEncoding
-															error:&error];
-	RKLog(@"%d results from wildcard search", wildcardResults.length);
-	RKLog(@"%@", wildcardResults);
-	
 	// this is here just to test RKCROSSession. There has to be a better place for it.
 	RKCROSSession *session = [[RKCROSSession alloc] init];
 	[session authenticateWithUsername:RKTestUsername password:RKCorrectTestPassword];
