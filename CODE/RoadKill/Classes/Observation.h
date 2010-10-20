@@ -33,6 +33,7 @@
 
 + (Observation *)addObservationInContext:(NSManagedObjectContext *)moc;
 - (void)markAsTestObservation;
+- (BOOL)isValidForSubmission;
 
 @end
 

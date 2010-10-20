@@ -47,4 +47,16 @@
 	self.observerName = @"Loudon Wainwright III";
 }
 
+- (BOOL)isValidForSubmission
+{
+	if (!self.speciesCategory) {
+		RKLog(@"speciesCategory needed in observation %@", self);
+		return NO;
+	}
+	if (!self.species) {
+		RKLog(@"species needed in observation %@", self);
+		return NO;
+	}
+	return YES;
+}
 @end

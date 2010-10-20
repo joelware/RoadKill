@@ -94,9 +94,14 @@
 	return result;
 }
 
-
 - (NSMutableURLRequest *)observationSubmissionRequestForObservation:(Observation *)obs
 {
+	if (![obs isValidForSubmission]) {
+		RKLog(@"observation %@ not valid for submission");
+		return nil;
+	}
+	RKLog(@"@@@@@@@@@@@@ yay! Validation passed");
+	
 	NSURL *url = [[[NSURL alloc] initWithScheme:@"http" 
 										  host:RKWebServer 
 										  path:@"/california/node/add/roadkill"] autorelease];
@@ -144,12 +149,6 @@
 	[arguments setObject:[obsDateFormatter stringFromDate:obs.observationTimestamp]
 				  forKey:@"field_date_observation[0][value][time]" ];
 						  
-#ifdef DEBUG
-	[arguments setObject:@"Fulvous Whistling-Duck [nid:122]" forKey:@"field_taxon_ref[0][nid][nid]"];
-	[arguments setObject:@"8" forKey:@"taxonomy[1]"];
-	NSLog(@"#################\nWarning: I'm using dummy data\n");
-#endif
-	
 	NSString *stringForBody = [self multipartMIMEStringWithDictionary:arguments];
 
 	RKLog(@"**********");
