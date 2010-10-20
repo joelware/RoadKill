@@ -13,3 +13,13 @@
 #define RKFailingTestPassword @"xyzzy"
 
 #define RKObservationEntity @"Observation"
+#define RKSpeciesEntity @"Species"
+#define RKSpeciesCategoryEntity @"SpeciesCategory"
+#define RKStateEntity @"State"
+#define RKUserEntity @"User"
+
+
+
+
+
+
