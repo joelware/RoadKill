@@ -96,6 +96,7 @@
 
 - (NSMutableURLRequest *)observationSubmissionRequestForObservation:(Observation *)obs
 {
+	// FIXME: this submits only the bare minimum required form info
 	if (![obs isValidForSubmission]) {
 		RKLog(@"observation %@ not valid for submission");
 		NSAssert(NO, @"observation not valid for submission");
@@ -111,17 +112,23 @@
 	[postRequest setValue:[NSString stringWithFormat:@"multipart/form-data; boundary=%@", kFormBoundaryString]
 	   forHTTPHeaderField:@"Content-Type"];
 	
-	NSDictionary *headers = [NSHTTPCookie requestHeaderFieldsWithCookies:[[NSHTTPCookieStorage sharedHTTPCookieStorage] 
-																		  cookiesForURL:[[self class] baseURLForWildlifeServer]]];
+	NSMutableDictionary *headers = 
+	[NSMutableDictionary dictionaryWithDictionary:[NSHTTPCookie 
+												   requestHeaderFieldsWithCookies:[[NSHTTPCookieStorage sharedHTTPCookieStorage] 
+																				   cookiesForURL:[[self class] baseURLForWildlifeServer]]]];
+	[headers addEntriesFromDictionary:postRequest.allHTTPHeaderFields];
 	RKLog(@"my headers: %@", headers);
 	RKLog(@"default headers: %@", postRequest.allHTTPHeaderFields);
-	[postRequest setAllHTTPHeaderFields:headers]; // I am not sure that this is safe. What am I overwriting?
+	[postRequest setAllHTTPHeaderFields:headers]; 
 	[postRequest addValue:@"8bit" forHTTPHeaderField:@"Content-Transfer-Encoding"];
 	[postRequest addValue: [NSString stringWithFormat:@"multipart/form-data; boundary=%@", kFormBoundaryString] 
 	   forHTTPHeaderField: @"Content-Type"];
 
 	//
 	// This approach to form data taken from http://cocoadev.com/forums/comments.php?DiscussionID=1402
+	//
+	// Here's another approach to form data: http://allseeing-i.com/ASIHTTPRequest/How-to-use
+	// ASIHTTPRequest is a drop-in replacement for NSURLConnection
 	//
 	NSMutableDictionary *arguments = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 									  obs.speciesCategory.code, @"taxonomy[1]",
@@ -248,9 +255,9 @@
 
 - (BOOL)submitObservationReport:(Observation *)report
 {
-	// FIXME: this submits only the bare minimum required form info
 	LogMethod();
 	NSAssert(self.sessionState = RKCROSSessionFormTokenObtained, @"need RKCROSSessionFormTokenObtained");
+	// FIXME: the correct behavior would be to attempt to obtain a form token, not to die
 	NSMutableURLRequest *reportSubmissionRequest = 
 	[self observationSubmissionRequestForObservation:report];
 	if (self.connection)
