@@ -17,24 +17,10 @@
 #define kFormBoundaryString @"---------------------------1184049667376"
 #define kURLResponseSWAGLength 1000
 
-@interface NSMutableString (RKCROSSession)
-// this category is used by -observationSubmissionRequestForObservation:
-- (void)addFieldName:(NSString *)fieldName
-			   value:(NSString *)fieldValue;
-@end
-@implementation NSMutableString (RKCROSSession)
-- (void)addFieldName:(NSString *)fieldName
-			   value:(NSString *)fieldValue;
-{
-	[self appendFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n%@\r\n%@\r\n",
-	 fieldName, fieldValue, kFormBoundaryString];
-}
-@end
-
 @implementation RKCROSSession
 
-@synthesize speciesCategory;
 @synthesize connection;
+@synthesize asiHTTPRequest;
 @synthesize sessionState;
 @synthesize receivedData;
 @synthesize receivedString;
@@ -50,11 +36,20 @@
 
 - (void)dealloc
 {
-	[speciesCategory release], speciesCategory = nil;
     self.connection = nil;
-    self.receivedData = nil;
+    self.asiHTTPRequest = nil;
+	self.receivedData = nil;
 	
     [super dealloc];
+}
+
+- (void)setConnection:(NSURLConnection *)theConnection
+{
+    if (connection != theConnection) {
+		[connection cancel];
+        [connection release];
+        connection = [theConnection retain];
+    }
 }
 
 + (NSMutableURLRequest *)authenticationRequestWithUsername:(NSString *)username password:(NSString *)password
@@ -162,8 +157,6 @@
 {
 	NSMutableURLRequest *request = [[self class] authenticationRequestWithUsername:username
 																		  password:password];
-	if (self.connection)
-		[self.connection cancel];
 	self.connection = [NSURLConnection connectionWithRequest:request
 													delegate:self];
 }
@@ -214,8 +207,6 @@
 {
 	NSAssert((self.sessionState == RKCROSSessionAuthenticated), @"session not authenticated");
 	NSMutableURLRequest *request = [self formTokenRequest];
-	if (self.connection)
-		[self.connection cancel];
 	self.connection = [NSURLConnection connectionWithRequest:request delegate:self];
 }
 
@@ -247,13 +238,21 @@
 	// FIXME: the correct behavior would be to attempt to obtain a form token, not to die
 	ASIHTTPRequest *reportSubmissionRequest = 
 	[self observationSubmissionRequestForObservation:report];
-	//	if (self.connection)
-	//		[self.connection cancel];
-	//	self.connection = [NSURLConnection connectionWithRequest:reportSubmissionRequest delegate:self];
+	self.asiHTTPRequest = reportSubmissionRequest;
 	reportSubmissionRequest.delegate = self;
 	[reportSubmissionRequest startAsynchronous];
 	self.sessionState = RKCROSSessionObservationSubmitted;
 	return YES;
+}
+
+- (BOOL)receivedStringIsValid
+{
+	/* upon sucess, the page contains the this text:
+	       <div class="messages status">
+           Observation <em>roadkill/review</em> has been created.</div>
+	 */
+	NSRange searchResults = [self.receivedString rangeOfString:@"Observation <em>roadkill/review</em> has been created."];
+	return (searchResults.location != NSNotFound);
 }
 
 #pragma mark -
@@ -314,8 +313,8 @@
 			RKLog(@"%@", self.receivedString);
 			break;
 	}
-	
 }
+
 #pragma mark -
 #pragma mark ASIHTTPRequest delegate
 - (void)requestStarted:(ASIHTTPRequest *)request
@@ -329,25 +328,23 @@
 	RKLog(@"%@", request.responseHeaders);
 	RKLog(@"%@", request.responseCookies);
 }
+
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
 	LogMethod();
-	self.receivedString = [[[NSString alloc] initWithData:self.receivedData
-												 encoding:NSUTF8StringEncoding] autorelease];
+	self.receivedString = request.responseString;
 	RKLog(@"%@", self.receivedString);
+	if (self.receivedStringIsValid)
+		self.sessionState = RKCROSSessionObservationComplete;
+	else 
+		self.sessionState = RKCROSSessionAuthenticated;
 }
+
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
 	LogMethod();
-}
-
-// When a delegate implements this method, it is expected to process all incoming data itself
-// This means that responseData / responseString / downloadDestinationPath etc are ignored
-// You can have the request call a different method by setting didReceiveDataSelector
-- (void)request:(ASIHTTPRequest *)request didReceiveData:(NSData *)data
-{
-	NSAssert(self.receivedData, @"bad receivedData ivar");
-	[self.receivedData appendData:data];	
+	if (self.sessionState == RKCROSSessionObservationSubmitted)
+		self.sessionState = RKCROSSessionAuthenticated;
 }
 
 @end

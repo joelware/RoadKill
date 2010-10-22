@@ -9,10 +9,11 @@
 #import <Foundation/Foundation.h>
 
 @class Observation;
-@class SpeciesCategory;
+@class ASIHTTPRequest;
+
 @interface RKCROSSession : NSObject {
-	SpeciesCategory *speciesCategory;
 	NSURLConnection *connection;
+	ASIHTTPRequest *asiHTTPRequest;
 	NSUInteger sessionState;
 	NSMutableData *receivedData;
 	NSString *receivedString;
@@ -28,8 +29,8 @@ typedef enum {
 	
 } RKCROSSessionState;
 
-@property (nonatomic, retain) SpeciesCategory *speciesCategory;
 @property (nonatomic, retain) NSURLConnection *connection;
+@property (nonatomic, retain) ASIHTTPRequest *asiHTTPRequest;
 @property (nonatomic) NSUInteger sessionState;
 @property (nonatomic, retain) NSMutableData *receivedData;
 @property (nonatomic, retain) NSString *receivedString;
@@ -44,4 +45,5 @@ typedef enum {
 - (BOOL)extractFormTokenFromReceivedString;
 - (BOOL)submitObservationReport:(Observation *)report;
 
+- (BOOL)receivedStringIsValid;
 @end
