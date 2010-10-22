@@ -80,7 +80,7 @@
 
 - (NSString*) multipartMIMEStringWithDictionary: (NSDictionary*) dict 
 {
-	NSString* result = [NSString string];
+	NSString* result = @"--";
 	
 	for (NSString *theKey in dict) {
 		NSString *theValue = [dict valueForKey:theKey];
@@ -90,7 +90,7 @@
 					  @"%@\r\nContent-Disposition: form-data; name=\"%@\"\r\n\r\n%@\r\n",
 					  kFormBoundaryString, theKey, theValue];
 	}
-	result = [result stringByAppendingFormat:@"\r\n%@--\r\n", kFormBoundaryString];
+	result = [result stringByAppendingFormat:@"%@--\r\n", kFormBoundaryString];
 	return result;
 }
 
@@ -104,9 +104,13 @@
 	}
 	NSAssert(self.formToken, @"formToken not set");
 	
+//	NSURL *url = [[[NSURL alloc] initWithScheme:@"http" 
+//										  host:RKWebServer 
+//										  path:@"/california/node/add/roadkill"] autorelease];
 	NSURL *url = [[[NSURL alloc] initWithScheme:@"http" 
-										  host:RKWebServer 
-										  path:@"/california/node/add/roadkill"] autorelease];
+										   host:@"www.sailwx.info"
+										   path:@"/test/roadkill.php"] autorelease];
+
 	NSMutableURLRequest *postRequest = [[[NSMutableURLRequest alloc] initWithURL:url] autorelease];
 	postRequest.HTTPMethod = @"POST";
 	[postRequest setValue:[NSString stringWithFormat:@"multipart/form-data; boundary=%@", kFormBoundaryString]
@@ -135,11 +139,13 @@
 									  obs.species.commonName, @"field_taxon_ref[0][nid][nid]",
 									  obs.freeText, @"field_taxon_freetext[0][value]",
 									  self.formToken, @"form_token", 
-									  @"roadkill_node_form", @"form_id",
 									  obs.formIDConfidence, @"field_id_confidence[value]",
 									  obs.street, @"field_geography[0][street]", 
 									  obs.decayDurationHours, @"field_decay_duration",
 									  obs.observerName, @"field_observer[0][value]", 
+									  @"roadkill_node_form", @"form_id",
+									  @"", @"changed",
+									  @"", @"form_build_id",
 									  @"test log message Seattle iPhone Team",	@"log", 
 									  @"Save", @"op",
 									  nil];
@@ -151,7 +157,9 @@
 	[obsDateFormatter setDateFormat:@"kk:mm"];
 	[arguments setObject:[obsDateFormatter stringFromDate:obs.observationTimestamp]
 				  forKey:@"field_date_observation[0][value][time]" ];
-						  
+	[arguments setObject:@"16:15" 
+				  forKey:@"field_date_observation[0][value][time]"];
+
 	NSString *stringForBody = [self multipartMIMEStringWithDictionary:arguments];
 
 	RKLog(@"\n**********");
