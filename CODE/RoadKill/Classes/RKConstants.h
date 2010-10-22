@@ -24,7 +24,7 @@
 #define kRKNotReady @"not ready"
 #define kRKReady @"ready"
 #define kRKQueued @"queued"
-#define kRKSubmitted @"submitted"
+#define kRKComplete @"complete"
 
 
 

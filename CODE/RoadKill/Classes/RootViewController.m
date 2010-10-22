@@ -74,7 +74,7 @@
     cell.textLabel.text = [theObservation.observationTimestamp descriptionWithLocale:nil];
 	cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ (%@) %@", 
 								 theObservation.species.commonName, 
-								 theObservation.species.nidCode,
+								 theObservation.observationID,
 								 theObservation.sentStatus];
 }
 

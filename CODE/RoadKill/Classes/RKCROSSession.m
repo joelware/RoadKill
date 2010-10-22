@@ -204,6 +204,18 @@
 - (void)requestReceivedResponseHeaders:(ASIHTTPRequest *)request
 {
 	self.receivedData.length = 0;
+	if (self.sessionState == RKCROSSessionObservationSubmitted) {
+		if (request.responseStatusCode == 302) {
+			NSDictionary *headers = request.responseHeaders;
+			RKLog(@"%@", headers);
+			NSString *serverLocationString = [headers objectForKey:@"Location"];
+			RKLog(@"%@", serverLocationString);
+			self.observation.observationID = [[serverLocationString componentsSeparatedByString:@"/"] lastObject];
+//			[headers enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+//				RKLog(@"%@", key);
+//			}];
+		}
+	}
 }
 
 - (void)requestFinished:(ASIHTTPRequest *)request
@@ -223,7 +235,7 @@
 			else 
 				self.sessionState = RKCROSSessionAuthenticated;
 			RKLog(@"observation successfully submitted");
-			self.observation.sentStatus = kRKSubmitted;
+			self.observation.sentStatus = kRKComplete;
 			break;
 	}
 }
