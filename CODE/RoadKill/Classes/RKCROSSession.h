@@ -7,11 +7,12 @@
 // encapsulate the credentials for a session with the CROS server
 
 #import <Foundation/Foundation.h>
+#import "ASIHTTPRequestDelegate.h"
 
 @class Observation;
 @class ASIHTTPRequest;
 
-@interface RKCROSSession : NSObject {
+@interface RKCROSSession : NSObject <ASIHTTPRequestDelegate> {
 	NSURLConnection *connection;
 	ASIHTTPRequest *asiHTTPRequest;
 	NSUInteger sessionState;
@@ -36,14 +37,13 @@ typedef enum {
 @property (nonatomic, retain) NSString *receivedString;
 @property (nonatomic, retain) NSString *formToken;
 
-+ (NSMutableURLRequest *)authenticationRequestWithUsername:(NSString *)username password:(NSString *)password;
++ (ASIHTTPRequest *)authenticationRequestWithUsername:(NSString *)username password:(NSString *)password;
 - (void)authenticateWithUsername:(NSString *)username password:(NSString *)password;
-- (void)doSomethingWithResponse:(NSURLResponse *)response;
-- (NSMutableURLRequest *)formTokenRequest;
+- (ASIHTTPRequest *)formTokenRequest;
 - (void)obtainFormToken;
 + (NSURL *)baseURLForWildlifeServer;
 - (BOOL)extractFormTokenFromReceivedString;
 - (BOOL)submitObservationReport:(Observation *)report;
 
-- (BOOL)receivedStringIsValid;
+- (BOOL)receivedStringShowsSuccessfulSubmission;
 @end

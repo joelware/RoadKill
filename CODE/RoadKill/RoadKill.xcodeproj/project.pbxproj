@@ -53,6 +53,11 @@
 		2B790BA3125AA06B00EB101D /* RKCROSSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B790BA1125AA00F00EB101D /* RKCROSSession.m */; };
 		2B9327BD126568FE00BADFA7 /* Observation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B9327BC126568FE00BADFA7 /* Observation.m */; };
 		2B9327BE126568FE00BADFA7 /* Observation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B9327BC126568FE00BADFA7 /* Observation.m */; };
+		2BA80DDF12720FB20071E8A3 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B088D3E12711FF800ECC691 /* CFNetwork.framework */; };
+		2BA80DE012720FB70071E8A3 /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B088D4A1271202200ECC691 /* libz.1.2.3.dylib */; };
+		2BA80DE112720FBA0071E8A3 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B088D461271200B00ECC691 /* MobileCoreServices.framework */; };
+		2BA80DE212720FBB0071E8A3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B088D421271200400ECC691 /* SystemConfiguration.framework */; };
+		2BA80DE512720FC90071E8A3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */; };
 		8D8FE372126BFA4700336686 /* Species.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8FE370126BFA4700336686 /* Species.m */; };
 		8D8FE4BE126D1A4600336686 /* SpeciesCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8FE4BD126D1A4600336686 /* SpeciesCategory.m */; };
 /* End PBXBuildFile section */
@@ -141,6 +146,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				2B0DD152126923470034E084 /* CoreData.framework in Frameworks */,
+				2BA80DDF12720FB20071E8A3 /* CFNetwork.framework in Frameworks */,
+				2BA80DE012720FB70071E8A3 /* libz.1.2.3.dylib in Frameworks */,
+				2BA80DE112720FBA0071E8A3 /* MobileCoreServices.framework in Frameworks */,
+				2BA80DE212720FBB0071E8A3 /* SystemConfiguration.framework in Frameworks */,
+				2BA80DE512720FC90071E8A3 /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

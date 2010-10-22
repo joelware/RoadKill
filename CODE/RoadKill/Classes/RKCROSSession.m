@@ -52,44 +52,25 @@
     }
 }
 
-+ (NSMutableURLRequest *)authenticationRequestWithUsername:(NSString *)username password:(NSString *)password
++ (ASIHTTPRequest *)authenticationRequestWithUsername:(NSString *)username password:(NSString *)password
 {
 	NSURL *url = [[[NSURL alloc] initWithScheme:@"http" 
 										   host:RKWebServer 
 										   path:@"/california/node"] autorelease];
 	RKLog(@"requesting URL %@", url);
-	NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] initWithURL:url] autorelease];
-	request.HTTPMethod = @"POST";
-	request.cachePolicy = NSURLRequestReloadIgnoringLocalAndRemoteCacheData;
-	// added cachePolicy to try to force reload, but it has no effect. Maybe need to clear cookies?
-	[request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-	
-	NSString *stringForBody = [NSString stringWithFormat:@"name=%@&pass=%@&op=Log+in&form_id=user_login_block",
-							   username, password];
-	request.HTTPBody = [stringForBody dataUsingEncoding:NSUTF8StringEncoding];
-	[request setValue:[NSString stringWithFormat:@"%d", request.HTTPBody.length] forHTTPHeaderField:@"Content-Length"];
-	
-	RKLog(@"request %@ headers %@", request, request.allHTTPHeaderFields);
-	RKLog(@"request body string %@", stringForBody);
-	RKLog(@"request body %@", request.HTTPBody);
-	
+	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	request.shouldRedirect = NO;
+	NSMutableDictionary *arguments = [NSDictionary dictionaryWithObjectsAndKeys:
+									  username, @"name",
+									  password, @"pass",
+									  @"Log in", @"op",
+									  @"user_login_block", @"form_id",
+									  nil];
+	[arguments enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+		[request setPostValue:obj forKey:key];
+	}];
+	 
 	return request;
-}
-
-- (NSString*) multipartMIMEStringWithDictionary: (NSDictionary*) dict 
-{
-	NSString* result = @"--";
-	
-	for (NSString *theKey in dict) {
-		NSString *theValue = [dict valueForKey:theKey];
-		RKLog(@"key %@ %@", theKey, theValue);
-		if (theValue)
-			result = [result stringByAppendingFormat:
-					  @"%@\r\nContent-Disposition: form-data; name=\"%@\"\r\n\r\n%@\r\n",
-					  kFormBoundaryString, theKey, theValue];
-	}
-	result = [result stringByAppendingFormat:@"%@--\r\n", kFormBoundaryString];
-	return result;
 }
 
 - (ASIFormDataRequest *)observationSubmissionRequestForObservation:(Observation *)obs
@@ -157,64 +138,36 @@
 
 - (void)authenticateWithUsername:(NSString *)username password:(NSString *)password
 {
-	NSMutableURLRequest *request = [[self class] authenticationRequestWithUsername:username
+	ASIHTTPRequest *request = [[self class] authenticationRequestWithUsername:username
 																		  password:password];
-	self.connection = [NSURLConnection connectionWithRequest:request
-													delegate:self];
+	request.delegate = self;
+	[request startAsynchronous];
 }
 
-- (void)doSomethingWithResponse:(NSURLResponse *)response
-{
-	// this method might be completely unnecessary. After the authentication request has been sent, 
-	// cookies are available using NSHTTPCookieStorage. We don't have to do anything manually. Might
-	// be able to scrap the connection:didReceiveData: implementation and receivedData ivar.
-	
-	// break out into separate method with no NSURLConnection reference, for unit testing
-	NSAssert([response isKindOfClass:[NSHTTPURLResponse class]], 
-			 @"should be NSHTTPURLResponse");
-	NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-	RKLog(@"response status %d: %@", httpResponse.statusCode, [NSHTTPURLResponse localizedStringForStatusCode:httpResponse.statusCode]);
-	RKLog(@"response headers %@", httpResponse.allHeaderFields);
-	
-	long long contentLength = httpResponse.expectedContentLength;
-	if (contentLength == NSURLResponseUnknownLength)
-		contentLength = kURLResponseSWAGLength; 
-	self.receivedData = [NSMutableData dataWithCapacity:contentLength];
-	
-	NSArray *cookies = [NSHTTPCookie cookiesWithResponseHeaderFields:httpResponse.allHeaderFields
-															  forURL:[[self class] baseURLForWildlifeServer]];
-	RKLog(@"Response contained %d cookies", cookies.count);
-	for (id theCookie in cookies) {
-		RKLog(@"  received cookie: %@", theCookie);
-	}
-	RKLog(@"Persisted cookies: %@", [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[[self class] baseURLForWildlifeServer]]);
-}
-
-- (NSMutableURLRequest *)formTokenRequest
+- (ASIHTTPRequest *)formTokenRequest
 {
 	LogMethod();
 	NSURL *formTokenURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/california/node/add/roadkill",
 												[[self class] baseURLForWildlifeServer]]];
 	RKLog(@"%@", formTokenURL);
-	NSMutableURLRequest *result = [NSMutableURLRequest requestWithURL:formTokenURL];
-	
-	NSDictionary *headers = [NSHTTPCookie requestHeaderFieldsWithCookies:[[NSHTTPCookieStorage sharedHTTPCookieStorage] 
-																		  cookiesForURL:[[self class] baseURLForWildlifeServer]]];
-	RKLog(@"headers: %@", headers);
-	[result setAllHTTPHeaderFields:headers]; // I am not sure that this is safe. What am I overwriting?
+	ASIHTTPRequest *result = [ASIHTTPRequest requestWithURL:formTokenURL];
 	return result;
 }
 
 - (void)obtainFormToken
 {
 	NSAssert((self.sessionState == RKCROSSessionAuthenticated), @"session not authenticated");
-	NSMutableURLRequest *request = [self formTokenRequest];
-	self.connection = [NSURLConnection connectionWithRequest:request delegate:self];
+	self.asiHTTPRequest = [self formTokenRequest];
+	self.asiHTTPRequest.delegate = self;
+	[self.asiHTTPRequest startAsynchronous];
 }
 
 - (BOOL)extractFormTokenFromReceivedString
 {
+	//
+	// sample response text:
 	// <input type="hidden" name="form_token" id="edit-roadkill-node-form-form-token" value="014bed2bec533edbae01c14ebac6e174"  />
+	//
 	
 	NSRange tokenFormElementRange = [self.receivedString rangeOfString:@"<input type=\"hidden\" name=\"form_token\".*>"
 															   options:NSRegularExpressionSearch];
@@ -230,6 +183,7 @@
 		RKLog(@"token %@", self.formToken);
 		return YES;
 	}
+	RKLog(@"form token not found");
 	return NO;
 }
 
@@ -247,9 +201,9 @@
 	return YES;
 }
 
-- (BOOL)receivedStringIsValid
+- (BOOL)receivedStringShowsSuccessfulSubmission
 {
-	/* upon sucess, the page contains the this text:
+	/* upon success, the page contains this text:
 	       <div class="messages status">
            Observation <em>roadkill/review</em> has been created.</div>
 	 */
@@ -270,32 +224,6 @@
 			break;
 	} 
 	return request;
-}
-
-- (void)connection:(NSURLConnection *)theConnection didReceiveResponse:(NSURLResponse *)response
-{
-	NSAssert(theConnection == self.connection, @"connection error");
-	self.receivedData.length = 0;
-	[self doSomethingWithResponse:response];
-}
-
-- (void)connection:(NSURLConnection *)theConnection didReceiveData:(NSData *)data
-{
-	NSAssert(theConnection == self.connection, @"connection error");
-	NSAssert(self.receivedData, @"bad receivedData ivar");
-	[self.receivedData appendData:data];
-}
-
-- (void)connection:(NSURLConnection *)connection
-  didFailWithError:(NSError *)error
-{
-	LogMethod();
-    self.connection = nil;
-	self.receivedData.length = 0;
-	
-    // inform the user
-    RKLog(@"Connection failed! Error - %@",
-          [error localizedDescription]);
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)theConnection
@@ -335,17 +263,35 @@
 {
 	LogMethod();
 	self.receivedString = request.responseString;
-	if (self.receivedStringIsValid)
-		self.sessionState = RKCROSSessionObservationComplete;
-	else 
-		self.sessionState = RKCROSSessionAuthenticated;
+	switch (self.sessionState) {
+		case RKCROSSessionConnecting:
+			self.sessionState = RKCROSSessionAuthenticated;
+			break;
+		case RKCROSSessionAuthenticated:
+			if ([self extractFormTokenFromReceivedString])
+				self.sessionState = RKCROSSessionFormTokenObtained;
+			break;
+		case RKCROSSessionObservationSubmitted:
+			if (self.receivedStringShowsSuccessfulSubmission)
+				self.sessionState = RKCROSSessionObservationComplete;
+			else 
+				self.sessionState = RKCROSSessionAuthenticated;
+			break;
+	}
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
 	LogMethod();
-	if (self.sessionState == RKCROSSessionObservationSubmitted)
-		self.sessionState = RKCROSSessionAuthenticated;
+	switch (self.sessionState) {
+		case RKCROSSessionConnecting:
+			break;
+		case RKCROSSessionAuthenticated:
+			break;
+		case RKCROSSessionObservationSubmitted:
+			self.sessionState = RKCROSSessionAuthenticated;
+			break;
+	}
 }
 
 @end

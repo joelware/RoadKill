@@ -18,6 +18,8 @@
 #import "RKConstants.h"
 #import "RKCROSSession.h"
 
+#import "ASIHTTPRequest.h"
+
 @implementation WebAPITestCase
 
 
@@ -73,7 +75,6 @@
 	STAssertNotNil(responseData, @"responseData");
 	STAssertTrue(responseData.length > 0, @"responseData length %d", responseData.length);
 	
-	STAssertNoThrow([session doSomethingWithResponse:response], @"doSomethingWithResponse");
 	STAssertNoThrow(session.receivedData = [responseData mutableCopy], @"copy");
 //	STAssertNoThrow([session connectionDidFinishLoading:nil], @"connectionDidFinishLoading");
 }
@@ -91,11 +92,11 @@
 															 error:&error];
 	STAssertTrue(responseData.length > 0, @"responseData length %d", responseData.length);
 	
-	NSMutableURLRequest *tokenRequest = [session formTokenRequest];
-	NSData *tokenRequestData = [NSURLConnection sendSynchronousRequest:tokenRequest
-													 returningResponse:&response
-																 error:&error];
-	STAssertTrue(tokenRequestData.length > 0, @"tokenRequestData length %d %@", tokenRequestData.length, error.localizedDescription);
+	ASIHTTPRequest *tokenRequest = [session formTokenRequest];
+	STAssertNoThrow([tokenRequest startSynchronous], @"startSynchronous failed");
+	STAssertNil(tokenRequest.error, @"error %@ from token request", tokenRequest.error.localizedFailureReason);
+	NSData *tokenRequestData = tokenRequest.responseData;
+	STAssertTrue(tokenRequestData.length > 0, @"tokenRequestData length %d", tokenRequestData.length);
 }
 
 #pragma mark -
