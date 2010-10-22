@@ -39,6 +39,8 @@
     [window addSubview:navigationController.view];
     [window makeKeyAndVisible];
 
+	[self populateInitialDatastore];
+	
     return YES;
 }
 
@@ -221,21 +223,33 @@
      */
 }
 
+- (void)putSpeciesIntoDatastore
+{
+	[Species findOrCreateSpeciesWithCommonName:@"Striped Skunk"
+									 latinName:@"Mephitis mephitis"
+									   nidCode:@"624"
+									 inContext:self.managedObjectContext];
+	[Species findOrCreateSpeciesWithCommonName:@"Fulvous Whistling-Duck"
+									 latinName:@"Dendrocygna bicolor" 
+									   nidCode:@"122"
+									 inContext:self.managedObjectContext];
+}
+
 - (void)putSpeciesCategoriesIntoDatastore
 {
 	[SpeciesCategory findOrCreateSpeciesCategoryWithName:@"Amphibian"
 											 codeInteger:8
 											   inContext:self.managedObjectContext];
-		[SpeciesCategory findOrCreateSpeciesCategoryWithName:@"Bird"
+	[SpeciesCategory findOrCreateSpeciesCategoryWithName:@"Bird"
 											 codeInteger:6
 											   inContext:self.managedObjectContext];
 	[SpeciesCategory findOrCreateSpeciesCategoryWithName:@"Mammal (Large)"
 											 codeInteger:3
 											   inContext:self.managedObjectContext];
-		[SpeciesCategory findOrCreateSpeciesCategoryWithName:@"Mammal (Medium)"
+	[SpeciesCategory findOrCreateSpeciesCategoryWithName:@"Mammal (Medium)"
 											 codeInteger:4
 											   inContext:self.managedObjectContext];
-		[SpeciesCategory findOrCreateSpeciesCategoryWithName:@"Mammal (Small)"
+	[SpeciesCategory findOrCreateSpeciesCategoryWithName:@"Mammal (Small)"
 											 codeInteger:5
 											   inContext:self.managedObjectContext];
 	[SpeciesCategory findOrCreateSpeciesCategoryWithName:@"Reptile"
