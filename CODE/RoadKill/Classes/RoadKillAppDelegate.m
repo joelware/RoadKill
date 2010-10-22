@@ -105,6 +105,7 @@
 	[testObservation markAsTestObservation];
 	testObservation.species = species624;
 	testObservation.speciesCategory = mediumMammals;
+	testObservation.sentStatus = kRKReady;
 	[session performSelector:@selector(submitObservationReport:)
 				  withObject:testObservation
 				  afterDelay:10.];

@@ -19,7 +19,7 @@
 
 @implementation RKCROSSession
 
-@synthesize connection;
+@synthesize observation;
 @synthesize asiHTTPRequest;
 @synthesize sessionState;
 @synthesize receivedData;
@@ -36,20 +36,12 @@
 
 - (void)dealloc
 {
-    self.connection = nil;
+    self.observation = nil;
     self.asiHTTPRequest = nil;
 	self.receivedData = nil;
+	self.receivedString = nil;
 	
     [super dealloc];
-}
-
-- (void)setConnection:(NSURLConnection *)theConnection
-{
-    if (connection != theConnection) {
-		[connection cancel];
-        [connection release];
-        connection = [theConnection retain];
-    }
 }
 
 + (ASIHTTPRequest *)authenticationRequestWithUsername:(NSString *)username password:(NSString *)password
@@ -72,16 +64,16 @@
 	return request;
 }
 
-- (ASIFormDataRequest *)observationSubmissionRequestForObservation:(Observation *)obs
+- (ASIFormDataRequest *)observationSubmissionRequest
 {
 	// FIXME: this submits only the bare minimum required form info
-	if (![obs isValidForSubmission]) {
+	if (![self.observation isValidForSubmission]) {
 		RKLog(@"observation %@ not valid for submission");
 		NSAssert(NO, @"observation not valid for submission");
 		return nil;
 	}
 	NSAssert(self.formToken, @"formToken not set");
-	
+	self.observation = self.observation;
 	NSURL *url = [[[NSURL alloc] initWithScheme:@"http" 
 										   host:RKWebServer 
 										   path:@"/california/node/add/roadkill"] autorelease];
@@ -91,16 +83,16 @@
 	
 	ASIFormDataRequest *postRequest = [ASIFormDataRequest requestWithURL:url];
 	NSMutableDictionary *arguments = [NSDictionary dictionaryWithObjectsAndKeys:
-									  obs.speciesCategory.code, @"taxonomy[1]",
-									  obs.species.commonName, @"field_taxon_ref[0][nid][nid]",
-									  obs.freeText, @"field_taxon_freetext[0][value]",
+									  self.observation.speciesCategory.code, @"taxonomy[1]",
+									  self.observation.species.commonName, @"field_taxon_ref[0][nid][nid]",
+									  self.observation.freeText, @"field_taxon_freetext[0][value]",
 									  self.formToken, @"form_token", 
-									  obs.formIDConfidence, @"field_id_confidence[value]",
-									  obs.street, @"field_geography[0][street]", 
-									  obs.decayDurationHours, @"field_decay_duration",
-									  obs.observerName, @"field_observer[0][value]", 
-									  obs.latitude, @"field_geography[0][locpick][user_latitude]",
-									  obs.longitude, @"field_geography[0][locpick][user_longitude]",
+									  self.observation.formIDConfidence, @"field_id_confidence[value]",
+									  self.observation.street, @"field_geography[0][street]", 
+									  self.observation.decayDurationHours, @"field_decay_duration",
+									  self.observation.observerName, @"field_observer[0][value]", 
+									  self.observation.latitude, @"field_geography[0][locpick][user_latitude]",
+									  self.observation.longitude, @"field_geography[0][locpick][user_longitude]",
 									  @"roadkill_node_form", @"form_id",
 									  @"", @"changed",
 									  @"", @"form_build_id",
@@ -114,10 +106,10 @@
 	
 	NSDateFormatter *obsDateFormatter = [[[NSDateFormatter alloc] init] autorelease];
 	[obsDateFormatter setDateFormat:@"YYYY-MM-dd"];
-	[postRequest setPostValue:[obsDateFormatter stringFromDate:obs.observationTimestamp]
+	[postRequest setPostValue:[obsDateFormatter stringFromDate:self.observation.observationTimestamp]
 					   forKey:@"field_date_observation[0][value][date]"];
 	[obsDateFormatter setDateFormat:@"kk:mm"];
-	[postRequest setPostValue:[obsDateFormatter stringFromDate:obs.observationTimestamp]
+	[postRequest setPostValue:[obsDateFormatter stringFromDate:self.observation.observationTimestamp]
 					   forKey:@"field_date_observation[0][value][time]" ];
 
 	NSString *demoImagePathname = [[NSBundle mainBundle] pathForResource:@"demoSkunk" ofType:@"jpg"];
@@ -184,14 +176,15 @@
 - (BOOL)submitObservationReport:(Observation *)report
 {
 	LogMethod();
+	self.observation = report;
 	NSAssert(self.sessionState = RKCROSSessionFormTokenObtained, @"need RKCROSSessionFormTokenObtained");
 	// FIXME: the correct behavior would be to attempt to obtain a form token, not to die
-	ASIHTTPRequest *reportSubmissionRequest = 
-	[self observationSubmissionRequestForObservation:report];
+	ASIHTTPRequest *reportSubmissionRequest = [self observationSubmissionRequest];
 	self.asiHTTPRequest = reportSubmissionRequest;
 	reportSubmissionRequest.delegate = self;
 	[reportSubmissionRequest startAsynchronous];
 	self.sessionState = RKCROSSessionObservationSubmitted;
+	self.observation.sentStatus = kRKQueued;
 	return YES;
 }
 
@@ -230,6 +223,7 @@
 			else 
 				self.sessionState = RKCROSSessionAuthenticated;
 			RKLog(@"observation successfully submitted");
+			self.observation.sentStatus = kRKSubmitted;
 			break;
 	}
 }

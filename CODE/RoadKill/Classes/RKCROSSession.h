@@ -13,7 +13,7 @@
 @class ASIHTTPRequest;
 
 @interface RKCROSSession : NSObject <ASIHTTPRequestDelegate> {
-	NSURLConnection *connection;
+	Observation *observation;
 	ASIHTTPRequest *asiHTTPRequest;
 	NSUInteger sessionState;
 	NSMutableData *receivedData;
@@ -30,7 +30,7 @@ typedef enum {
 	
 } RKCROSSessionState;
 
-@property (nonatomic, retain) NSURLConnection *connection;
+@property (nonatomic, retain) Observation *observation;
 @property (nonatomic, retain) ASIHTTPRequest *asiHTTPRequest;
 @property (nonatomic) NSUInteger sessionState;
 @property (nonatomic, retain) NSMutableData *receivedData;

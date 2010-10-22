@@ -43,12 +43,16 @@
 {
 	self.freeText = @"TEST";
 	self.formIDConfidence = @"100% Certain";
-	self.street = @"Middle Road";
+	self.street = @"Middle of the Road";
 	self.observerName = @"Loudon Wainwright III";
 }
 
 - (BOOL)isValidForSubmission
 {
+	if (![self.sentStatus isEqualToString:kRKReady]) {
+		RKLog(@"status should be kRKReady in observation %@", self);
+		return NO;
+	}
 	if (!self.speciesCategory) {
 		RKLog(@"speciesCategory needed in observation %@", self);
 		return NO;
@@ -58,5 +62,10 @@
 		return NO;
 	}
 	return YES;
+}
+
+- (void)awakeFromInsert
+{
+	self.sentStatus = kRKNotReady;
 }
 @end

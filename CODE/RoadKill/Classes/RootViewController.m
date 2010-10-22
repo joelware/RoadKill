@@ -73,8 +73,9 @@
     Observation *theObservation = (Observation *)[self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.textLabel.text = [theObservation.observationTimestamp descriptionWithLocale:nil];
 	cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ (%@) %@", 
-								 theObservation.species.commonName, theObservation.species.latinName,
-								 theObservation.species.nidCode];
+								 theObservation.species.commonName, 
+								 theObservation.species.nidCode,
+								 theObservation.sentStatus];
 }
 
 
@@ -85,11 +86,17 @@
     
     // Create a new instance of the entity managed by the fetched results controller.
     NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
+    Observation *newObservation = [Observation addObservationInContext:context];
     
-    // If appropriate, configure the new managed object.
-    [newManagedObject setValue:[NSDate date] forKey:@"observationTimestamp"];
+    newObservation.observationTimestamp = [NSDate date];
+	newObservation.species = [Species findOrCreateSpeciesWithCommonName:@"Striped Skunk"
+															  latinName:@"Mephitis mephitis"
+																nidCode:@"624"
+															  inContext:context];
+	newObservation.speciesCategory = [SpeciesCategory findOrCreateSpeciesCategoryWithName:@"Mammal (Medium)" 
+																			  codeInteger:4 
+																				inContext:context];
+	[newObservation markAsTestObservation];
     
     // Save the context.
     NSError *error = nil;
