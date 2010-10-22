@@ -139,6 +139,13 @@
 	[obsDateFormatter setDateFormat:@"kk:mm"];
 	[postRequest setPostValue:[obsDateFormatter stringFromDate:obs.observationTimestamp]
 					   forKey:@"field_date_observation[0][value][time]" ];
+
+	NSString *demoImagePathname = [[NSBundle mainBundle] pathForResource:@"demoSkunk" ofType:@"jpg"];
+	RKLog (@"demo image %@", demoImagePathname);
+	[postRequest addFile:demoImagePathname forKey:@"files[field_image_0]"];
+	[postRequest setPostValue:@"0" forKey:@"field_image[0][fid]"];
+	[postRequest setPostValue:@"1" forKey:@"field_image[0][list]"];
+	[postRequest setPostValue:@"0" forKey:@"field_image[0][_weight]"];
 	
 	return postRequest;
 }

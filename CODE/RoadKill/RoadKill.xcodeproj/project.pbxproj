@@ -35,6 +35,7 @@
 		2B088D431271200400ECC691 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B088D421271200400ECC691 /* SystemConfiguration.framework */; };
 		2B088D471271200B00ECC691 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B088D461271200B00ECC691 /* MobileCoreServices.framework */; };
 		2B088D4B1271202200ECC691 /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B088D4A1271202200ECC691 /* libz.1.2.3.dylib */; };
+		2B088E841271425B00ECC691 /* demoSkunk.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2B088E831271425B00ECC691 /* demoSkunk.jpg */; };
 		2B0DD152126923470034E084 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28860BE40F44EE6400985440 /* CoreData.framework */; };
 		2B244433125BE720005152E6 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B244431125BE720005152E6 /* Icon.png */; };
 		2B244434125BE720005152E6 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B244432125BE720005152E6 /* Icon@2x.png */; };
@@ -93,6 +94,7 @@
 		2B088D421271200400ECC691 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		2B088D461271200B00ECC691 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		2B088D4A1271202200ECC691 /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = usr/lib/libz.1.2.3.dylib; sourceTree = SDKROOT; };
+		2B088E831271425B00ECC691 /* demoSkunk.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = demoSkunk.jpg; path = Graphics/demoSkunk.jpg; sourceTree = "<group>"; };
 		2B0DD116126920250034E084 /* DataModelTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataModelTestCase.h; sourceTree = "<group>"; };
 		2B0DD117126920250034E084 /* DataModelTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataModelTestCase.m; sourceTree = "<group>"; };
 		2B244431125BE720005152E6 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = Graphics/Icon.png; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 				2899E55F0DE3E45000AC0155 /* RootViewController.xib */,
 				28AD735F0D9D9599002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* RoadKill-Info.plist */,
+				2B088E831271425B00ECC691 /* demoSkunk.jpg */,
 				2B244431125BE720005152E6 /* Icon.png */,
 				2B244432125BE720005152E6 /* Icon@2x.png */,
 			);
@@ -369,6 +372,7 @@
 				2899E5600DE3E45000AC0155 /* RootViewController.xib in Resources */,
 				2B244433125BE720005152E6 /* Icon.png in Resources */,
 				2B244434125BE720005152E6 /* Icon@2x.png in Resources */,
+				2B088E841271425B00ECC691 /* demoSkunk.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
