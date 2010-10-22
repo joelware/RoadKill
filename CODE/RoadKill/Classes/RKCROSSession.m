@@ -7,9 +7,12 @@
 
 #import "RKConstants.h"
 #import "RKCROSSession.h"
+
 #import "Observation.h"
 #import "SpeciesCategory.h"
 #import "Species.h"
+
+#import "ASIFormDataRequest.h"
 
 #define kFormBoundaryString @"---------------------------1184049667376"
 #define kURLResponseSWAGLength 1000
@@ -57,15 +60,15 @@
 + (NSMutableURLRequest *)authenticationRequestWithUsername:(NSString *)username password:(NSString *)password
 {
 	NSURL *url = [[[NSURL alloc] initWithScheme:@"http" 
-										  host:RKWebServer 
-										  path:@"/california/node"] autorelease];
+										   host:RKWebServer 
+										   path:@"/california/node"] autorelease];
 	RKLog(@"requesting URL %@", url);
 	NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] initWithURL:url] autorelease];
 	request.HTTPMethod = @"POST";
 	request.cachePolicy = NSURLRequestReloadIgnoringLocalAndRemoteCacheData;
 	// added cachePolicy to try to force reload, but it has no effect. Maybe need to clear cookies?
 	[request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-
+	
 	NSString *stringForBody = [NSString stringWithFormat:@"name=%@&pass=%@&op=Log+in&form_id=user_login_block",
 							   username, password];
 	request.HTTPBody = [stringForBody dataUsingEncoding:NSUTF8StringEncoding];
@@ -74,7 +77,7 @@
 	RKLog(@"request %@ headers %@", request, request.allHTTPHeaderFields);
 	RKLog(@"request body string %@", stringForBody);
 	RKLog(@"request body %@", request.HTTPBody);
-
+	
 	return request;
 }
 
@@ -94,7 +97,7 @@
 	return result;
 }
 
-- (NSMutableURLRequest *)observationSubmissionRequestForObservation:(Observation *)obs
+- (ASIFormDataRequest *)observationSubmissionRequestForObservation:(Observation *)obs
 {
 	// FIXME: this submits only the bare minimum required form info
 	if (![obs isValidForSubmission]) {
@@ -104,72 +107,48 @@
 	}
 	NSAssert(self.formToken, @"formToken not set");
 	
-//	NSURL *url = [[[NSURL alloc] initWithScheme:@"http" 
-//										  host:RKWebServer 
-//										  path:@"/california/node/add/roadkill"] autorelease];
 	NSURL *url = [[[NSURL alloc] initWithScheme:@"http" 
-										   host:@"www.sailwx.info"
-										   path:@"/test/roadkill.php"] autorelease];
-
-	NSMutableURLRequest *postRequest = [[[NSMutableURLRequest alloc] initWithURL:url] autorelease];
-	postRequest.HTTPMethod = @"POST";
-	[postRequest setValue:[NSString stringWithFormat:@"multipart/form-data; boundary=%@", kFormBoundaryString]
-	   forHTTPHeaderField:@"Content-Type"];
+										   host:RKWebServer 
+										   path:@"/california/node/add/roadkill"] autorelease];
+	//	  NSURL *url = [[[NSURL alloc] initWithScheme:@"http" 
+	//			       host:@"www.sailwx.info"
+	//			       path:@"/test/roadkill.php"] autorelease];
 	
-	NSMutableDictionary *headers = 
-	[NSMutableDictionary dictionaryWithDictionary:[NSHTTPCookie 
-												   requestHeaderFieldsWithCookies:[[NSHTTPCookieStorage sharedHTTPCookieStorage] 
-																				   cookiesForURL:[[self class] baseURLForWildlifeServer]]]];
-	[headers addEntriesFromDictionary:postRequest.allHTTPHeaderFields];
-	RKLog(@"my headers: %@", headers);
-	RKLog(@"default headers: %@", postRequest.allHTTPHeaderFields);
-	[postRequest setAllHTTPHeaderFields:headers]; 
-	[postRequest addValue:@"8bit" forHTTPHeaderField:@"Content-Transfer-Encoding"];
-	[postRequest addValue: [NSString stringWithFormat:@"multipart/form-data; boundary=%@", kFormBoundaryString] 
-	   forHTTPHeaderField: @"Content-Type"];
-
-	//
-	// This approach to form data taken from http://cocoadev.com/forums/comments.php?DiscussionID=1402
-	//
-	// Here's another approach to form data: http://allseeing-i.com/ASIHTTPRequest/How-to-use
-	// ASIHTTPRequest is a drop-in replacement for NSURLConnection
-	//
-	NSMutableDictionary *arguments = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-									  obs.speciesCategory.code, @"taxonomy[1]",
-									  obs.species.commonName, @"field_taxon_ref[0][nid][nid]",
-									  obs.freeText, @"field_taxon_freetext[0][value]",
-									  self.formToken, @"form_token", 
-									  obs.formIDConfidence, @"field_id_confidence[value]",
-									  obs.street, @"field_geography[0][street]", 
-									  obs.decayDurationHours, @"field_decay_duration",
-									  obs.observerName, @"field_observer[0][value]", 
-									  @"roadkill_node_form", @"form_id",
-									  @"", @"changed",
-									  @"", @"form_build_id",
-									  @"test log message Seattle iPhone Team",	@"log", 
-									  @"Save", @"op",
-									  nil];
+	ASIFormDataRequest *postRequest = [ASIFormDataRequest requestWithURL:url];
+	
+	//  NSMutableDictionary *headers = 
+	//    [NSMutableDictionary dictionaryWithDictionary:[NSHTTPCookie 
+	//						    requestHeaderFieldsWithCookies:[[NSHTTPCookieStorage sharedHTTPCookieStorage] 
+	//										     cookiesForURL:[[self class] baseURLForWildlifeServer]]]];
+	//	[headers addEntriesFromDictionary:postRequest.allHTTPHeaderFields];
+	//	RKLog(@"my headers: %@", headers);
+	//	RKLog(@"default headers: %@", postRequest.allHTTPHeaderFields);
+	//	[postRequest setAllHTTPHeaderFields:headers]; 
+	//	[postRequest addValue:@"8bit" forHTTPHeaderField:@"Content-Transfer-Encoding"];
+	//	[postRequest addValue: [NSString stringWithFormat:@"multipart/form-data; boundary=%@", kFormBoundaryString] 
+	//	   forHTTPHeaderField: @"Content-Type"];
+	
+	[postRequest setPostValue:obs.speciesCategory.code forKey:@"taxonomy[1]"];
+	[postRequest setPostValue:obs.species.commonName forKey: @"field_taxon_ref[0][nid][nid]"];
+	[postRequest setPostValue:obs.freeText forKey: @"field_taxon_freetext[0][value]"];
+	[postRequest setPostValue:self.formToken forKey: @"form_token"];
+	[postRequest setPostValue:obs.formIDConfidence forKey: @"field_id_confidence[value]"];
+	[postRequest setPostValue:obs.street forKey: @"field_geography[0][street]"];
+	[postRequest setPostValue:obs.decayDurationHours forKey: @"field_decay_duration"];
+	[postRequest setPostValue:obs.observerName forKey: @"field_observer[0][value]"];
+	[postRequest setPostValue:@"roadkill_node_form" forKey: @"form_id"];
+	[postRequest setPostValue:@"" forKey: @"changed"];
+	[postRequest setPostValue:@"" forKey: @"form_build_id"];
+	[postRequest setPostValue:@"test log message Seattle iPhone Team" forKey:	@"log"];
+	[postRequest setPostValue:@"Save" forKey: @"op"];
 	
 	NSDateFormatter *obsDateFormatter = [[[NSDateFormatter alloc] init] autorelease];
 	[obsDateFormatter setDateFormat:@"YYYY-MM-dd"];
-	[arguments setObject:[obsDateFormatter stringFromDate:obs.observationTimestamp]
-				  forKey:@"field_date_observation[0][value][date]"];
+	[postRequest setPostValue:[obsDateFormatter stringFromDate:obs.observationTimestamp]
+					   forKey:@"field_date_observation[0][value][date]"];
 	[obsDateFormatter setDateFormat:@"kk:mm"];
-	[arguments setObject:[obsDateFormatter stringFromDate:obs.observationTimestamp]
-				  forKey:@"field_date_observation[0][value][time]" ];
-	[arguments setObject:@"16:15" 
-				  forKey:@"field_date_observation[0][value][time]"];
-
-	NSString *stringForBody = [self multipartMIMEStringWithDictionary:arguments];
-
-	RKLog(@"\n**********");
-	RKLog(@"%@", stringForBody);
-	RKLog(@"**********");
-	postRequest.HTTPBody = [stringForBody dataUsingEncoding:NSUTF8StringEncoding];
-	[postRequest setValue:[NSString stringWithFormat:@"%d", postRequest.HTTPBody.length] 
-	   forHTTPHeaderField:@"Content-Length"];
-	
-	RKLog(@"request %@ headers %@", postRequest, postRequest.allHTTPHeaderFields);
+	[postRequest setPostValue:[obsDateFormatter stringFromDate:obs.observationTimestamp]
+					   forKey:@"field_date_observation[0][value][time]" ];
 	
 	return postRequest;
 }
@@ -178,7 +157,7 @@
 {
 	return [NSURL URLWithString:[NSString stringWithFormat:@"http://%@", RKWebServer]];
 }
-			
+
 - (void)authenticateWithUsername:(NSString *)username password:(NSString *)password
 {
 	NSMutableURLRequest *request = [[self class] authenticationRequestWithUsername:username
@@ -243,9 +222,9 @@
 - (BOOL)extractFormTokenFromReceivedString
 {
 	// <input type="hidden" name="form_token" id="edit-roadkill-node-form-form-token" value="014bed2bec533edbae01c14ebac6e174"  />
-
+	
 	NSRange tokenFormElementRange = [self.receivedString rangeOfString:@"<input type=\"hidden\" name=\"form_token\".*>"
-													options:NSRegularExpressionSearch];
+															   options:NSRegularExpressionSearch];
 	if (tokenFormElementRange.length > 0) {
 		RKLog(@"found %@", [self.receivedString substringWithRange:tokenFormElementRange]);
 		NSScanner *scanner = [NSScanner scannerWithString:[self.receivedString substringWithRange:tokenFormElementRange]];
@@ -266,11 +245,13 @@
 	LogMethod();
 	NSAssert(self.sessionState = RKCROSSessionFormTokenObtained, @"need RKCROSSessionFormTokenObtained");
 	// FIXME: the correct behavior would be to attempt to obtain a form token, not to die
-	NSMutableURLRequest *reportSubmissionRequest = 
+	ASIHTTPRequest *reportSubmissionRequest = 
 	[self observationSubmissionRequestForObservation:report];
-	if (self.connection)
-		[self.connection cancel];
-	self.connection = [NSURLConnection connectionWithRequest:reportSubmissionRequest delegate:self];
+	//	if (self.connection)
+	//		[self.connection cancel];
+	//	self.connection = [NSURLConnection connectionWithRequest:reportSubmissionRequest delegate:self];
+	reportSubmissionRequest.delegate = self;
+	[reportSubmissionRequest startAsynchronous];
 	self.sessionState = RKCROSSessionObservationSubmitted;
 	return YES;
 }
@@ -333,7 +314,40 @@
 			RKLog(@"%@", self.receivedString);
 			break;
 	}
+	
+}
+#pragma mark -
+#pragma mark ASIHTTPRequest delegate
+- (void)requestStarted:(ASIHTTPRequest *)request
+{
+	LogMethod();
+}
+- (void)requestReceivedResponseHeaders:(ASIHTTPRequest *)request
+{
+	LogMethod();
+	self.receivedData.length = 0;
+	RKLog(@"%@", request.responseHeaders);
+	RKLog(@"%@", request.responseCookies);
+}
+- (void)requestFinished:(ASIHTTPRequest *)request
+{
+	LogMethod();
+	self.receivedString = [[[NSString alloc] initWithData:self.receivedData
+												 encoding:NSUTF8StringEncoding] autorelease];
+	RKLog(@"%@", self.receivedString);
+}
+- (void)requestFailed:(ASIHTTPRequest *)request
+{
+	LogMethod();
+}
 
+// When a delegate implements this method, it is expected to process all incoming data itself
+// This means that responseData / responseString / downloadDestinationPath etc are ignored
+// You can have the request call a different method by setting didReceiveDataSelector
+- (void)request:(ASIHTTPRequest *)request didReceiveData:(NSData *)data
+{
+	NSAssert(self.receivedData, @"bad receivedData ivar");
+	[self.receivedData appendData:data];	
 }
 
 @end

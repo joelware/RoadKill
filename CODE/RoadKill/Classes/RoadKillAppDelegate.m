@@ -92,17 +92,17 @@
 				  withObject:nil
 				  afterDelay:5.];
 	// FIXME: these 5 second delays are really brittle, instead need to use notifications to trigger next step
-	Species *species122 = [Species findOrCreateSpeciesWithCommonName:@"Fulvous Whistling-Duck"
-														   latinName:@"Dendrocygna bicolor" 
-															 nidCode:@"122"
+	Species *species624 = [Species findOrCreateSpeciesWithCommonName:@"Striped Skunk"
+														   latinName:@"Mephitis mephitis"
+															 nidCode:@"624"
 														   inContext:self.managedObjectContext];
-	SpeciesCategory *birds = [SpeciesCategory findOrCreateSpeciesCategoryWithName:@"Bird" 
-																	  codeInteger:6 
+	SpeciesCategory *mediumMammals = [SpeciesCategory findOrCreateSpeciesCategoryWithName:@"Mammal (Medium)" 
+																	  codeInteger:4 
 																		inContext:self.managedObjectContext];
 	Observation *testObservation = [Observation addObservationInContext:self.managedObjectContext];
 	[testObservation markAsTestObservation];
-	testObservation.species = species122;
-	testObservation.speciesCategory = birds;
+	testObservation.species = species624;
+	testObservation.speciesCategory = mediumMammals;
 	[session performSelector:@selector(submitObservationReport:)
 				  withObject:testObservation
 				  afterDelay:10.];
