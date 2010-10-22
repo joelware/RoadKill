@@ -110,32 +110,27 @@
 	//			       path:@"/test/roadkill.php"] autorelease];
 	
 	ASIFormDataRequest *postRequest = [ASIFormDataRequest requestWithURL:url];
-	
-	//  NSMutableDictionary *headers = 
-	//    [NSMutableDictionary dictionaryWithDictionary:[NSHTTPCookie 
-	//						    requestHeaderFieldsWithCookies:[[NSHTTPCookieStorage sharedHTTPCookieStorage] 
-	//										     cookiesForURL:[[self class] baseURLForWildlifeServer]]]];
-	//	[headers addEntriesFromDictionary:postRequest.allHTTPHeaderFields];
-	//	RKLog(@"my headers: %@", headers);
-	//	RKLog(@"default headers: %@", postRequest.allHTTPHeaderFields);
-	//	[postRequest setAllHTTPHeaderFields:headers]; 
-	//	[postRequest addValue:@"8bit" forHTTPHeaderField:@"Content-Transfer-Encoding"];
-	//	[postRequest addValue: [NSString stringWithFormat:@"multipart/form-data; boundary=%@", kFormBoundaryString] 
-	//	   forHTTPHeaderField: @"Content-Type"];
-	
-	[postRequest setPostValue:obs.speciesCategory.code forKey:@"taxonomy[1]"];
-	[postRequest setPostValue:obs.species.commonName forKey: @"field_taxon_ref[0][nid][nid]"];
-	[postRequest setPostValue:obs.freeText forKey: @"field_taxon_freetext[0][value]"];
-	[postRequest setPostValue:self.formToken forKey: @"form_token"];
-	[postRequest setPostValue:obs.formIDConfidence forKey: @"field_id_confidence[value]"];
-	[postRequest setPostValue:obs.street forKey: @"field_geography[0][street]"];
-	[postRequest setPostValue:obs.decayDurationHours forKey: @"field_decay_duration"];
-	[postRequest setPostValue:obs.observerName forKey: @"field_observer[0][value]"];
-	[postRequest setPostValue:@"roadkill_node_form" forKey: @"form_id"];
-	[postRequest setPostValue:@"" forKey: @"changed"];
-	[postRequest setPostValue:@"" forKey: @"form_build_id"];
-	[postRequest setPostValue:@"test log message Seattle iPhone Team" forKey:	@"log"];
-	[postRequest setPostValue:@"Save" forKey: @"op"];
+	NSMutableDictionary *arguments = [NSDictionary dictionaryWithObjectsAndKeys:
+									  obs.speciesCategory.code, @"taxonomy[1]",
+									  obs.species.commonName, @"field_taxon_ref[0][nid][nid]",
+									  obs.freeText, @"field_taxon_freetext[0][value]",
+									  self.formToken, @"form_token", 
+									  obs.formIDConfidence, @"field_id_confidence[value]",
+									  obs.street, @"field_geography[0][street]", 
+									  obs.decayDurationHours, @"field_decay_duration",
+									  obs.observerName, @"field_observer[0][value]", 
+									  obs.latitude, @"field_geography[0][locpick][user_latitude]",
+									  obs.longitude, @"field_geography[0][locpick][user_longitude]",
+									  @"roadkill_node_form", @"form_id",
+									  @"", @"changed",
+									  @"", @"form_build_id",
+									  @"test log message Seattle iPhone Team",	@"log", 
+									  @"Save", @"op",
+									  nil];
+	[arguments enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+		if (obj)
+			[postRequest setPostValue:obj forKey:key];
+	}];
 	
 	NSDateFormatter *obsDateFormatter = [[[NSDateFormatter alloc] init] autorelease];
 	[obsDateFormatter setDateFormat:@"YYYY-MM-dd"];
@@ -333,7 +328,6 @@
 {
 	LogMethod();
 	self.receivedString = request.responseString;
-	RKLog(@"%@", self.receivedString);
 	if (self.receivedStringIsValid)
 		self.sessionState = RKCROSSessionObservationComplete;
 	else 
