@@ -57,7 +57,6 @@
 	NSURL *url = [[[NSURL alloc] initWithScheme:@"http" 
 										   host:RKWebServer 
 										   path:@"/california/node"] autorelease];
-	RKLog(@"requesting URL %@", url);
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	request.shouldRedirect = NO;
 	NSMutableDictionary *arguments = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -122,7 +121,6 @@
 					   forKey:@"field_date_observation[0][value][time]" ];
 
 	NSString *demoImagePathname = [[NSBundle mainBundle] pathForResource:@"demoSkunk" ofType:@"jpg"];
-	RKLog (@"demo image %@", demoImagePathname);
 	[postRequest addFile:demoImagePathname forKey:@"files[field_image_0]"];
 	[postRequest setPostValue:@"0" forKey:@"field_image[0][fid]"];
 	[postRequest setPostValue:@"1" forKey:@"field_image[0][list]"];
@@ -146,10 +144,8 @@
 
 - (ASIHTTPRequest *)formTokenRequest
 {
-	LogMethod();
 	NSURL *formTokenURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/california/node/add/roadkill",
 												[[self class] baseURLForWildlifeServer]]];
-	RKLog(@"%@", formTokenURL);
 	ASIHTTPRequest *result = [ASIHTTPRequest requestWithURL:formTokenURL];
 	return result;
 }
@@ -172,7 +168,6 @@
 	NSRange tokenFormElementRange = [self.receivedString rangeOfString:@"<input type=\"hidden\" name=\"form_token\".*>"
 															   options:NSRegularExpressionSearch];
 	if (tokenFormElementRange.length > 0) {
-		RKLog(@"found %@", [self.receivedString substringWithRange:tokenFormElementRange]);
 		NSScanner *scanner = [NSScanner scannerWithString:[self.receivedString substringWithRange:tokenFormElementRange]];
 		[scanner scanUpToString:@"value=\"" intoString:NULL];
 		[scanner scanUpToString:@"\"" intoString:NULL];
@@ -180,7 +175,6 @@
 		NSString *theToken;
 		[scanner scanUpToString:@"\"" intoString:&theToken];
 		self.formToken = theToken;
-		RKLog(@"token %@", self.formToken);
 		return YES;
 	}
 	RKLog(@"form token not found");
@@ -212,56 +206,15 @@
 }
 
 #pragma mark -
-#pragma mark NSURLConnection delegate
-- (NSURLRequest *)connection:(NSURLConnection *)theConnection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse
-{
-	LogMethod();
-	RKLog(@"%@ %@ %@", theConnection, request, redirectResponse);
-	switch (self.sessionState) {
-		case RKCROSSessionConnecting:
-			if (redirectResponse) 
-				return nil;
-			break;
-	} 
-	return request;
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)theConnection
-{
-	self.receivedString = [[[NSString alloc] initWithData:self.receivedData
-												 encoding:NSUTF8StringEncoding] autorelease];
-	LogMethod();
-	switch (self.sessionState) {
-		case RKCROSSessionConnecting:
-			self.sessionState = RKCROSSessionAuthenticated;
-			break;
-		case RKCROSSessionAuthenticated:
-			if ([self extractFormTokenFromReceivedString])
-				self.sessionState = RKCROSSessionFormTokenObtained;
-			break;
-		case RKCROSSessionObservationSubmitted:
-			RKLog(@"%@", self.receivedString);
-			break;
-	}
-}
-
-#pragma mark -
 #pragma mark ASIHTTPRequest delegate
-- (void)requestStarted:(ASIHTTPRequest *)request
-{
-	LogMethod();
-}
+
 - (void)requestReceivedResponseHeaders:(ASIHTTPRequest *)request
 {
-	LogMethod();
 	self.receivedData.length = 0;
-	RKLog(@"%@", request.responseHeaders);
-	RKLog(@"%@", request.responseCookies);
 }
 
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
-	LogMethod();
 	self.receivedString = request.responseString;
 	switch (self.sessionState) {
 		case RKCROSSessionConnecting:
@@ -276,6 +229,7 @@
 				self.sessionState = RKCROSSessionObservationComplete;
 			else 
 				self.sessionState = RKCROSSessionAuthenticated;
+			RKLog(@"observation successfully submitted");
 			break;
 	}
 }
