@@ -2,3 +2,6 @@
 build/
 joelware.*
 hickey.*
+*.pbxuser
+*.perspectivev3
+*~
