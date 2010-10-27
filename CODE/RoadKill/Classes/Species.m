@@ -9,6 +9,7 @@
 #import "Species.h"
 
 #import "Observation.h"
+#import "SpeciesCategory.h"
 #import "RKConstants.h"
 
 @implementation Species 
@@ -16,6 +17,7 @@
 @dynamic nidCode;
 @dynamic latinName;
 @dynamic commonName;
+@dynamic speciesCategory;
 @dynamic observations;
 
 + (Species *)findOrCreateSpeciesWithCommonName:(NSString *)theCommonName

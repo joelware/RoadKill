@@ -240,6 +240,8 @@
 														  nidCode:[theRecord objectForKey:kCSVHeaderNID]
 														inContext:self.managedObjectContext];
 	// species.category = category;
+	species.speciesCategory = category;
+
 }
 
 - (void)startAsynchronousLoadOfSpeciesDatabase

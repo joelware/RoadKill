@@ -9,6 +9,7 @@
 #import <CoreData/CoreData.h>
 
 @class Observation;
+@class Species;
 
 @interface SpeciesCategory :  NSManagedObject  
 {
@@ -17,6 +18,7 @@
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSNumber * code;
 @property (nonatomic, retain) NSSet* observations;
+@property (nonatomic, retain) NSSet* speciesMembers;
 
 
 + (SpeciesCategory *)findOrCreateSpeciesCategoryWithName:(NSString *)theName
@@ -32,5 +34,11 @@
 - (void)removeObservationsObject:(Observation *)value;
 - (void)addObservations:(NSSet *)value;
 - (void)removeObservations:(NSSet *)value;
+
+- (void)addSpeciesMembersObject:(Species *)value;
+- (void)removeSpeciesMembersObject:(Species *)value;
+- (void)addSpeciesMembers:(NSSet *)value;
+- (void)removeSpeciesMembers:(NSSet *)value;
+
 @end
 

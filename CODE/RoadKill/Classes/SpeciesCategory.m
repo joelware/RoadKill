@@ -8,6 +8,7 @@
 #import "SpeciesCategory.h"
 
 #import "Observation.h"
+#import "Species.h"
 #import "RKConstants.h"
 
 @implementation SpeciesCategory 
@@ -15,6 +16,8 @@
 @dynamic name;
 @dynamic code;
 @dynamic observations;
+@dynamic speciesMembers;
+
 
 + (SpeciesCategory *)findOrCreateSpeciesCategoryWithName:(NSString *)theName
 											 codeInteger:(NSInteger)codeInteger
