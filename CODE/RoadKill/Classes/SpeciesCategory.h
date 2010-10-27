@@ -22,6 +22,8 @@
 + (SpeciesCategory *)findOrCreateSpeciesCategoryWithName:(NSString *)theName
 											 codeInteger:(NSInteger)codeInteger
 											   inContext:(NSManagedObjectContext *)moc;
++ (SpeciesCategory *)speciesCategoryWithName:(NSString *)theName
+								   inContext:(NSManagedObjectContext *)moc;
 @end
 
 

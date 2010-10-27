@@ -15,6 +15,9 @@
 #import "SpeciesCategory.h"
 #import "Species.h"
 
+#import "ASIHTTPRequest.h"
+#import "CSVParser.h"
+
 @implementation RoadKillAppDelegate
 
 @synthesize window;
@@ -224,7 +227,49 @@
      */
 }
 
-- (void)putSpeciesIntoDatastore
+#pragma mark -
+#pragma mark datastore setup
+- (void)handleParsedSpeciesInfo:(NSDictionary*)theRecord
+{
+	LogMethod();
+	RKLog(@"%@", theRecord);
+	SpeciesCategory *category = [SpeciesCategory speciesCategoryWithName:[theRecord objectForKey:kCSVHeaderCategory]
+															   inContext:self.managedObjectContext];
+	Species *species = [Species findOrCreateSpeciesWithCommonName:[theRecord objectForKey:kCSVHeaderCommon]
+														latinName:[theRecord objectForKey:kCSVHeaderLatin]
+														  nidCode:[theRecord objectForKey:kCSVHeaderNID]
+														inContext:self.managedObjectContext];
+	// species.category = category;
+}
+
+- (void)startAsynchronousLoadOfSpeciesDatabase
+{
+	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:@"http://www.wildlifecrossing.net/california/files/xing/CA-taxa.csv"]];
+	request.delegate = self;
+	[request startAsynchronous];
+}
+
+- (void)requestFinished:(ASIHTTPRequest *)request
+{
+	NSError *error;
+	RKLog(@"MOC status: %d registered objects", self.managedObjectContext.registeredObjects.count);
+	CSVParser *speciesParser =
+	[[[CSVParser alloc]
+	  initWithString:request.responseString
+	  separator:@","
+	  hasHeader:YES
+	  fieldNames:
+	  [NSArray arrayWithObjects:
+	   kCSVHeaderNID, kCSVHeaderCategory, kCSVHeaderCommon, kCSVHeaderLatin, nil
+	   ]]
+	 autorelease];
+	[speciesParser parseRowsForReceiver:self selector:@selector(handleParsedSpeciesInfo:)];
+	RKLog(@"MOC status: %d registered objects", self.managedObjectContext.registeredObjects.count);
+	[self.managedObjectContext save:&error];
+}
+
+/*
+ - (void)putSpeciesIntoDatastore
 {
 	[Species findOrCreateSpeciesWithCommonName:@"Striped Skunk"
 									 latinName:@"Mephitis mephitis"
@@ -234,7 +279,9 @@
 									 latinName:@"Dendrocygna bicolor" 
 									   nidCode:@"122"
 									 inContext:self.managedObjectContext];
+
 }
+*/
 
 - (void)putSpeciesCategoriesIntoDatastore
 {
@@ -262,6 +309,7 @@
 - (void)populateInitialDatastore
 {
 	[self putSpeciesCategoriesIntoDatastore];
+	[self startAsynchronousLoadOfSpeciesDatabase];
 }
 
 - (void)dealloc {

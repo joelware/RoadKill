@@ -27,6 +27,12 @@
 #define kRKComplete @"complete"
 
 
+// species database header fields, http://www.wildlifecrossing.net/california/files/xing/CA-taxa.csv
+#define kCSVHeaderNID @"ID"
+#define kCSVHeaderCategory @"Species Category"
+#define kCSVHeaderCommon @"Common Name"
+#define kCSVHeaderLatin @"Scientific Name"
+
 
 
 
