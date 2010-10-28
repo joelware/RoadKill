@@ -42,7 +42,7 @@
     [window addSubview:navigationController.view];
     [window makeKeyAndVisible];
 
-	[self populateInitialDatastore];
+	//[self populateInitialDatastore];
 	
     return YES;
 }
@@ -89,14 +89,8 @@
      */
 
 	// this is here just to test RKCROSSession. There has to be a better place for it.
+	
 	RKCROSSession *session = [[RKCROSSession alloc] init];
-	[session authenticateWithUsername:RKTestUsername password:RKCorrectTestPassword];
-	RKLog(@"%@", session);
-	LogMethod();
-	[session performSelector:@selector(obtainFormToken)
-				  withObject:nil
-				  afterDelay:5.];
-	// FIXME: these 5 second delays are really brittle, instead need to use notifications to trigger next step
 	Species *species624 = [Species findOrCreateSpeciesWithCommonName:@"Striped Skunk"
 														   latinName:@"Mephitis mephitis"
 															 nidCode:@"624"
@@ -109,9 +103,8 @@
 	testObservation.species = species624;
 	testObservation.speciesCategory = mediumMammals;
 	testObservation.sentStatus = kRKReady;
-	[session performSelector:@selector(submitObservationReport:)
-				  withObject:testObservation
-				  afterDelay:10.];
+	[session submitObservationReport:testObservation
+					  asynchronously:NO];
 }
 
 

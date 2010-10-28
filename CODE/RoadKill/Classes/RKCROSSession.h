@@ -16,9 +16,8 @@
 	Observation *observation;
 	ASIHTTPRequest *asiHTTPRequest;
 	NSUInteger sessionState;
-	NSMutableData *receivedData;
-	NSString *receivedString;
 	NSString *formToken;
+	BOOL isAynchronous;
 }
 
 typedef enum {
@@ -33,9 +32,8 @@ typedef enum {
 @property (nonatomic, retain) Observation *observation;
 @property (nonatomic, retain) ASIHTTPRequest *asiHTTPRequest;
 @property (nonatomic) NSUInteger sessionState;
-@property (nonatomic, retain) NSMutableData *receivedData;
-@property (nonatomic, retain) NSString *receivedString;
 @property (nonatomic, retain) NSString *formToken;
+@property (nonatomic) BOOL isAsynchronous;
 
 + (ASIHTTPRequest *)authenticationRequestWithUsername:(NSString *)username password:(NSString *)password;
 - (void)authenticateWithUsername:(NSString *)username password:(NSString *)password;
@@ -43,7 +41,10 @@ typedef enum {
 - (void)obtainFormToken;
 + (NSURL *)baseURLForWildlifeServer;
 - (BOOL)extractFormTokenFromReceivedString;
-- (BOOL)submitObservationReport:(Observation *)report;
+- (BOOL)receivedStringShowsSuccessfulSubmission;
+- (NSString *)observationIDFromResponseHeaders:(NSDictionary *)headers;
+- (BOOL)submitObservationReport:(Observation *)report
+				 asynchronously:(BOOL)async;
 
 - (BOOL)receivedStringShowsSuccessfulSubmission;
 @end
