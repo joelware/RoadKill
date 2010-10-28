@@ -23,6 +23,7 @@
 + (Species *)findOrCreateSpeciesWithCommonName:(NSString *)theCommonName
 									 latinName:(NSString *)theLatinName
 									   nidCode:(NSString *)theNidCode
+							   speciesCategory:(SpeciesCategory *)theSpeciesCategory
 									 inContext:(NSManagedObjectContext *)moc;
 @end
 

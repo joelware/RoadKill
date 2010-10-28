@@ -89,6 +89,7 @@
      */
 
 	// this is here just to test RKCROSSession. There has to be a better place for it.
+	/*
 	RKCROSSession *session = [[RKCROSSession alloc] init];
 	[session authenticateWithUsername:RKTestUsername password:RKCorrectTestPassword];
 	RKLog(@"%@", session);
@@ -97,6 +98,7 @@
 				  withObject:nil
 				  afterDelay:5.];
 	// FIXME: these 5 second delays are really brittle, instead need to use notifications to trigger next step
+	// FIXME: if using this, be sure to update findOrCreateSpeciesWithCommonName: to include speciesCategory:
 	Species *species624 = [Species findOrCreateSpeciesWithCommonName:@"Striped Skunk"
 														   latinName:@"Mephitis mephitis"
 															 nidCode:@"624"
@@ -112,6 +114,7 @@
 	[session performSelector:@selector(submitObservationReport:)
 				  withObject:testObservation
 				  afterDelay:10.];
+	 */
 }
 
 
@@ -235,11 +238,12 @@
 	RKLog(@"%@", theRecord);
 	SpeciesCategory *category = [SpeciesCategory speciesCategoryWithName:[theRecord objectForKey:kCSVHeaderCategory]
 															   inContext:self.managedObjectContext];
+	
+		// FIXME: if using this, be sure to update findOrCreateSpeciesWithCommonName: to include speciesCategory:
 	Species *species = [Species findOrCreateSpeciesWithCommonName:[theRecord objectForKey:kCSVHeaderCommon]
 														latinName:[theRecord objectForKey:kCSVHeaderLatin]
 														  nidCode:[theRecord objectForKey:kCSVHeaderNID]
 														inContext:self.managedObjectContext];
-	// species.category = category;
 	species.speciesCategory = category;
 
 }
@@ -273,6 +277,7 @@
 /*
  - (void)putSpeciesIntoDatastore
 {
+ // FIXME: if using this, be sure to update findOrCreateSpeciesWithCommonName: to include speciesCategory:
 	[Species findOrCreateSpeciesWithCommonName:@"Striped Skunk"
 									 latinName:@"Mephitis mephitis"
 									   nidCode:@"624"

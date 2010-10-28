@@ -22,7 +22,8 @@
 
 + (Species *)findOrCreateSpeciesWithCommonName:(NSString *)theCommonName
 									 latinName:(NSString *)theLatinName
-									   nidCode:(NSString *)theNidCode
+									   nidCode:(NSString *)theNidCode 
+							   speciesCategory:(SpeciesCategory *)theSpeciesCategory
 											   inContext:(NSManagedObjectContext *)moc
 {
 	NSDictionary *predicateVariables = [NSDictionary dictionaryWithObject:theLatinName
@@ -47,6 +48,7 @@
 	theSpecies.commonName = theCommonName;
 	theSpecies.latinName = theLatinName;
 	theSpecies.nidCode = theNidCode;
+	theSpecies.speciesCategory = theSpeciesCategory;
 	return theSpecies;
 }
 
