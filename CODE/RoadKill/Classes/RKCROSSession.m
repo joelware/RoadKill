@@ -58,7 +58,7 @@
 		RKLog(@"%@ %@", key, obj);
 		[request setPostValue:obj forKey:key];
 	}];
-	 
+	
 	return request;
 }
 
@@ -78,6 +78,7 @@
 	//			       path:@"/test/roadkill.php"] autorelease];
 	
 	ASIFormDataRequest *postRequest = [ASIFormDataRequest requestWithURL:url];
+	postRequest.shouldRedirect = NO;
 	NSMutableDictionary *arguments = [NSDictionary dictionaryWithObjectsAndKeys:
 									  self.observation.speciesCategory.code, @"taxonomy[1]",
 									  self.observation.species.commonName, @"field_taxon_ref[0][nid][nid]",
@@ -108,7 +109,7 @@
 	[obsDateFormatter setDateFormat:@"kk:mm"];
 	[postRequest setPostValue:[obsDateFormatter stringFromDate:self.observation.observationTimestamp]
 					   forKey:@"field_date_observation[0][value][time]" ];
-
+	
 	NSString *demoImagePathname = [[NSBundle mainBundle] pathForResource:@"demoSkunk" ofType:@"jpg"];
 	[postRequest addFile:demoImagePathname forKey:@"files[field_image_0]"];
 	[postRequest setPostValue:@"0" forKey:@"field_image[0][fid]"];
@@ -126,7 +127,7 @@
 - (void)authenticateWithUsername:(NSString *)username password:(NSString *)password
 {
 	ASIHTTPRequest *request = [[self class] authenticationRequestWithUsername:username
-																		  password:password];
+																	 password:password];
 	request.delegate = self;
 	[request startAsynchronous];
 }
@@ -155,7 +156,7 @@
 	//
 	
 	NSRange tokenFormElementRange = [self.asiHTTPRequest.responseString rangeOfString:@"<input type=\"hidden\" name=\"form_token\".*>"
-															   options:NSRegularExpressionSearch];
+																			  options:NSRegularExpressionSearch];
 	if (tokenFormElementRange.length > 0) {
 		NSScanner *scanner = [NSScanner scannerWithString:[self.asiHTTPRequest.responseString substringWithRange:tokenFormElementRange]];
 		[scanner scanUpToString:@"value=\"" intoString:NULL];
@@ -199,7 +200,7 @@
 	self.isAsynchronous = async;
 	
 	self.asiHTTPRequest = [[self class] authenticationRequestWithUsername:RKTestUsername
-																 password:RKCorrectTestPassword];
+																 password:RKFailingTestPassword];
 	self.sessionState = RKCROSSessionConnecting;
 	
 	if (self.isAsynchronous) {
@@ -223,31 +224,41 @@
 					RKLog(@"sending submission request");
 					[self.asiHTTPRequest startSynchronous];
 					if (![self.asiHTTPRequest error]) {
-						if ([self receivedStringShowsSuccessfulSubmission]) {
+						NSString *theObservationID = [self observationIDFromResponseHeaders:self.asiHTTPRequest.responseHeaders];
+						if (theObservationID) {
 							RKLog(@"%d %@", asiHTTPRequest.responseStatusCode, asiHTTPRequest.responseHeaders);
-							self.observation.observationID = [self observationIDFromResponseHeaders:self.asiHTTPRequest.responseHeaders];
+							self.observation.observationID = theObservationID;
 							self.sessionState = RKCROSSessionObservationComplete;
 							self.observation.sentStatus = kRKComplete;
+							RKLog(@"self.observation");
 							return YES;
 						}
-						RKLog(@"observation submission shows unsuccessful submission");
+						else {
+							RKLog(@"observation submission shows unsuccessful submission");
+						}
 					}
 					RKLog(@"observation submission request failed");
 					RKLog(@"%d %@", asiHTTPRequest.responseStatusCode, asiHTTPRequest.responseHeaders);
 				}
+				else {
+					RKLog(@"form token response contained no token");
+				}
 			}
-			RKLog(@"form token request failed");
+			else {
+				RKLog(@"form token request failed");
+			}
 		}
 	}
 	return NO;
 }
-						  
+
 - (BOOL)receivedStringShowsSuccessfulSubmission
 {
 	/* upon success, the page contains this text:
-	       <div class="messages status">
-           Observation <em>roadkill/review</em> has been created.</div>
+	 <div class="messages status">
+	 Observation <em>roadkill/review</em> has been created.</div>
 	 */
+	RKLog(@"response string %@", self.asiHTTPRequest.responseString);
 	NSRange searchResults = [self.asiHTTPRequest.responseString rangeOfString:@"Observation <em>roadkill/review</em> has been created."];
 	return (searchResults.location != NSNotFound);
 }
