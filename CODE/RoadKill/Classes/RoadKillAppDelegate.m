@@ -104,7 +104,7 @@
 	testObservation.speciesCategory = mediumMammals;
 	testObservation.sentStatus = kRKReady;
 	[session submitObservationReport:testObservation
-					  asynchronously:NO];
+					  asynchronously:YES];
 }
 
 
