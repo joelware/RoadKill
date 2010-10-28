@@ -8,6 +8,7 @@
 #import <CoreData/CoreData.h>
 
 @class Observation;
+@class SpeciesCategory;
 
 @interface Species :  NSManagedObject  
 {
@@ -16,11 +17,13 @@
 @property (nonatomic, retain) NSString * nidCode;
 @property (nonatomic, retain) NSString * latinName;
 @property (nonatomic, retain) NSString * commonName;
+@property (nonatomic, retain) SpeciesCategory * speciesCategory;
 @property (nonatomic, retain) NSSet* observations;
 
 + (Species *)findOrCreateSpeciesWithCommonName:(NSString *)theCommonName
 									 latinName:(NSString *)theLatinName
 									   nidCode:(NSString *)theNidCode
+							   speciesCategory:(SpeciesCategory *)theSpeciesCategory
 									 inContext:(NSManagedObjectContext *)moc;
 @end
 

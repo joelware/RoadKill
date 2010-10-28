@@ -42,7 +42,7 @@
     [window addSubview:navigationController.view];
     [window makeKeyAndVisible];
 
-	//[self populateInitialDatastore];
+	[self populateInitialDatastore];
 	
     return YES;
 }
@@ -88,23 +88,6 @@
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
 
-	// this is here just to test RKCROSSession. There has to be a better place for it.
-	
-	RKCROSSession *session = [[RKCROSSession alloc] init];
-	Species *species624 = [Species findOrCreateSpeciesWithCommonName:@"Striped Skunk"
-														   latinName:@"Mephitis mephitis"
-															 nidCode:@"624"
-														   inContext:self.managedObjectContext];
-	SpeciesCategory *mediumMammals = [SpeciesCategory findOrCreateSpeciesCategoryWithName:@"Mammal (Medium)" 
-																	  codeInteger:4 
-																		inContext:self.managedObjectContext];
-	Observation *testObservation = [Observation addObservationInContext:self.managedObjectContext];
-	[testObservation markAsTestObservation];
-	testObservation.species = species624;
-	testObservation.speciesCategory = mediumMammals;
-	testObservation.sentStatus = kRKReady;
-	[session submitObservationReport:testObservation
-					  asynchronously:YES];
 }
 
 
@@ -228,11 +211,13 @@
 	RKLog(@"%@", theRecord);
 	SpeciesCategory *category = [SpeciesCategory speciesCategoryWithName:[theRecord objectForKey:kCSVHeaderCategory]
 															   inContext:self.managedObjectContext];
-	Species *species = [Species findOrCreateSpeciesWithCommonName:[theRecord objectForKey:kCSVHeaderCommon]
-														latinName:[theRecord objectForKey:kCSVHeaderLatin]
-														  nidCode:[theRecord objectForKey:kCSVHeaderNID]
-														inContext:self.managedObjectContext];
-	// species.category = category;
+	
+	//Species *species = 
+	[Species findOrCreateSpeciesWithCommonName:[theRecord objectForKey:kCSVHeaderCommon]
+									 latinName:[theRecord objectForKey:kCSVHeaderLatin]
+									   nidCode:[theRecord objectForKey:kCSVHeaderNID]
+							   speciesCategory:category
+									 inContext:self.managedObjectContext];
 }
 
 - (void)startAsynchronousLoadOfSpeciesDatabase
@@ -264,6 +249,7 @@
 /*
  - (void)putSpeciesIntoDatastore
 {
+ // FIXME: if using this, be sure to update findOrCreateSpeciesWithCommonName: to include speciesCategory:
 	[Species findOrCreateSpeciesWithCommonName:@"Striped Skunk"
 									 latinName:@"Mephitis mephitis"
 									   nidCode:@"624"

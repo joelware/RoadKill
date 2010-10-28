@@ -46,6 +46,7 @@
 
 - (void)testSpeciesInsertion
 {
+		// FIXME: if using this, be sure to update findOrCreateSpeciesWithCommonName: to include speciesCategory:
 	STAssertNoThrow([Species findOrCreateSpeciesWithCommonName:@"Fulvous Whistling-Duck"
 													 latinName:@"Dendrocygna bicolor" 
 													   nidCode:@"122"
@@ -63,6 +64,7 @@
 
 - (void)testObservationInsertion
 {
+		// FIXME: if using this, be sure to update findOrCreateSpeciesWithCommonName: to include speciesCategory:
 	Species *species122 = [Species findOrCreateSpeciesWithCommonName:@"Fulvous Whistling-Duck"
 														   latinName:@"Dendrocygna bicolor" 
 															 nidCode:@"122"

@@ -89,13 +89,15 @@
     Observation *newObservation = [Observation addObservationInContext:context];
     
     newObservation.observationTimestamp = [NSDate date];
-	newObservation.species = [Species findOrCreateSpeciesWithCommonName:@"Striped Skunk"
-															  latinName:@"Mephitis mephitis"
-																nidCode:@"624"
-															  inContext:context];
 	newObservation.speciesCategory = [SpeciesCategory findOrCreateSpeciesCategoryWithName:@"Mammal (Medium)" 
 																			  codeInteger:4 
 																				inContext:context];
+	newObservation.species = [Species findOrCreateSpeciesWithCommonName:@"Striped Skunk"
+															  latinName:@"Mephitis mephitis"
+																nidCode:@"624"
+														speciesCategory:newObservation.speciesCategory
+															  inContext:context];
+	
 	[newObservation markAsTestObservation];
     
     // Save the context.
