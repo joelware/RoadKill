@@ -49,7 +49,8 @@
 
 - (BOOL)isValidForSubmission
 {
-	if (![self.sentStatus isEqualToString:kRKReady]) {
+	if (!([self.sentStatus isEqualToString:kRKReady] ||
+		  [self.sentStatus isEqualToString:kRKQueued])) {
 		RKLog(@"status should be kRKReady in observation %@", self);
 		return NO;
 	}

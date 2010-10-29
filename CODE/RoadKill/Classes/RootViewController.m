@@ -8,9 +8,12 @@
 
 #import "RootViewController.h"
 #import "RKConstants.h"
+
 #import "Observation.h"
 #import "Species.h"
 #import "SpeciesCategory.h"
+
+#import "RKCROSSession.h"
 
 @interface RootViewController ()
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
@@ -189,10 +192,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Navigation logic may go here -- for example, create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     NSManagedObject *selectedObject = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-     // ...
+	Observation *obs = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+	
+	if ([obs.sentStatus isEqualToString:kRKNotReady])
+		obs.sentStatus = kRKReady;
+	else if ([obs isValidForSubmission]) {
+		RKCROSSession *webSession = [[RKCROSSession alloc] init];
+		[webSession submitObservationReport:obs asynchronously:YES];
+	}
+	
+	/* // ...
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      [detailViewController release];

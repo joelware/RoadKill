@@ -200,7 +200,7 @@
 	self.isAsynchronous = async;
 	
 	self.asiHTTPRequest = [[self class] authenticationRequestWithUsername:RKTestUsername
-																 password:RKFailingTestPassword];
+																 password:RKCorrectTestPassword];
 	self.sessionState = RKCROSSessionConnecting;
 	
 	if (self.isAsynchronous) {
