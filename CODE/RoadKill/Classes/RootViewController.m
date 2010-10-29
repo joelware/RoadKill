@@ -8,6 +8,7 @@
 
 #import "RootViewController.h"
 #import "RKConstants.h"
+#import "RoadKillAppDelegate.h"
 
 #import "Observation.h"
 #import "Species.h"
@@ -196,8 +197,11 @@
 	if ([obs.sentStatus isEqualToString:kRKNotReady])
 		obs.sentStatus = kRKReady;
 	else if ([obs isValidForSubmission]) {
-		RKCROSSession *webSession = [[RKCROSSession alloc] init];
-		[webSession submitObservationReport:obs asynchronously:YES];
+		[[(RoadKillAppDelegate *)[[UIApplication sharedApplication] delegate] activeWebTransactions]
+		 addObject:[RKCROSSession submissionForObservation:obs
+											  withUsername:RKTestUsername 
+												  password:RKCorrectTestPassword 
+													 start:YES]];
 	}
 	
 	/* // ...

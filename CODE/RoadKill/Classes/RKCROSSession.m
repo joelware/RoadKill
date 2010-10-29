@@ -14,8 +14,16 @@
 
 #import "ASIFormDataRequest.h"
 
-#define kFormBoundaryString @"---------------------------1184049667376"
-#define kURLResponseSWAGLength 1000
+@interface RKCROSSession ()
++ (ASIHTTPRequest *)authenticationRequestWithUsername:(NSString *)username password:(NSString *)password;
+- (void)authenticateWithUsername:(NSString *)username password:(NSString *)password;
+- (ASIHTTPRequest *)formTokenRequest;
+- (void)obtainFormToken;
++ (NSURL *)baseURLForWildlifeServer;
+- (BOOL)extractFormTokenFromReceivedString;
+- (BOOL)receivedStringShowsSuccessfulSubmission;
+- (NSString *)observationIDFromResponseHeaders:(NSDictionary *)headers;
+@end
 
 @implementation RKCROSSession
 
@@ -23,7 +31,12 @@
 @synthesize asiHTTPRequest;
 @synthesize sessionState;
 @synthesize formToken;
+@synthesize username;
+@synthesize password;
 @synthesize isAsynchronous;
+
+NSString *RKCROSSessionSucceededNotification = @"RKCROSSessionSucceededNotification";
+NSString *RKCROSSessionFailedNotification = @"RKCROSSessionFailedNotification";
 
 - (id)init
 {
@@ -37,7 +50,7 @@
 {
     self.observation = nil;
     self.asiHTTPRequest = nil;
-	
+	self.formToken = nil;
     [super dealloc];
 }
 
@@ -124,10 +137,10 @@
 	return [NSURL URLWithString:[NSString stringWithFormat:@"http://%@", RKWebServer]];
 }
 
-- (void)authenticateWithUsername:(NSString *)username password:(NSString *)password
+- (void)authenticateWithUsername:(NSString *)theUsername password:(NSString *)thePassword
 {
-	ASIHTTPRequest *request = [[self class] authenticationRequestWithUsername:username
-																	 password:password];
+	ASIHTTPRequest *request = [[self class] authenticationRequestWithUsername:theUsername
+																	 password:thePassword];
 	request.delegate = self;
 	[request startAsynchronous];
 }
@@ -171,6 +184,40 @@
 	return NO;
 }
 
++ (RKCROSSession *)submissionForObservation:(Observation *)report
+							   withUsername:(NSString *)theUsername
+								   password:(NSString *)thePassword
+									  start:(BOOL)startNow
+{
+	RKCROSSession *result = [[[self alloc] init] autorelease];
+	result.observation = report;
+	result.username = theUsername;
+	result.password = thePassword;
+	if (startNow) {
+		[result startAsynchronously];
+	}
+	RKLog(@"%@", result);
+	return result;
+}
+
+- (void)startAsynchronously
+{
+	LogMethod();
+	[self beginTransactionAsynchronously:YES];
+}
+
+- (void)startSynchronously
+{
+	LogMethod();
+	[self beginTransactionAsynchronously:NO];
+}
+
+- (void)cancel
+{
+	LogMethod();
+	[self.asiHTTPRequest cancel];
+}
+
 /*
  
  Asynchronous:
@@ -192,11 +239,9 @@
  
  */
 
-- (BOOL)submitObservationReport:(Observation *)report
-				 asynchronously:(BOOL)async
+- (BOOL)beginTransactionAsynchronously:(BOOL)async
 {
 	LogMethod();
-	self.observation = report;
 	self.isAsynchronous = async;
 	
 	self.asiHTTPRequest = [[self class] authenticationRequestWithUsername:RKTestUsername
@@ -230,13 +275,28 @@
 							self.observation.observationID = theObservationID;
 							self.sessionState = RKCROSSessionObservationComplete;
 							self.observation.sentStatus = kRKComplete;
-							RKLog(@"self.observation");
+							[[NSNotificationCenter defaultCenter] postNotificationName:RKCROSSessionSucceededNotification
+																				object:self];
+							NSError *error = nil;
+							if (![self.observation.managedObjectContext save:&error]) {
+								/*
+								 Replace this implementation with code to handle the error appropriately.
+								 
+								 abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
+								 */
+								RKLog(@"Unresolved error %@, %@", error, [error userInfo]);
+								abort();
+							}
 							return YES;
 						}
 						else {
 							RKLog(@"observation submission shows unsuccessful submission");
+							[[NSNotificationCenter defaultCenter] postNotificationName:RKCROSSessionFailedNotification
+																				object:self];
 						}
 					}
+					[[NSNotificationCenter defaultCenter] postNotificationName:RKCROSSessionFailedNotification
+																		object:self];
 					RKLog(@"observation submission request failed");
 					RKLog(@"%d %@", asiHTTPRequest.responseStatusCode, asiHTTPRequest.responseHeaders);
 				}
@@ -288,6 +348,7 @@
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
 	LogMethod();
+	NSAssert(self.observation, @"observation cannot be null");
 	switch (self.sessionState) {
 		case RKCROSSessionConnecting:
 			self.sessionState = RKCROSSessionAuthenticated;
@@ -304,18 +365,36 @@
 				self.asiHTTPRequest.delegate = self;
 				RKLog(@"authenticated headers %@", self.asiHTTPRequest.responseHeaders);
 				self.sessionState = RKCROSSessionObservationSubmitted;
-				self.observation.sentStatus = kRKComplete;
+				self.observation.sentStatus = kRKQueued;
 				[self.asiHTTPRequest startAsynchronous];
 			}
 			break;
 		case RKCROSSessionObservationSubmitted:
 			RKLog(@"final headers %@", self.asiHTTPRequest.responseHeaders);
-			if (self.receivedStringShowsSuccessfulSubmission)
+			if ([self receivedStringShowsSuccessfulSubmission] ||
+				[self observationIDFromResponseHeaders:request.responseHeaders]) {
 				self.sessionState = RKCROSSessionObservationComplete;
-			else 
+				RKLog(@"observation successfully submitted");
+				self.observation.sentStatus = kRKComplete;
+				NSError *error = nil;
+				if (![self.observation.managedObjectContext save:&error]) {
+					/*
+					 Replace this implementation with code to handle the error appropriately.
+					 
+					 abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
+					 */
+					RKLog(@"Unresolved error %@, %@", error, [error userInfo]);
+					abort();
+				}
+				[[NSNotificationCenter defaultCenter] postNotificationName:RKCROSSessionSucceededNotification
+																	object:self];
+			}
+			else {
 				self.sessionState = RKCROSSessionAuthenticated;
-			RKLog(@"observation successfully submitted");
-			self.observation.sentStatus = kRKComplete;
+				RKLog(@"observation failed");
+				[[NSNotificationCenter defaultCenter] postNotificationName:RKCROSSessionFailedNotification
+																	object:self];
+			}
 			break;
 	}
 }
@@ -323,6 +402,8 @@
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
 	LogMethod();
+	[[NSNotificationCenter defaultCenter] postNotificationName:RKCROSSessionFailedNotification
+														object:self];
 	switch (self.sessionState) {
 		case RKCROSSessionConnecting:
 			break;

@@ -33,7 +33,4 @@
 #define kCSVHeaderCommon @"Common Name"
 #define kCSVHeaderLatin @"Scientific Name"
 
-
-
-
-
+#define kNinetyDaysInSeconds 90.*24.*60.*60.

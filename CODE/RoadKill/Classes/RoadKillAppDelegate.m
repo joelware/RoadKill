@@ -22,10 +22,29 @@
 
 @synthesize window;
 @synthesize navigationController;
+@synthesize activeWebTransactions;
 
+NSString *RKIsFirstLaunchKey = @"isFirstLaunch";
 
 #pragma mark -
 #pragma mark Application lifecycle
+
+- (void)initializeDefaults {
+	NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
+    
+	[defaultValues setValue:[NSNumber numberWithBool:YES] forKey:RKIsFirstLaunchKey];
+
+	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
+}	
+
+- (id)init
+{
+    if ((self = [super init])) {
+        activeWebTransactions = [[NSMutableSet set] retain];
+		[self initializeDefaults];
+    }
+    return self;
+}
 
 - (void)awakeFromNib {    
     
@@ -42,8 +61,17 @@
     [window addSubview:navigationController.view];
     [window makeKeyAndVisible];
 
-	[self populateInitialDatastore];
-	
+	[self populateInitialDatastoreIfNeeded];
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(noteDeactivatedTransaction:)
+												 name:RKCROSSessionSucceededNotification
+											   object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(noteDeactivatedTransaction:)
+												 name:RKCROSSessionFailedNotification
+											   object:nil];
+	[[NSUserDefaults standardUserDefaults] setBool:NO
+											forKey:RKIsFirstLaunchKey];
     return YES;
 }
 
@@ -61,6 +89,8 @@
      Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
      If your application supports background execution, called instead of applicationWillTerminate: when the user quits.
      */
+	[[NSUserDefaults standardUserDefaults] synchronize];
+
     NSError *error = nil;
     if (managedObjectContext_ != nil) {
         if ([managedObjectContext_ hasChanges] && ![managedObjectContext_ save:&error]) {
@@ -87,7 +117,6 @@
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
-
 }
 
 
@@ -95,7 +124,9 @@
  applicationWillTerminate: saves changes in the application's managed object context before the application terminates.
  */
 - (void)applicationWillTerminate:(UIApplication *)application {
-    
+    [self.activeWebTransactions enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+		[obj cancel];
+	}];
 }
 
 
@@ -246,22 +277,6 @@
 	[self.managedObjectContext save:&error];
 }
 
-/*
- - (void)putSpeciesIntoDatastore
-{
- // FIXME: if using this, be sure to update findOrCreateSpeciesWithCommonName: to include speciesCategory:
-	[Species findOrCreateSpeciesWithCommonName:@"Striped Skunk"
-									 latinName:@"Mephitis mephitis"
-									   nidCode:@"624"
-									 inContext:self.managedObjectContext];
-	[Species findOrCreateSpeciesWithCommonName:@"Fulvous Whistling-Duck"
-									 latinName:@"Dendrocygna bicolor" 
-									   nidCode:@"122"
-									 inContext:self.managedObjectContext];
-
-}
-*/
-
 - (void)putSpeciesCategoriesIntoDatastore
 {
 	[SpeciesCategory findOrCreateSpeciesCategoryWithName:@"Amphibian"
@@ -285,10 +300,18 @@
 	
 }
 
-- (void)populateInitialDatastore
+- (void)populateInitialDatastoreIfNeeded
 {
-	[self putSpeciesCategoriesIntoDatastore];
-	[self startAsynchronousLoadOfSpeciesDatabase];
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:RKIsFirstLaunchKey]) {
+		[self putSpeciesCategoriesIntoDatastore];
+		[self startAsynchronousLoadOfSpeciesDatabase];
+	}
+}
+
+- (void)noteDeactivatedTransaction:(NSNotification *)notification
+{
+	LogMethod();
+	[self.activeWebTransactions removeObject:notification.object];
 }
 
 - (void)dealloc {
