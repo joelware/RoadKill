@@ -15,7 +15,6 @@
 
 @dynamic name;
 @dynamic code;
-@dynamic observations;
 @dynamic speciesMembers;
 
 

@@ -27,7 +27,6 @@
 @dynamic observationTimestamp;
 @dynamic state;
 @dynamic species;
-@dynamic speciesCategory;
 @dynamic user;
 
 + (Observation *)addObservationInContext:(NSManagedObjectContext *)moc
@@ -52,10 +51,6 @@
 	if (!([self.sentStatus isEqualToString:kRKReady] ||
 		  [self.sentStatus isEqualToString:kRKQueued])) {
 		RKLog(@"status should be kRKReady in observation %@", self);
-		return NO;
-	}
-	if (!self.speciesCategory) {
-		RKLog(@"speciesCategory needed in observation %@", self);
 		return NO;
 	}
 	if (!self.species) {

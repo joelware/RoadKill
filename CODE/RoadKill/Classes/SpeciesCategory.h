@@ -17,7 +17,6 @@
 
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSNumber * code;
-@property (nonatomic, retain) NSSet* observations;
 @property (nonatomic, retain) NSSet* speciesMembers;
 
 
@@ -30,11 +29,6 @@
 
 
 @interface SpeciesCategory (CoreDataGeneratedAccessors)
-- (void)addObservationsObject:(Observation *)value;
-- (void)removeObservationsObject:(Observation *)value;
-- (void)addObservations:(NSSet *)value;
-- (void)removeObservations:(NSSet *)value;
-
 - (void)addSpeciesMembersObject:(Species *)value;
 - (void)removeSpeciesMembersObject:(Species *)value;
 - (void)addSpeciesMembers:(NSSet *)value;

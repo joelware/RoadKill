@@ -80,7 +80,7 @@
 	ASIFormDataRequest *postRequest = [ASIFormDataRequest requestWithURL:url];
 	postRequest.shouldRedirect = NO;
 	NSMutableDictionary *arguments = [NSDictionary dictionaryWithObjectsAndKeys:
-									  self.observation.speciesCategory.code, @"taxonomy[1]",
+									  self.observation.species.speciesCategory.code, @"taxonomy[1]",
 									  self.observation.species.commonName, @"field_taxon_ref[0][nid][nid]",
 									  self.observation.freeText, @"field_taxon_freetext[0][value]",
 									  self.formToken, @"form_token", 
