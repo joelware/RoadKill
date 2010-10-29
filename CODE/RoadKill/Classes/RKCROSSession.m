@@ -348,6 +348,7 @@ NSString *RKCROSSessionFailedNotification = @"RKCROSSessionFailedNotification";
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
 	LogMethod();
+	NSAssert(self.observation, @"observation cannot be null");
 	switch (self.sessionState) {
 		case RKCROSSessionConnecting:
 			self.sessionState = RKCROSSessionAuthenticated;
@@ -375,8 +376,6 @@ NSString *RKCROSSessionFailedNotification = @"RKCROSSessionFailedNotification";
 				self.sessionState = RKCROSSessionObservationComplete;
 				RKLog(@"observation successfully submitted");
 				self.observation.sentStatus = kRKComplete;
-				[[NSNotificationCenter defaultCenter] postNotificationName:RKCROSSessionSucceededNotification
-																	object:self];
 				NSError *error = nil;
 				if (![self.observation.managedObjectContext save:&error]) {
 					/*
@@ -387,7 +386,8 @@ NSString *RKCROSSessionFailedNotification = @"RKCROSSessionFailedNotification";
 					RKLog(@"Unresolved error %@, %@", error, [error userInfo]);
 					abort();
 				}
-				
+				[[NSNotificationCenter defaultCenter] postNotificationName:RKCROSSessionSucceededNotification
+																	object:self];
 			}
 			else {
 				self.sessionState = RKCROSSessionAuthenticated;

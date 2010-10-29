@@ -32,7 +32,11 @@
 @property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 - (NSString *)applicationDocumentsDirectory;
-- (void)populateInitialDatastore;
+- (void)populateInitialDatastoreIfNeeded;
+
+// User Defaults
+
+extern NSString *RKIsFirstLaunchKey;
 
 @end
 

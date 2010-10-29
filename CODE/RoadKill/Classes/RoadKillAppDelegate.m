@@ -24,17 +24,27 @@
 @synthesize navigationController;
 @synthesize activeWebTransactions;
 
+NSString *RKIsFirstLaunchKey = @"isFirstLaunch";
+
 #pragma mark -
 #pragma mark Application lifecycle
+
+- (void)initializeDefaults {
+	NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
+    
+	[defaultValues setValue:[NSNumber numberWithBool:YES] forKey:RKIsFirstLaunchKey];
+
+	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
+}	
 
 - (id)init
 {
     if ((self = [super init])) {
         activeWebTransactions = [[NSMutableSet set] retain];
+		[self initializeDefaults];
     }
     return self;
 }
-
 
 - (void)awakeFromNib {    
     
@@ -51,7 +61,7 @@
     [window addSubview:navigationController.view];
     [window makeKeyAndVisible];
 
-	[self populateInitialDatastore];
+	[self populateInitialDatastoreIfNeeded];
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(noteDeactivatedTransaction:)
 												 name:RKCROSSessionSucceededNotification
@@ -60,6 +70,8 @@
 											 selector:@selector(noteDeactivatedTransaction:)
 												 name:RKCROSSessionFailedNotification
 											   object:nil];
+	[[NSUserDefaults standardUserDefaults] setBool:NO
+											forKey:RKIsFirstLaunchKey];
     return YES;
 }
 
@@ -77,6 +89,8 @@
      Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
      If your application supports background execution, called instead of applicationWillTerminate: when the user quits.
      */
+	[[NSUserDefaults standardUserDefaults] synchronize];
+
     NSError *error = nil;
     if (managedObjectContext_ != nil) {
         if ([managedObjectContext_ hasChanges] && ![managedObjectContext_ save:&error]) {
@@ -286,10 +300,12 @@
 	
 }
 
-- (void)populateInitialDatastore
+- (void)populateInitialDatastoreIfNeeded
 {
-	[self putSpeciesCategoriesIntoDatastore];
-	[self startAsynchronousLoadOfSpeciesDatabase];
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:RKIsFirstLaunchKey]) {
+		[self putSpeciesCategoriesIntoDatastore];
+		[self startAsynchronousLoadOfSpeciesDatabase];
+	}
 }
 
 - (void)noteDeactivatedTransaction:(NSNotification *)notification
