@@ -17,6 +17,8 @@
 	ASIHTTPRequest *asiHTTPRequest;
 	NSUInteger sessionState;
 	NSString *formToken;
+	NSString *username;
+	NSString *password;
 	BOOL isAynchronous;
 }
 
@@ -33,18 +35,20 @@ typedef enum {
 @property (nonatomic, retain) ASIHTTPRequest *asiHTTPRequest;
 @property (nonatomic) NSUInteger sessionState;
 @property (nonatomic, retain) NSString *formToken;
+@property (nonatomic, retain) NSString *username;
+@property (nonatomic, retain) NSString *password;
 @property (nonatomic) BOOL isAsynchronous;
 
-+ (ASIHTTPRequest *)authenticationRequestWithUsername:(NSString *)username password:(NSString *)password;
-- (void)authenticateWithUsername:(NSString *)username password:(NSString *)password;
-- (ASIHTTPRequest *)formTokenRequest;
-- (void)obtainFormToken;
-+ (NSURL *)baseURLForWildlifeServer;
-- (BOOL)extractFormTokenFromReceivedString;
-- (BOOL)receivedStringShowsSuccessfulSubmission;
-- (NSString *)observationIDFromResponseHeaders:(NSDictionary *)headers;
-- (BOOL)submitObservationReport:(Observation *)report
-				 asynchronously:(BOOL)async;
+extern NSString *RKCROSSessionSucceededNotification;
+extern NSString *RKCROSSessionFailedNotification;
 
-- (BOOL)receivedStringShowsSuccessfulSubmission;
+
+- (BOOL)beginTransactionAsynchronously:(BOOL)async;
++ (RKCROSSession *)submissionForObservation:(Observation *)report
+							   withUsername:(NSString *)username
+							   password:(NSString *)password
+									  start:(BOOL)startNow;
+- (void)startAsynchronously;
+- (void)startSynchronously;
+- (void)cancel;
 @end

@@ -14,6 +14,8 @@
     UIWindow *window;
     UINavigationController *navigationController;
 
+	NSMutableSet *activeWebTransactions;
+
 @private
     NSManagedObjectContext *managedObjectContext_;
     NSManagedObjectModel *managedObjectModel_;
@@ -22,6 +24,8 @@
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) IBOutlet UINavigationController *navigationController;
+
+@property (nonatomic, copy) NSMutableSet *activeWebTransactions;
 
 @property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;

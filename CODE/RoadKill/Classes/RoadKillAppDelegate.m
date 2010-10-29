@@ -22,10 +22,19 @@
 
 @synthesize window;
 @synthesize navigationController;
-
+@synthesize activeWebTransactions;
 
 #pragma mark -
 #pragma mark Application lifecycle
+
+- (id)init
+{
+    if ((self = [super init])) {
+        activeWebTransactions = [[NSMutableSet set] retain];
+    }
+    return self;
+}
+
 
 - (void)awakeFromNib {    
     
@@ -43,7 +52,14 @@
     [window makeKeyAndVisible];
 
 	[self populateInitialDatastore];
-	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(noteDeactivatedTransaction:)
+												 name:RKCROSSessionSucceededNotification
+											   object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(noteDeactivatedTransaction:)
+												 name:RKCROSSessionFailedNotification
+											   object:nil];
     return YES;
 }
 
@@ -87,7 +103,6 @@
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
-
 }
 
 
@@ -95,7 +110,9 @@
  applicationWillTerminate: saves changes in the application's managed object context before the application terminates.
  */
 - (void)applicationWillTerminate:(UIApplication *)application {
-    
+    [self.activeWebTransactions enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+		[obj cancel];
+	}];
 }
 
 
@@ -246,22 +263,6 @@
 	[self.managedObjectContext save:&error];
 }
 
-/*
- - (void)putSpeciesIntoDatastore
-{
- // FIXME: if using this, be sure to update findOrCreateSpeciesWithCommonName: to include speciesCategory:
-	[Species findOrCreateSpeciesWithCommonName:@"Striped Skunk"
-									 latinName:@"Mephitis mephitis"
-									   nidCode:@"624"
-									 inContext:self.managedObjectContext];
-	[Species findOrCreateSpeciesWithCommonName:@"Fulvous Whistling-Duck"
-									 latinName:@"Dendrocygna bicolor" 
-									   nidCode:@"122"
-									 inContext:self.managedObjectContext];
-
-}
-*/
-
 - (void)putSpeciesCategoriesIntoDatastore
 {
 	[SpeciesCategory findOrCreateSpeciesCategoryWithName:@"Amphibian"
@@ -289,6 +290,12 @@
 {
 	[self putSpeciesCategoriesIntoDatastore];
 	[self startAsynchronousLoadOfSpeciesDatabase];
+}
+
+- (void)noteDeactivatedTransaction:(NSNotification *)notification
+{
+	LogMethod();
+	[self.activeWebTransactions removeObject:notification.object];
 }
 
 - (void)dealloc {
