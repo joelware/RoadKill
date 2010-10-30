@@ -63,5 +63,7 @@
 - (void)awakeFromInsert
 {
 	self.sentStatus = kRKNotReady;
+	self.longitude = [NSNumber numberWithDouble:-130.];
+	self.latitude = [NSNumber numberWithDouble:40.];
 }
 @end
