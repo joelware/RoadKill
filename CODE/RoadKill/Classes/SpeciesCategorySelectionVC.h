@@ -15,7 +15,7 @@
 
 @interface SpeciesCategorySelectionVC : UITableViewController <NSFetchedResultsControllerDelegate>
 {
-		//Observation *observation_;
+	Observation *observation_;
 	SpeciesCategory *category_;
 	
 		//NSMutableArray *categoryArray_;
@@ -26,12 +26,15 @@
 	NSFetchedResultsController *fetchedResultsController_;
 }
 
-	//@property (nonatomic, retain) Observation *observation;
+@property (nonatomic, retain) Observation *observation;
 @property (nonatomic, retain) SpeciesCategory *category;
 	//@property (nonatomic, retain) NSArray *categoryArray;
 @property (nonatomic, retain) NSIndexPath * lastIndexPath;
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
+
+- (IBAction)setConfidenceLevel:(id)sender;
+
 
 
 @end

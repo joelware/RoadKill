@@ -3,7 +3,7 @@
 //  RoadKill
 //
 //  Created by Pamela on 10/13/10.
-//  Copyright 2010 Pamela DeBriere. All rights reserved.
+//  Copyright 2010 Seattle RoadKill Team. All rights reserved.
 //
 
 #import "State.h"

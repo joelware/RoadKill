@@ -10,8 +10,9 @@
 #import "RKConstants.h"
 #import "RoadKillAppDelegate.h"
 
-	//#import "Observation.h"
+#import "Observation.h"
 #import "SpeciesCategory.h"
+#import "SpeciesSelectionVC.h"
 
 @interface SpeciesCategorySelectionVC ()
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
@@ -20,7 +21,7 @@
 
 @implementation SpeciesCategorySelectionVC
 
-	//@synthesize observation = observation_;
+@synthesize observation = observation_;
 @synthesize category = category_;
 	//@synthesize categoryArray = categoryArray_;
 @synthesize lastIndexPath = lastIndexPath_;
@@ -83,7 +84,7 @@
 	switch (section) 
 	{
 		case 0:
-			footer = [NSString stringWithFormat:@"\nConfidence level"];
+			footer = [NSString stringWithFormat:@"\nTo continue, after selecting the Category, select a Confidence Level"];
 			break;
 		default:
 			footer = nil;
@@ -210,7 +211,64 @@
 }
 
 #pragma mark -
+#pragma mark SegmentedControl
+	//FIXME: this isn't working, probably because I'm not yet using a new observation?
+- (IBAction)setConfidenceLevel:(id)sender
+{
+    switch (((UISegmentedControl *)sender).selectedSegmentIndex)
+    {
+        case 0:
+        {
+			self.observation.formIDConfidence = kRK100PercentCertain;
+            break;
+        } 
+        case 1:
+        {
+            self.observation.formIDConfidence = kRKSomewhatConfident;
+            break;
+        } 
+        default:
+        {
+            self.observation.formIDConfidence = kRKBestGuess;
+            break;
+        } 
+    }
+	RKLog(@"The selected Confidence level is: %@", self.observation.formIDConfidence);
+	
+		//FIXME: this won't work until I create a new observation separate from Hal's test obs?
+		//if no Category was selected, remind the user to do that
+	if (self.category == nil)
+	{
+        RKLog(@"No Category was selected");
+		UIAlertView *noCategoryAlert = [[UIAlertView alloc] initWithTitle:@"Please select a species category"
+																 message:NULL
+																delegate:NULL 
+													   cancelButtonTitle:@"OK" 
+													   otherButtonTitles:NULL];
+		[noCategoryAlert show]; 
+		[noCategoryAlert release]; 
+		return;
+	}
+	else 
+	{
+			//TODO: which is better UI?
+			//this moves the user to the SpeciesSelection view when the Confidence selection is made (saves the user a tap)? 
+			//or should we use a Done button on the navigation bar?
+		SpeciesSelectionVC *testVC = [[SpeciesSelectionVC alloc] initWithNibName:@"SpeciesSelectionVC" bundle:nil];
+		
+		if (testVC) 
+		{
+			[self.navigationController pushViewController:testVC animated:YES];
+		}
+		
+		[testVC release];
+	}
+}
+
+
+#pragma mark -
 #pragma mark Fetched results controller
+	//see Apress More iPhone 3 Development
 
 - (NSFetchedResultsController *)fetchedResultsController 
 {	
@@ -354,7 +412,7 @@
 
 - (void)dealloc 
 {
-		//[observation_ release], observation_ = nil;
+	[observation_ release], observation_ = nil;
 	[category_ release], category_ = nil;
 		//[categoryArray_ release], categoryArray_ = nil;
 	[lastIndexPath_ release], lastIndexPath_ = nil;

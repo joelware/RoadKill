@@ -216,14 +216,18 @@
 	
 		// Testing the SpeciesCategory view controller. This is only a test!
 	
-	SpeciesCategorySelectionVC *testVC = [[SpeciesCategorySelectionVC alloc] initWithNibName:@"SpeciesCategorySelectionVC" bundle:nil];
-	
-	if (testVC) 
+	if ([obs.sentStatus isEqualToString:kRKComplete]) 
 	{
-		[self.navigationController pushViewController:testVC animated:YES];
+		SpeciesCategorySelectionVC *testVC = [[SpeciesCategorySelectionVC alloc] initWithNibName:@"SpeciesCategorySelectionVC" bundle:nil];
+		
+		if (testVC) 
+		{
+			[self.navigationController pushViewController:testVC animated:YES];
+		}
+		
+		[testVC release];
 	}
-	
-	[testVC release];
+
 }
 
 
