@@ -13,6 +13,7 @@
 #import "Observation.h"
 #import "Species.h"
 #import "SpeciesCategory.h"
+#import "SpeciesCategorySelectionVC.h"
 
 #import "RKCROSSession.h"
 
@@ -34,6 +35,9 @@
 
     // Set up the edit and add buttons.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
+	
+	//added a temporary name - it's needed for the back button on the next view
+	self.navigationItem.title = @"Road Kill"; 
     
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject)];
     self.navigationItem.rightBarButtonItem = addButton;
@@ -209,6 +213,17 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      [detailViewController release];
      */
+	
+		// Testing the SpeciesCategory view controller. This is only a test!
+	
+	SpeciesCategorySelectionVC *testVC = [[SpeciesCategorySelectionVC alloc] initWithNibName:@"SpeciesCategorySelectionVC" bundle:nil];
+	
+	if (testVC) 
+	{
+		[self.navigationController pushViewController:testVC animated:YES];
+	}
+	
+	[testVC release];
 }
 
 
