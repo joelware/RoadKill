@@ -78,6 +78,21 @@
     return [[self.fetchedResultsController sections] count];
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section 
+{
+	NSString *footer = nil;
+	switch (section) 
+	{
+		case 0:
+			footer = [NSString stringWithFormat:@"\nConfidence level"];
+			break;
+		default:
+			footer = nil;
+			break;
+	}
+	return footer;
+}
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
@@ -102,14 +117,11 @@
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath 
-{
-	RKLog(@"Entering SpeciesCategorySelectionVC's configureCell: and the fetchedResultsController = %@", [fetchedResultsController_ description]);
-	
+{	
 	self.category = nil;
 	self.category = (SpeciesCategory *) [self.fetchedResultsController objectAtIndexPath:indexPath];
 	
-	cell.textLabel.text = [self.category valueForKey:@"name"];
-			
+	cell.textLabel.text = [self.category valueForKey:@"name"];			
 }
 
 
@@ -171,9 +183,7 @@
 #pragma mark Fetched results controller
 
 - (NSFetchedResultsController *)fetchedResultsController 
-{
-	RKLog(@"Entering SpeciesCategorySelectionVC's fetchedResultsController setup");
-	
+{	
     if (fetchedResultsController_ != nil) 
 	{
         return fetchedResultsController_;
@@ -226,9 +236,6 @@
         RKLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
-	
-	RKLog(@"Leaving SpeciesCategorySelectionVC's fetchedResultsController setup");
-    
     return fetchedResultsController_;
 }
 
