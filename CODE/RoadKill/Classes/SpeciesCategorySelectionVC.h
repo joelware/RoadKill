@@ -15,11 +15,12 @@
 
 @interface SpeciesCategorySelectionVC : UITableViewController <NSFetchedResultsControllerDelegate>
 {
-		//	Observation *observation_;
+		//Observation *observation_;
 	SpeciesCategory *category_;
 	
-		// I'm not sure yet if I need this when I add the checkmark code
-	NSMutableArray *categoryArray_;
+		//NSMutableArray *categoryArray_;
+		//NSArray *categoryArray_;
+	NSIndexPath * lastIndexPath_;
 
 	NSManagedObjectContext *managedObjectContext_;
 	NSFetchedResultsController *fetchedResultsController_;
@@ -27,7 +28,8 @@
 
 	//@property (nonatomic, retain) Observation *observation;
 @property (nonatomic, retain) SpeciesCategory *category;
-@property (nonatomic, retain) NSMutableArray *categoryArray;
+	//@property (nonatomic, retain) NSArray *categoryArray;
+@property (nonatomic, retain) NSIndexPath * lastIndexPath;
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 

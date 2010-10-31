@@ -22,7 +22,8 @@
 
 	//@synthesize observation = observation_;
 @synthesize category = category_;
-@synthesize categoryArray = categoryArray_;
+	//@synthesize categoryArray = categoryArray_;
+@synthesize lastIndexPath = lastIndexPath_;
 @synthesize managedObjectContext = managedObjectContext_, fetchedResultsController=fetchedResultsController_;
 
 
@@ -38,8 +39,6 @@
 	self.navigationItem.title = @"Species Category";
 }
  
-
-
 
 /*
 - (void)viewWillAppear:(BOOL)animated {
@@ -118,10 +117,18 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath 
 {	
+		//Apress Beginning iPhone 3 Chapter 9 - Project 09 Nav: see CheckListController files
+
+	NSUInteger row = [indexPath row];
+    NSUInteger oldRow = [self.lastIndexPath row];
+
 	self.category = nil;
 	self.category = (SpeciesCategory *) [self.fetchedResultsController objectAtIndexPath:indexPath];
 	
-	cell.textLabel.text = [self.category valueForKey:@"name"];			
+	cell.textLabel.text = [self.category valueForKey:@"name"];
+	
+	cell.accessoryType = (row == oldRow && self.lastIndexPath != nil) ? 
+    UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 }
 
 
@@ -168,7 +175,8 @@
 #pragma mark -
 #pragma mark Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
+{
     // Navigation logic may go here. Create and push another view controller.
 	/*
 	 <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
@@ -177,6 +185,28 @@
 	 [self.navigationController pushViewController:detailViewController animated:YES];
 	 [detailViewController release];
 	 */
+
+		//TODO: save/persist the selection
+		//http://stackoverflow.com/questions/974170/uitableview-having-problems-changing-accessory-when-selected
+		//http://developer.apple.com/library/ios/#documentation/userexperience/conceptual/TableView_iPhone/ManageSelections/ManageSelections.html see listing 6-3  Managing a selection list—exclusive list
+		//Apress Beginning iPhone 3 Chapter 9 - Project 09 Nav: see CheckListController files
+	
+	int newRow = [indexPath row];
+    int oldRow = (self.lastIndexPath != nil) ? [self.lastIndexPath row] : -1;
+    
+    if (newRow != oldRow)
+    {
+        UITableViewCell *newCell = [tableView cellForRowAtIndexPath:
+                                    indexPath];
+        newCell.accessoryType = UITableViewCellAccessoryCheckmark;
+        
+        UITableViewCell *oldCell = [tableView cellForRowAtIndexPath: 
+                                    self.lastIndexPath]; 
+        oldCell.accessoryType = UITableViewCellAccessoryNone;
+        self.lastIndexPath = indexPath;
+    }
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark -
@@ -326,7 +356,8 @@
 {
 		//[observation_ release], observation_ = nil;
 	[category_ release], category_ = nil;
-	[categoryArray_ release], categoryArray_ = nil;
+		//[categoryArray_ release], categoryArray_ = nil;
+	[lastIndexPath_ release], lastIndexPath_ = nil;
 	[managedObjectContext_ release], managedObjectContext_ = nil;
 	[fetchedResultsController_ release], fetchedResultsController_ = nil;
 
