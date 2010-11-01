@@ -10,6 +10,7 @@
 #import "Observation.h"
 #import "HalsRootViewController.h"
 #import "SpeciesCategorySelectionVC.h"
+#import "ExistingReportsVC.h"
 
 
 @implementation RootViewController
@@ -112,7 +113,7 @@
 			cell.textLabel.text = @"New observation";
 			break;
 		case 2:
-			cell.textLabel.text = @"Pending observations";
+			cell.textLabel.text = @"Existing observations";
 			break;		
 			
 				//default:
@@ -193,7 +194,7 @@
 			
 		case 2:
 		{
-				//TODO: make this VC
+			nextViewController = [[ExistingReportsVC alloc] initWithStyle:UITableViewStyleGrouped];
 		}
 			break;
 	}
