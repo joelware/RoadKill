@@ -44,6 +44,10 @@
 	self.formIDConfidence = @"100% Certain";
 	self.street = @"Middle of the Road";
 	self.observerName = @"Loudon Wainwright III";
+
+	// per Dave Waetjen's request 1 November:
+	self.latitude = [NSNumber numberWithDouble:38.];
+	self.longitude = [NSNumber numberWithDouble:-120.];
 }
 
 - (BOOL)isValidForSubmission
@@ -63,7 +67,8 @@
 - (void)awakeFromInsert
 {
 	self.sentStatus = kRKNotReady;
-	self.longitude = [NSNumber numberWithDouble:-130.];
-	self.latitude = [NSNumber numberWithDouble:40.];
+	// per Dave Waetjen's request 1 November:
+	self.latitude = [NSNumber numberWithDouble:38.];
+	self.longitude = [NSNumber numberWithDouble:-120.];
 }
 @end
