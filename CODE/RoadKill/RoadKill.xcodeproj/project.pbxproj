@@ -15,7 +15,7 @@
 		2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */; };
 		2899E5600DE3E45000AC0155 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E55F0DE3E45000AC0155 /* RootViewController.xib */; };
 		28AD73600D9D9599002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD735F0D9D9599002E5188 /* MainWindow.xib */; };
-		28C286E10D94DF7D0034E888 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C286E00D94DF7D0034E888 /* RootViewController.m */; };
+		28C286E10D94DF7D0034E888 /* HalsRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C286E00D94DF7D0034E888 /* HalsRootViewController.m */; };
 		28D3F202112F7DC200FD0661 /* RoadKill.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 28D3F201112F7DC200FD0661 /* RoadKill.xcdatamodeld */; };
 		2B088C9C12711E8300ECC691 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B088C9B12711E8300ECC691 /* Reachability.m */; };
 		2B088C9D12711E8300ECC691 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B088C9B12711E8300ECC691 /* Reachability.m */; };
@@ -63,6 +63,7 @@
 		8D88BBA6127CDDE1002A7029 /* SpeciesCategorySelectionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D88BBA5127CDDE1002A7029 /* SpeciesCategorySelectionVC.m */; };
 		8D88C139127E2B66002A7029 /* SpeciesSelectionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D88C137127E2B66002A7029 /* SpeciesSelectionVC.xib */; };
 		8D88C14F127E2BB2002A7029 /* SpeciesSelectionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D88C14E127E2BB2002A7029 /* SpeciesSelectionVC.m */; };
+		8D88C682127F42BA002A7029 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D88C681127F42BA002A7029 /* RootViewController.m */; };
 		8D8FE372126BFA4700336686 /* Species.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8FE370126BFA4700336686 /* Species.m */; };
 		8D8FE4BE126D1A4600336686 /* SpeciesCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8FE4BD126D1A4600336686 /* SpeciesCategory.m */; };
 /* End PBXBuildFile section */
@@ -79,8 +80,8 @@
 		2899E55F0DE3E45000AC0155 /* RootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RootViewController.xib; sourceTree = "<group>"; };
 		28A0AAE50D9B0CCF005BE974 /* RoadKill_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoadKill_Prefix.pch; sourceTree = "<group>"; };
 		28AD735F0D9D9599002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
-		28C286DF0D94DF7D0034E888 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
-		28C286E00D94DF7D0034E888 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		28C286DF0D94DF7D0034E888 /* HalsRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HalsRootViewController.h; sourceTree = "<group>"; };
+		28C286E00D94DF7D0034E888 /* HalsRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HalsRootViewController.m; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2B088C9A12711E8300ECC691 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		2B088C9B12711E8300ECC691 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
@@ -132,6 +133,8 @@
 		8D88C137127E2B66002A7029 /* SpeciesSelectionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SpeciesSelectionVC.xib; sourceTree = "<group>"; };
 		8D88C14D127E2BB2002A7029 /* SpeciesSelectionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeciesSelectionVC.h; sourceTree = "<group>"; };
 		8D88C14E127E2BB2002A7029 /* SpeciesSelectionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeciesSelectionVC.m; sourceTree = "<group>"; };
+		8D88C680127F42BA002A7029 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		8D88C681127F42BA002A7029 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		8D8FE36F126BFA4700336686 /* Species.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Species.h; sourceTree = "<group>"; };
 		8D8FE370126BFA4700336686 /* Species.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Species.m; sourceTree = "<group>"; };
 		8D8FE4BC126D1A4600336686 /* SpeciesCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeciesCategory.h; sourceTree = "<group>"; };
@@ -175,8 +178,10 @@
 			children = (
 				1D3623240D0F684500981E51 /* RoadKillAppDelegate.h */,
 				1D3623250D0F684500981E51 /* RoadKillAppDelegate.m */,
-				28C286DF0D94DF7D0034E888 /* RootViewController.h */,
-				28C286E00D94DF7D0034E888 /* RootViewController.m */,
+				28C286DF0D94DF7D0034E888 /* HalsRootViewController.h */,
+				28C286E00D94DF7D0034E888 /* HalsRootViewController.m */,
+				8D88C680127F42BA002A7029 /* RootViewController.h */,
+				8D88C681127F42BA002A7029 /* RootViewController.m */,
 				8D88BBA4127CDDE1002A7029 /* SpeciesCategorySelectionVC.h */,
 				8D88BBA5127CDDE1002A7029 /* SpeciesCategorySelectionVC.m */,
 				8D88C14D127E2BB2002A7029 /* SpeciesSelectionVC.h */,
@@ -449,7 +454,7 @@
 			files = (
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* RoadKillAppDelegate.m in Sources */,
-				28C286E10D94DF7D0034E888 /* RootViewController.m in Sources */,
+				28C286E10D94DF7D0034E888 /* HalsRootViewController.m in Sources */,
 				28D3F202112F7DC200FD0661 /* RoadKill.xcdatamodeld in Sources */,
 				2B790BA3125AA06B00EB101D /* RKCROSSession.m in Sources */,
 				2B9327BE126568FE00BADFA7 /* Observation.m in Sources */,
@@ -467,6 +472,7 @@
 				2B64215D1277A867005BFC0C /* CSVParser.m in Sources */,
 				8D88BBA6127CDDE1002A7029 /* SpeciesCategorySelectionVC.m in Sources */,
 				8D88C14F127E2BB2002A7029 /* SpeciesSelectionVC.m in Sources */,
+				8D88C682127F42BA002A7029 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
