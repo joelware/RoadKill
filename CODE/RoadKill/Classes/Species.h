@@ -3,6 +3,7 @@
 //  RoadKill
 //
 //  Created by Pamela on 10/17/10.
+//  Copyright 2010 Seattle RoadKill Team. All rights reserved.
 //
 
 #import <CoreData/CoreData.h>
@@ -23,6 +24,7 @@
 + (Species *)findOrCreateSpeciesWithCommonName:(NSString *)theCommonName
 									 latinName:(NSString *)theLatinName
 									   nidCode:(NSString *)theNidCode
+							   speciesCategory:(SpeciesCategory *)theSpeciesCategory
 									 inContext:(NSManagedObjectContext *)moc;
 @end
 

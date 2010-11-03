@@ -2,20 +2,25 @@
 //  RootViewController.h
 //  RoadKill
 //
-//  Created by Joel Ware on 9/27/10.
-//  Copyright University of Washington 2010. All rights reserved.
+//  Created by Pamela on 11/1/10.
+//  Copyright 2010 Seattle RoadKill Team. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 
-@interface RootViewController : UITableViewController <NSFetchedResultsControllerDelegate> {
+@class Observation;
 
-@private
-    NSFetchedResultsController *fetchedResultsController_;
+
+@interface RootViewController : UITableViewController 
+{
+	Observation *testObservation_;
+	
+	NSFetchedResultsController *fetchedResultsController_;
     NSManagedObjectContext *managedObjectContext_;
 }
 
+@property (nonatomic, retain) Observation *testObservation;
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 

@@ -28,7 +28,6 @@
 @property (nonatomic, retain) NSDate * observationTimestamp;
 @property (nonatomic, retain) State * state;
 @property (nonatomic, retain) Species * species;
-@property (nonatomic, retain) SpeciesCategory * speciesCategory;
 @property (nonatomic, retain) User * user;
 
 + (Observation *)addObservationInContext:(NSManagedObjectContext *)moc;

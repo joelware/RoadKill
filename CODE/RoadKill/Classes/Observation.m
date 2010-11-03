@@ -27,7 +27,6 @@
 @dynamic observationTimestamp;
 @dynamic state;
 @dynamic species;
-@dynamic speciesCategory;
 @dynamic user;
 
 + (Observation *)addObservationInContext:(NSManagedObjectContext *)moc
@@ -45,16 +44,17 @@
 	self.formIDConfidence = @"100% Certain";
 	self.street = @"Middle of the Road";
 	self.observerName = @"Loudon Wainwright III";
+
+	// per Dave Waetjen's request 1 November:
+	self.latitude = [NSNumber numberWithDouble:38.];
+	self.longitude = [NSNumber numberWithDouble:-120.];
 }
 
 - (BOOL)isValidForSubmission
 {
-	if (![self.sentStatus isEqualToString:kRKReady]) {
+	if (!([self.sentStatus isEqualToString:kRKReady] ||
+		  [self.sentStatus isEqualToString:kRKQueued])) {
 		RKLog(@"status should be kRKReady in observation %@", self);
-		return NO;
-	}
-	if (!self.speciesCategory) {
-		RKLog(@"speciesCategory needed in observation %@", self);
 		return NO;
 	}
 	if (!self.species) {
@@ -67,5 +67,8 @@
 - (void)awakeFromInsert
 {
 	self.sentStatus = kRKNotReady;
+	// per Dave Waetjen's request 1 November:
+	self.latitude = [NSNumber numberWithDouble:38.];
+	self.longitude = [NSNumber numberWithDouble:-120.];
 }
 @end

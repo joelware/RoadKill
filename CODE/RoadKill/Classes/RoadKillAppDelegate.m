@@ -22,13 +22,32 @@
 
 @synthesize window;
 @synthesize navigationController;
+@synthesize activeWebTransactions;
 
+NSString *RKIsFirstLaunchKey = @"isFirstLaunch";
 
 #pragma mark -
 #pragma mark Application lifecycle
 
-- (void)awakeFromNib {    
+- (void)initializeDefaults {
+	NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
     
+	[defaultValues setValue:[NSNumber numberWithBool:YES] forKey:RKIsFirstLaunchKey];
+
+	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
+}	
+
+- (id)init
+{
+    if ((self = [super init])) {
+        activeWebTransactions = [[NSMutableSet set] retain];
+		[self initializeDefaults];
+    }
+    return self;
+}
+
+- (void)awakeFromNib {    
+ 
     RootViewController *rootViewController = (RootViewController *)[navigationController topViewController];
     rootViewController.managedObjectContext = self.managedObjectContext;
 }
@@ -42,8 +61,17 @@
     [window addSubview:navigationController.view];
     [window makeKeyAndVisible];
 
-	[self populateInitialDatastore];
-	
+	[self populateInitialDatastoreIfNeeded];
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(noteDeactivatedTransaction:)
+												 name:RKCROSSessionSucceededNotification
+											   object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(noteDeactivatedTransaction:)
+												 name:RKCROSSessionFailedNotification
+											   object:nil];
+	[[NSUserDefaults standardUserDefaults] setBool:NO
+											forKey:RKIsFirstLaunchKey];
     return YES;
 }
 
@@ -61,6 +89,8 @@
      Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
      If your application supports background execution, called instead of applicationWillTerminate: when the user quits.
      */
+	[[NSUserDefaults standardUserDefaults] synchronize];
+
     NSError *error = nil;
     if (managedObjectContext_ != nil) {
         if ([managedObjectContext_ hasChanges] && ![managedObjectContext_ save:&error]) {
@@ -87,31 +117,6 @@
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
-
-	// this is here just to test RKCROSSession. There has to be a better place for it.
-	RKCROSSession *session = [[RKCROSSession alloc] init];
-	[session authenticateWithUsername:RKTestUsername password:RKCorrectTestPassword];
-	RKLog(@"%@", session);
-	LogMethod();
-	[session performSelector:@selector(obtainFormToken)
-				  withObject:nil
-				  afterDelay:5.];
-	// FIXME: these 5 second delays are really brittle, instead need to use notifications to trigger next step
-	Species *species624 = [Species findOrCreateSpeciesWithCommonName:@"Striped Skunk"
-														   latinName:@"Mephitis mephitis"
-															 nidCode:@"624"
-														   inContext:self.managedObjectContext];
-	SpeciesCategory *mediumMammals = [SpeciesCategory findOrCreateSpeciesCategoryWithName:@"Mammal (Medium)" 
-																	  codeInteger:4 
-																		inContext:self.managedObjectContext];
-	Observation *testObservation = [Observation addObservationInContext:self.managedObjectContext];
-	[testObservation markAsTestObservation];
-	testObservation.species = species624;
-	testObservation.speciesCategory = mediumMammals;
-	testObservation.sentStatus = kRKReady;
-	[session performSelector:@selector(submitObservationReport:)
-				  withObject:testObservation
-				  afterDelay:10.];
 }
 
 
@@ -119,7 +124,9 @@
  applicationWillTerminate: saves changes in the application's managed object context before the application terminates.
  */
 - (void)applicationWillTerminate:(UIApplication *)application {
-    
+    [self.activeWebTransactions enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+		[obj cancel];
+	}];
 }
 
 
@@ -232,16 +239,18 @@
 - (void)handleParsedSpeciesInfo:(NSDictionary*)theRecord
 {
 	LogMethod();
-	RKLog(@"%@", theRecord);
+	RKLog(@"theRecord is %@", theRecord);
+	RKLog(@"the category is %@", [theRecord objectForKey:kCSVHeaderCategory]);
+
 	SpeciesCategory *category = [SpeciesCategory speciesCategoryWithName:[theRecord objectForKey:kCSVHeaderCategory]
 															   inContext:self.managedObjectContext];
-	Species *species = [Species findOrCreateSpeciesWithCommonName:[theRecord objectForKey:kCSVHeaderCommon]
-														latinName:[theRecord objectForKey:kCSVHeaderLatin]
-														  nidCode:[theRecord objectForKey:kCSVHeaderNID]
-														inContext:self.managedObjectContext];
-	// species.category = category;
-	species.speciesCategory = category;
-
+	
+	//Species *species = 
+	[Species findOrCreateSpeciesWithCommonName:[theRecord objectForKey:kCSVHeaderCommon]
+									 latinName:[theRecord objectForKey:kCSVHeaderLatin]
+									   nidCode:[theRecord objectForKey:kCSVHeaderNID]
+							   speciesCategory:category
+									 inContext:self.managedObjectContext];
 }
 
 - (void)startAsynchronousLoadOfSpeciesDatabase
@@ -255,6 +264,8 @@
 {
 	NSError *error;
 	RKLog(@"MOC status: %d registered objects", self.managedObjectContext.registeredObjects.count);
+		//RKLog(@"MOC status - the registered objects descriptions: %@ ", self.managedObjectContext.registeredObjects.description);
+
 	CSVParser *speciesParser =
 	[[[CSVParser alloc]
 	  initWithString:request.responseString
@@ -267,23 +278,9 @@
 	 autorelease];
 	[speciesParser parseRowsForReceiver:self selector:@selector(handleParsedSpeciesInfo:)];
 	RKLog(@"MOC status: %d registered objects", self.managedObjectContext.registeredObjects.count);
+
 	[self.managedObjectContext save:&error];
 }
-
-/*
- - (void)putSpeciesIntoDatastore
-{
-	[Species findOrCreateSpeciesWithCommonName:@"Striped Skunk"
-									 latinName:@"Mephitis mephitis"
-									   nidCode:@"624"
-									 inContext:self.managedObjectContext];
-	[Species findOrCreateSpeciesWithCommonName:@"Fulvous Whistling-Duck"
-									 latinName:@"Dendrocygna bicolor" 
-									   nidCode:@"122"
-									 inContext:self.managedObjectContext];
-
-}
-*/
 
 - (void)putSpeciesCategoriesIntoDatastore
 {
@@ -308,10 +305,18 @@
 	
 }
 
-- (void)populateInitialDatastore
+- (void)populateInitialDatastoreIfNeeded
 {
-	[self putSpeciesCategoriesIntoDatastore];
-	[self startAsynchronousLoadOfSpeciesDatabase];
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:RKIsFirstLaunchKey]) {
+		[self putSpeciesCategoriesIntoDatastore];
+		[self startAsynchronousLoadOfSpeciesDatabase];
+	}
+}
+
+- (void)noteDeactivatedTransaction:(NSNotification *)notification
+{
+	LogMethod();
+	[self.activeWebTransactions removeObject:notification.object];
 }
 
 - (void)dealloc {

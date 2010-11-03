@@ -3,6 +3,7 @@
 //  RoadKill
 //
 //  Created by Pamela on 10/18/10.
+//  Copyright 2010 Seattle RoadKill Team. All rights reserved.
 //
 
 #import "SpeciesCategory.h"
@@ -15,7 +16,6 @@
 
 @dynamic name;
 @dynamic code;
-@dynamic observations;
 @dynamic speciesMembers;
 
 

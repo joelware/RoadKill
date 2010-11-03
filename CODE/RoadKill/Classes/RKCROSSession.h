@@ -16,9 +16,10 @@
 	Observation *observation;
 	ASIHTTPRequest *asiHTTPRequest;
 	NSUInteger sessionState;
-	NSMutableData *receivedData;
-	NSString *receivedString;
 	NSString *formToken;
+	NSString *username;
+	NSString *password;
+	BOOL isAynchronous;
 }
 
 typedef enum {
@@ -33,17 +34,21 @@ typedef enum {
 @property (nonatomic, retain) Observation *observation;
 @property (nonatomic, retain) ASIHTTPRequest *asiHTTPRequest;
 @property (nonatomic) NSUInteger sessionState;
-@property (nonatomic, retain) NSMutableData *receivedData;
-@property (nonatomic, retain) NSString *receivedString;
 @property (nonatomic, retain) NSString *formToken;
+@property (nonatomic, retain) NSString *username;
+@property (nonatomic, retain) NSString *password;
+@property (nonatomic) BOOL isAsynchronous;
 
-+ (ASIHTTPRequest *)authenticationRequestWithUsername:(NSString *)username password:(NSString *)password;
-- (void)authenticateWithUsername:(NSString *)username password:(NSString *)password;
-- (ASIHTTPRequest *)formTokenRequest;
-- (void)obtainFormToken;
-+ (NSURL *)baseURLForWildlifeServer;
-- (BOOL)extractFormTokenFromReceivedString;
-- (BOOL)submitObservationReport:(Observation *)report;
+extern NSString *RKCROSSessionSucceededNotification;
+extern NSString *RKCROSSessionFailedNotification;
 
-- (BOOL)receivedStringShowsSuccessfulSubmission;
+
+- (BOOL)beginTransactionAsynchronously:(BOOL)async;
++ (RKCROSSession *)submissionForObservation:(Observation *)report
+							   withUsername:(NSString *)username
+							   password:(NSString *)password
+									  start:(BOOL)startNow;
+- (void)startAsynchronously;
+- (void)startSynchronously;
+- (void)cancel;
 @end

@@ -26,6 +26,11 @@
 #define kRKQueued @"queued"
 #define kRKComplete @"complete"
 
+	//observation confidence levels
+#define kRK100PercentCertain @"100% Certain"
+#define kRKSomewhatConfident @"Somewhat confident"
+#define kRKBestGuess @"Best guess"
+
 
 // species database header fields, http://www.wildlifecrossing.net/california/files/xing/CA-taxa.csv
 #define kCSVHeaderNID @"ID"
@@ -33,7 +38,4 @@
 #define kCSVHeaderCommon @"Common Name"
 #define kCSVHeaderLatin @"Scientific Name"
 
-
-
-
-
+#define kNinetyDaysInSeconds 90.*24.*60.*60.

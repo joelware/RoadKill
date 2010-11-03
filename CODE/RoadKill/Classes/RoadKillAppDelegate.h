@@ -14,6 +14,8 @@
     UIWindow *window;
     UINavigationController *navigationController;
 
+	NSMutableSet *activeWebTransactions;
+
 @private
     NSManagedObjectContext *managedObjectContext_;
     NSManagedObjectModel *managedObjectModel_;
@@ -23,12 +25,18 @@
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) IBOutlet UINavigationController *navigationController;
 
+@property (nonatomic, copy) NSMutableSet *activeWebTransactions;
+
 @property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 - (NSString *)applicationDocumentsDirectory;
-- (void)populateInitialDatastore;
+- (void)populateInitialDatastoreIfNeeded;
+
+// User Defaults
+
+extern NSString *RKIsFirstLaunchKey;
 
 @end
 
