@@ -59,6 +59,9 @@
 		2BA80DE112720FBA0071E8A3 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B088D461271200B00ECC691 /* MobileCoreServices.framework */; };
 		2BA80DE212720FBB0071E8A3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B088D421271200400ECC691 /* SystemConfiguration.framework */; };
 		2BA80DE512720FC90071E8A3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */; };
+		7B0FE26512820339009AED15 /* ObservationEntryController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7B0FE26412820339009AED15 /* ObservationEntryController.xib */; };
+		7B0FE2681282034A009AED15 /* ObservationEntryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FE26712820349009AED15 /* ObservationEntryController.m */; };
+		7B0FE28612820403009AED15 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B0FE28512820403009AED15 /* Default.png */; };
 		8D88BBA2127CDCCA002A7029 /* SpeciesCategorySelectionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D88BBA0127CDCCA002A7029 /* SpeciesCategorySelectionVC.xib */; };
 		8D88BBA6127CDDE1002A7029 /* SpeciesCategorySelectionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D88BBA5127CDDE1002A7029 /* SpeciesCategorySelectionVC.m */; };
 		8D88C139127E2B66002A7029 /* SpeciesSelectionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D88C137127E2B66002A7029 /* SpeciesSelectionVC.xib */; };
@@ -127,6 +130,10 @@
 		2B790BA1125AA00F00EB101D /* RKCROSSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKCROSSession.m; sourceTree = "<group>"; };
 		2B9327BB126568FE00BADFA7 /* Observation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Observation.h; sourceTree = "<group>"; };
 		2B9327BC126568FE00BADFA7 /* Observation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Observation.m; sourceTree = "<group>"; };
+		7B0FE26412820339009AED15 /* ObservationEntryController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ObservationEntryController.xib; path = Resources/ObservationEntryController.xib; sourceTree = "<group>"; };
+		7B0FE26612820349009AED15 /* ObservationEntryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObservationEntryController.h; sourceTree = "<group>"; };
+		7B0FE26712820349009AED15 /* ObservationEntryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObservationEntryController.m; sourceTree = "<group>"; };
+		7B0FE28512820403009AED15 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Resources/Default.png; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* RoadKill-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RoadKill-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		8D88BBA0127CDCCA002A7029 /* SpeciesCategorySelectionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SpeciesCategorySelectionVC.xib; sourceTree = "<group>"; };
 		8D88BBA4127CDDE1002A7029 /* SpeciesCategorySelectionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeciesCategorySelectionVC.h; sourceTree = "<group>"; };
@@ -179,6 +186,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				7B0FE26612820349009AED15 /* ObservationEntryController.h */,
+				7B0FE26712820349009AED15 /* ObservationEntryController.m */,
 				1D3623240D0F684500981E51 /* RoadKillAppDelegate.h */,
 				1D3623250D0F684500981E51 /* RoadKillAppDelegate.m */,
 				28C286DF0D94DF7D0034E888 /* HalsRootViewController.h */,
@@ -235,6 +244,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7B0FE28512820403009AED15 /* Default.png */,
+				7B0FE26412820339009AED15 /* ObservationEntryController.xib */,
 				2899E55F0DE3E45000AC0155 /* RootViewController.xib */,
 				8D88BBA0127CDCCA002A7029 /* SpeciesCategorySelectionVC.xib */,
 				8D88C137127E2B66002A7029 /* SpeciesSelectionVC.xib */,
@@ -424,6 +435,8 @@
 				2B088E841271425B00ECC691 /* demoSkunk.jpg in Resources */,
 				8D88BBA2127CDCCA002A7029 /* SpeciesCategorySelectionVC.xib in Resources */,
 				8D88C139127E2B66002A7029 /* SpeciesSelectionVC.xib in Resources */,
+				7B0FE26512820339009AED15 /* ObservationEntryController.xib in Resources */,
+				7B0FE28612820403009AED15 /* Default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -479,6 +492,7 @@
 				8D88C14F127E2BB2002A7029 /* SpeciesSelectionVC.m in Sources */,
 				8D88C682127F42BA002A7029 /* RootViewController.m in Sources */,
 				8D88C7B7127F5D8B002A7029 /* ExistingReportsVC.m in Sources */,
+				7B0FE2681282034A009AED15 /* ObservationEntryController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

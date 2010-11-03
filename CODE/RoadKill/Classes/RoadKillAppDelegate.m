@@ -12,6 +12,7 @@
 #import "RKConstants.h"
 #import "RKCROSSession.h"
 #import "Observation.h"
+#import "ObservationEntryController.h"
 #import "SpeciesCategory.h"
 #import "Species.h"
 
@@ -72,6 +73,11 @@ NSString *RKIsFirstLaunchKey = @"isFirstLaunch";
 											   object:nil];
 	[[NSUserDefaults standardUserDefaults] setBool:NO
 											forKey:RKIsFirstLaunchKey];
+											
+    UIViewController *entryVC = [[ObservationEntryController alloc] initWithNibName:@"ObservationEntryController" 
+                                                                              bundle:nil];
+    [navigationController pushViewController:entryVC animated:YES];
+                                                                          
     return YES;
 }
 
