@@ -10,13 +10,11 @@
 
 
 @interface ObservationEntryController : UIViewController {
-    UINavigationController *navigationC;
 
 }
 
-@property (retain,readwrite) UINavigationController *navigationC;
 
-
+- (IBAction) doSpecies:(id)sender;
 - (IBAction) doDone:(id)sender;
 
 

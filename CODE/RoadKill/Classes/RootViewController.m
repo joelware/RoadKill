@@ -10,6 +10,7 @@
 #import "Observation.h"
 #import "HalsRootViewController.h"
 #import "SpeciesCategorySelectionVC.h"
+#import "ObservationEntryController.h"
 #import "ExistingReportsVC.h"
 
 
@@ -188,7 +189,7 @@
 			
 		case 1:
 		{
-			nextViewController = [[SpeciesCategorySelectionVC alloc] initWithNibName:@"SpeciesCategorySelectionVC" bundle:nil];
+			nextViewController = [[ObservationEntryController alloc] initWithNibName:@"ObservationEntryController" bundle:nil];
 		}
 			break;
 			

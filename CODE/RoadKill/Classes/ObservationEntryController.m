@@ -7,11 +7,11 @@
 //
 
 #import "ObservationEntryController.h"
+#import "SpeciesCategorySelectionVC.h"
 
 
 @implementation ObservationEntryController
 
-@synthesize navigationC;
 
 #pragma mark -
 #pragma mark View lifecycle
@@ -156,9 +156,15 @@
 }
 
 
+- (IBAction) doSpecies:(id)sender {
+    UIViewController *speciesCategorySelectionVC = [[SpeciesCategorySelectionVC alloc] initWithNibName:@"SpeciesCategorySelectionVC" bundle:nil];
+    [self.navigationController pushViewController:speciesCategorySelectionVC animated:YES];
+    [speciesCategorySelectionVC release];
+    
+}
 
 - (IBAction) doDone:(id)sender {
-    [navigationC popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
