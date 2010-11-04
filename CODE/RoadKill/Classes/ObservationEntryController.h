@@ -9,12 +9,15 @@
 #import <UIKit/UIKit.h>
 
 
-@interface ObservationEntryController : UITableViewController {
+@interface ObservationEntryController : UIViewController {
+    UINavigationController *navigationC;
 
 }
 
+@property (retain,readwrite) UINavigationController *navigationC;
 
-//- (void) doDone:(id)sender;
+
+- (IBAction) doDone:(id)sender;
 
 
 @end

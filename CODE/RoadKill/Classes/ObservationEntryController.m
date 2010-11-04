@@ -11,6 +11,7 @@
 
 @implementation ObservationEntryController
 
+@synthesize navigationC;
 
 #pragma mark -
 #pragma mark View lifecycle
@@ -152,6 +153,12 @@
 - (void)viewDidUnload {
     // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
     // For example: self.myOutlet = nil;
+}
+
+
+
+- (IBAction) doDone:(id)sender {
+    [navigationC popViewControllerAnimated:YES];
 }
 
 
