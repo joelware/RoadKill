@@ -23,8 +23,8 @@
 
 @synthesize observation = observation_;
 @synthesize category = category_;
-	//@synthesize categoryArray = categoryArray_;
 @synthesize lastIndexPath = lastIndexPath_;
+@synthesize selectedCategoryString = selectedCategoryString_;
 @synthesize managedObjectContext = managedObjectContext_, fetchedResultsController=fetchedResultsController_;
 
 
@@ -77,22 +77,6 @@
     // Return the number of sections.
     return [[self.fetchedResultsController sections] count];
 }
-
-- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section 
-{
-	NSString *footer = nil;
-	switch (section) 
-	{
-		case 0:
-			footer = [NSString stringWithFormat:@"\nTo continue, after selecting the Category, select a Confidence Level"];
-			break;
-		default:
-			footer = nil;
-			break;
-	}
-	return footer;
-}
-
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
@@ -176,22 +160,17 @@
 #pragma mark -
 #pragma mark Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
-{
-    // Navigation logic may go here. Create and push another view controller.
-	/*
-	 <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-	 [self.navigationController pushViewController:detailViewController animated:YES];
-	 [detailViewController release];
-	 */
 
-		//TODO: save/persist the selection
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
+{		
 		//http://stackoverflow.com/questions/974170/uitableview-having-problems-changing-accessory-when-selected
 		//http://developer.apple.com/library/ios/#documentation/userexperience/conceptual/TableView_iPhone/ManageSelections/ManageSelections.html see listing 6-3  Managing a selection list—exclusive list
 		//Apress Beginning iPhone 3 Chapter 9 - Project 09 Nav: see CheckListController files
 	
+		//Be sure the list is exclusive
+	
+	NSLog(@"START: %@", self.selectedCategoryString);
+
 	int newRow = [indexPath row];
     int oldRow = (self.lastIndexPath != nil) ? [self.lastIndexPath row] : -1;
     
@@ -204,67 +183,27 @@
         UITableViewCell *oldCell = [tableView cellForRowAtIndexPath: 
                                     self.lastIndexPath]; 
         oldCell.accessoryType = UITableViewCellAccessoryNone;
-        self.lastIndexPath = indexPath;
+        self.lastIndexPath = indexPath;		
     }
-    
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-#pragma mark -
-#pragma mark SegmentedControl
-	//FIXME: this isn't working, probably because I'm not yet using a new observation?
-- (IBAction)setConfidenceLevel:(id)sender
-{
-    switch (((UISegmentedControl *)sender).selectedSegmentIndex)
-    {
-        case 0:
-        {
-			self.observation.formIDConfidence = kRK100PercentCertain;
-            break;
-        } 
-        case 1:
-        {
-            self.observation.formIDConfidence = kRKSomewhatConfident;
-            break;
-        } 
-        default:
-        {
-            self.observation.formIDConfidence = kRKBestGuess;
-            break;
-        } 
-    }
-	RKLog(@"The selected Confidence level is: %@", self.observation.formIDConfidence);
 	
-		//FIXME: this won't work until I create a new observation separate from Hal's test obs?
-		//if no Category was selected, remind the user to do that
-	if (self.category == nil)
-	{
-        RKLog(@"No Category was selected");
-		UIAlertView *noCategoryAlert = [[UIAlertView alloc] initWithTitle:@"Please select a species category"
-																 message:NULL
-																delegate:NULL 
-													   cancelButtonTitle:@"OK" 
-													   otherButtonTitles:NULL];
-		[noCategoryAlert show]; 
-		[noCategoryAlert release]; 
-		return;
-	}
-	else 
-	{
-			//TODO: which is better UI?
-			//this moves the user to the SpeciesSelection view when the Confidence selection is made (saves the user a tap)? 
-			//or should we use a Done button on the navigation bar?
-		SpeciesSelectionVC *testVC = [[SpeciesSelectionVC alloc] initWithNibName:@"SpeciesSelectionVC" bundle:nil];
-		
-		if (testVC) 
-		{
-			[self.navigationController pushViewController:testVC animated:YES];
-		}
-		
-		[testVC release];
-	}
-}
+		//remember the category selected so the next view will filter for species members of that category
+    UITableViewCell *selectedCell = [self.tableView 
+                                     cellForRowAtIndexPath:self.lastIndexPath];
+    self.selectedCategoryString = selectedCell.textLabel.text;
 
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+	
+	NSLog(@"END: %@", self.selectedCategoryString);
+	
+		//push the SpeciesSelectionVC when a category is selected
+	SpeciesSelectionVC *testVC = [[SpeciesSelectionVC alloc] initWithNibName:@"SpeciesSelectionVC" bundle:nil];
+	
+	if (testVC) 
+	{
+		[self.navigationController pushViewController:testVC animated:YES];
+	}	
+	[testVC release];
+}
 
 #pragma mark -
 #pragma mark Fetched results controller
@@ -414,8 +353,8 @@
 {
 	[observation_ release], observation_ = nil;
 	[category_ release], category_ = nil;
-		//[categoryArray_ release], categoryArray_ = nil;
 	[lastIndexPath_ release], lastIndexPath_ = nil;
+	[selectedCategoryString_ release], selectedCategoryString_ = nil;
 	[managedObjectContext_ release], managedObjectContext_ = nil;
 	[fetchedResultsController_ release], fetchedResultsController_ = nil;
 

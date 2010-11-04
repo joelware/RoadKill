@@ -59,7 +59,6 @@
 		2BA80DE112720FBA0071E8A3 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B088D461271200B00ECC691 /* MobileCoreServices.framework */; };
 		2BA80DE212720FBB0071E8A3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B088D421271200400ECC691 /* SystemConfiguration.framework */; };
 		2BA80DE512720FC90071E8A3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */; };
-		8D88BBA2127CDCCA002A7029 /* SpeciesCategorySelectionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D88BBA0127CDCCA002A7029 /* SpeciesCategorySelectionVC.xib */; };
 		8D88BBA6127CDDE1002A7029 /* SpeciesCategorySelectionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D88BBA5127CDDE1002A7029 /* SpeciesCategorySelectionVC.m */; };
 		8D88C139127E2B66002A7029 /* SpeciesSelectionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D88C137127E2B66002A7029 /* SpeciesSelectionVC.xib */; };
 		8D88C14F127E2BB2002A7029 /* SpeciesSelectionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D88C14E127E2BB2002A7029 /* SpeciesSelectionVC.m */; };
@@ -128,7 +127,6 @@
 		2B9327BB126568FE00BADFA7 /* Observation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Observation.h; sourceTree = "<group>"; };
 		2B9327BC126568FE00BADFA7 /* Observation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Observation.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* RoadKill-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RoadKill-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
-		8D88BBA0127CDCCA002A7029 /* SpeciesCategorySelectionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SpeciesCategorySelectionVC.xib; sourceTree = "<group>"; };
 		8D88BBA4127CDDE1002A7029 /* SpeciesCategorySelectionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeciesCategorySelectionVC.h; sourceTree = "<group>"; };
 		8D88BBA5127CDDE1002A7029 /* SpeciesCategorySelectionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeciesCategorySelectionVC.m; sourceTree = "<group>"; };
 		8D88C137127E2B66002A7029 /* SpeciesSelectionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SpeciesSelectionVC.xib; sourceTree = "<group>"; };
@@ -236,7 +234,6 @@
 			isa = PBXGroup;
 			children = (
 				2899E55F0DE3E45000AC0155 /* RootViewController.xib */,
-				8D88BBA0127CDCCA002A7029 /* SpeciesCategorySelectionVC.xib */,
 				8D88C137127E2B66002A7029 /* SpeciesSelectionVC.xib */,
 				28AD735F0D9D9599002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* RoadKill-Info.plist */,
@@ -422,7 +419,6 @@
 				2B244433125BE720005152E6 /* Icon.png in Resources */,
 				2B244434125BE720005152E6 /* Icon@2x.png in Resources */,
 				2B088E841271425B00ECC691 /* demoSkunk.jpg in Resources */,
-				8D88BBA2127CDCCA002A7029 /* SpeciesCategorySelectionVC.xib in Resources */,
 				8D88C139127E2B66002A7029 /* SpeciesSelectionVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

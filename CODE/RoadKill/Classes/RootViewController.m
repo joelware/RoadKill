@@ -188,7 +188,7 @@
 			
 		case 1:
 		{
-			nextViewController = [[SpeciesCategorySelectionVC alloc] initWithNibName:@"SpeciesCategorySelectionVC" bundle:nil];
+			nextViewController = [[SpeciesCategorySelectionVC alloc] initWithStyle:UITableViewStyleGrouped];
 		}
 			break;
 			
