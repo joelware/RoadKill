@@ -1,16 +1,14 @@
-//
-//  SpeciesCategorySelectionVC.m
-//  RoadKill
-//
-//  Created by Pamela on 10/30/10.
-//  Copyright 2010 Seattle RoadKill Team. All rights reserved.
-//
+	//
+	//  SpeciesCategorySelectionVC.m
+	//  RoadKill
+	//
+	//  Created by Pamela on 10/30/10.
+	//  Copyright 2010 Seattle RoadKill Team. All rights reserved.
+	//
 
 #import "SpeciesCategorySelectionVC.h"
 #import "RKConstants.h"
 #import "RoadKillAppDelegate.h"
-
-#import "Observation.h"
 #import "SpeciesCategory.h"
 #import "SpeciesSelectionVC.h"
 
@@ -21,7 +19,6 @@
 
 @implementation SpeciesCategorySelectionVC
 
-@synthesize observation = observation_;
 @synthesize category = category_;
 @synthesize lastIndexPath = lastIndexPath_;
 @synthesize selectedCategoryString = selectedCategoryString_;
@@ -32,59 +29,61 @@
 #pragma mark View lifecycle
 
 
-- (void)viewDidLoad {
+- (void)viewDidLoad 
+{
     [super viewDidLoad];
-
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+	
+		// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+		// self.navigationItem.rightBarButtonItem = self.editButtonItem;
 	self.navigationItem.title = @"Species Category";
 }
- 
+
 
 /*
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-}
-*/
+ - (void)viewWillAppear:(BOOL)animated {
+ [super viewWillAppear:animated];
+ }
+ */
 /*
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-}
-*/
+ - (void)viewDidAppear:(BOOL)animated {
+ [super viewDidAppear:animated];
+ }
+ */
 /*
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-}
-*/
+ - (void)viewWillDisappear:(BOOL)animated {
+ [super viewWillDisappear:animated];
+ }
+ */
 /*
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-}
-*/
+ - (void)viewDidDisappear:(BOOL)animated {
+ [super viewDidDisappear:animated];
+ }
+ */
 /*
-// Override to allow orientations other than the default portrait orientation.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-*/
+ // Override to allow orientations other than the default portrait orientation.
+ - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+ // Return YES for supported orientations
+ return (interfaceOrientation == UIInterfaceOrientationPortrait);
+ }
+ */
 
 
 #pragma mark -
 #pragma mark Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    // Return the number of sections.
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView 
+{
     return [[self.fetchedResultsController sections] count];
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section 
+{
     id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
     return [sectionInfo numberOfObjects];
 }
 
 
-// Customize the appearance of table view cells.
+	// Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *CellIdentifier = @"Cell";
@@ -94,7 +93,7 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     
-    // Configure the cell...
+		// Configure the cell...
 	[self configureCell:cell atIndexPath:indexPath];
     
     return cell;
@@ -103,10 +102,10 @@
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath 
 {	
 		//Apress Beginning iPhone 3 Chapter 9 - Project 09 Nav: see CheckListController files
-
+	
 	NSUInteger row = [indexPath row];
     NSUInteger oldRow = [self.lastIndexPath row];
-
+	
 	self.category = nil;
 	self.category = (SpeciesCategory *) [self.fetchedResultsController objectAtIndexPath:indexPath];
 	
@@ -118,43 +117,43 @@
 
 
 /*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
+ // Override to support conditional editing of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+ // Return NO if you do not want the specified item to be editable.
+ return YES;
+ }
+ */
 
 
 /*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
+ // Override to support editing the table view.
+ - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+ 
+ if (editingStyle == UITableViewCellEditingStyleDelete) {
+ // Delete the row from the data source
+ [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+ }   
+ else if (editingStyle == UITableViewCellEditingStyleInsert) {
+ // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+ }   
+ }
+ */
 
 
 /*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
+ // Override to support rearranging the table view.
+ - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+ }
+ */
 
 
 /*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
+ // Override to support conditional rearranging of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+ // Return NO if you do not want the item to be re-orderable.
+ return YES;
+ }
+ */
 
 
 #pragma mark -
@@ -169,8 +168,8 @@
 	
 		//Be sure the list is exclusive
 	
-	NSLog(@"START: %@", self.selectedCategoryString);
-
+		//RKLog(@"BEFORE category selection: %@", self.selectedCategoryString);
+	
 	int newRow = [indexPath row];
     int oldRow = (self.lastIndexPath != nil) ? [self.lastIndexPath row] : -1;
     
@@ -190,16 +189,20 @@
     UITableViewCell *selectedCell = [self.tableView 
                                      cellForRowAtIndexPath:self.lastIndexPath];
     self.selectedCategoryString = selectedCell.textLabel.text;
-
+	
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
-	NSLog(@"END: %@", self.selectedCategoryString);
+		//RKLog(@"AFTER category selection: %@", self.selectedCategoryString);
 	
 		//push the SpeciesSelectionVC when a category is selected
 	SpeciesSelectionVC *testVC = [[SpeciesSelectionVC alloc] initWithNibName:@"SpeciesSelectionVC" bundle:nil];
 	
 	if (testVC) 
 	{
+			//pass the selection to the next view
+		testVC.selectedCategoryString = self.selectedCategoryString;
+			//RKLog(@"PASSED to the next view: %@", testVC.selectedCategoryString);
+		
 		[self.navigationController pushViewController:testVC animated:YES];
 	}	
 	[testVC release];
@@ -337,27 +340,26 @@
 #pragma mark Memory management
 
 - (void)didReceiveMemoryWarning {
-    // Releases the view if it doesn't have a superview.
+		// Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
     
-    // Relinquish ownership any cached data, images, etc that aren't in use.
+		// Relinquish ownership any cached data, images, etc that aren't in use.
 }
 
 - (void)viewDidUnload {
-    // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
-    // For example: self.myOutlet = nil;
+		// Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
+		// For example: self.myOutlet = nil;
 }
 
 
 - (void)dealloc 
 {
-	[observation_ release], observation_ = nil;
 	[category_ release], category_ = nil;
 	[lastIndexPath_ release], lastIndexPath_ = nil;
 	[selectedCategoryString_ release], selectedCategoryString_ = nil;
 	[managedObjectContext_ release], managedObjectContext_ = nil;
 	[fetchedResultsController_ release], fetchedResultsController_ = nil;
-
+	
     [super dealloc];
 }
 
