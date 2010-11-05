@@ -201,7 +201,8 @@
         self.lastIndexPath = indexPath;		
     }
 	
-		//remember the category selected so the next view will filter for species members of that category
+		//remember the species selected
+		//FIXME: need to persist this selection for the new observation
     UITableViewCell *selectedCell = [self.tableView cellForRowAtIndexPath:self.lastIndexPath];
     self.selectedSpeciesString = selectedCell.textLabel.text;
 	
@@ -209,7 +210,8 @@
 	
 		//RKLog(@"AFTER species selection: %@", self.selectedSpeciesString);
 	
-		//push the SpeciesSelectionVC when a category is selected
+		//push the next view controller when a category is selected
+		//FIXME: what will the next view be? See note below.
 	RootViewController *newViewController = [[RootViewController alloc] initWithStyle:UITableViewStylePlain];
 	
 	if (newViewController) 
