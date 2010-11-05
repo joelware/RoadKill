@@ -175,19 +175,16 @@
     
     if (newRow != oldRow)
     {
-        UITableViewCell *newCell = [tableView cellForRowAtIndexPath:
-                                    indexPath];
+        UITableViewCell *newCell = [tableView cellForRowAtIndexPath:indexPath];
         newCell.accessoryType = UITableViewCellAccessoryCheckmark;
         
-        UITableViewCell *oldCell = [tableView cellForRowAtIndexPath: 
-                                    self.lastIndexPath]; 
+        UITableViewCell *oldCell = [tableView cellForRowAtIndexPath:self.lastIndexPath]; 
         oldCell.accessoryType = UITableViewCellAccessoryNone;
         self.lastIndexPath = indexPath;		
     }
 	
 		//remember the category selected so the next view will filter for species members of that category
-    UITableViewCell *selectedCell = [self.tableView 
-                                     cellForRowAtIndexPath:self.lastIndexPath];
+    UITableViewCell *selectedCell = [self.tableView cellForRowAtIndexPath:self.lastIndexPath];
     self.selectedCategoryString = selectedCell.textLabel.text;
 	
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -195,17 +192,17 @@
 		//RKLog(@"AFTER category selection: %@", self.selectedCategoryString);
 	
 		//push the SpeciesSelectionVC when a category is selected
-	SpeciesSelectionVC *testVC = [[SpeciesSelectionVC alloc] initWithNibName:@"SpeciesSelectionVC" bundle:nil];
+	SpeciesSelectionVC *newViewController = [[SpeciesSelectionVC alloc] initWithStyle:UITableViewStylePlain];
 	
-	if (testVC) 
+	if (newViewController) 
 	{
 			//pass the selection to the next view
-		testVC.selectedCategoryString = self.selectedCategoryString;
+		newViewController.selectedCategoryString = self.selectedCategoryString;
 			//RKLog(@"PASSED to the next view: %@", testVC.selectedCategoryString);
 		
-		[self.navigationController pushViewController:testVC animated:YES];
+		[self.navigationController pushViewController:newViewController animated:YES];
 	}	
-	[testVC release];
+	[newViewController release];
 }
 
 #pragma mark -
@@ -245,7 +242,10 @@
     
 		// Edit the section name key path and cache name if appropriate.
 		// nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext  sectionNameKeyPath:nil cacheName:@"Category"];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest 
+																								managedObjectContext:self.managedObjectContext  
+																								  sectionNameKeyPath:nil 
+																										   cacheName:@"Category"];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
 	

@@ -11,6 +11,7 @@
 #import "RoadKillAppDelegate.h"
 #import "Observation.h"
 #import "Species.h"
+#import "RootViewController.h"
 	//#import "SpeciesCategorySelectionVC.h"
 
 @interface SpeciesSelectionVC ()
@@ -34,7 +35,11 @@
     [super viewDidLoad];
 		// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
 		// self.navigationItem.rightBarButtonItem = self.editButtonItem;
-	self.navigationItem.title = @"Species";
+		//TODO: which title is better?
+		//self.navigationItem.title = @"Species";
+	self.navigationItem.title = self.selectedCategoryString;
+	
+		//NSLog(@"%@",[NSString stringWithFormat:@"I am adding this string:%@.", box.name]);
 }
 
 
@@ -158,7 +163,7 @@
 
 #pragma mark -
 #pragma mark Table view delegate
-
+#if 0
 	//TODO: need to do this next
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 		// Navigation logic may go here. Create and push another view controller.
@@ -170,6 +175,52 @@
 	 [detailViewController release];
 	 */
 }
+#endif
+
+#if 1
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
+{		
+		//http://stackoverflow.com/questions/974170/uitableview-having-problems-changing-accessory-when-selected
+		//http://developer.apple.com/library/ios/#documentation/userexperience/conceptual/TableView_iPhone/ManageSelections/ManageSelections.html see listing 6-3  Managing a selection list—exclusive list
+		//Apress Beginning iPhone 3 Chapter 9 - Project 09 Nav: see CheckListController files
+	
+		//Be sure the list is exclusive
+	
+		//RKLog(@"BEFORE species selection: %@", self.selectedSpeciesString);
+	
+	int newRow = [indexPath row];
+    int oldRow = (self.lastIndexPath != nil) ? [self.lastIndexPath row] : -1;
+    
+    if (newRow != oldRow)
+    {
+        UITableViewCell *newCell = [tableView cellForRowAtIndexPath:indexPath];
+        newCell.accessoryType = UITableViewCellAccessoryCheckmark;
+        
+        UITableViewCell *oldCell = [tableView cellForRowAtIndexPath:self.lastIndexPath]; 
+        oldCell.accessoryType = UITableViewCellAccessoryNone;
+        self.lastIndexPath = indexPath;		
+    }
+	
+		//remember the category selected so the next view will filter for species members of that category
+    UITableViewCell *selectedCell = [self.tableView cellForRowAtIndexPath:self.lastIndexPath];
+    self.selectedSpeciesString = selectedCell.textLabel.text;
+	
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+	
+		//RKLog(@"AFTER species selection: %@", self.selectedSpeciesString);
+	
+		//push the SpeciesSelectionVC when a category is selected
+	RootViewController *newViewController = [[RootViewController alloc] initWithStyle:UITableViewStylePlain];
+	
+	if (newViewController) 
+	{
+			//FIXME: the species selection is not persisted yet
+			//FIXME: temporarily return to rootView per Gerard's plan?
+			//[self.navigationController pushViewController:newViewController animated:YES];
+	}	
+	[newViewController release];
+}
+#endif
 
 #pragma mark -
 #pragma mark Fetched results controller
@@ -194,7 +245,8 @@
 	
 		// Create the fetch request for the entity.
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-	NSEntityDescription *entity = [NSEntityDescription entityForName:RKSpeciesEntity inManagedObjectContext:self.managedObjectContext ];
+	NSEntityDescription *entity = [NSEntityDescription entityForName:RKSpeciesEntity 
+											  inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
 	
 		//create the predicate to filter by the chosen category
@@ -216,7 +268,10 @@
     
 		// Edit the section name key path and cache name if appropriate.
 		// nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext  sectionNameKeyPath:nil cacheName:@"Species"];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest 
+																								managedObjectContext:self.managedObjectContext  
+																								  sectionNameKeyPath:nil 
+																										   cacheName:@"Species"];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
 	
