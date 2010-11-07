@@ -192,23 +192,37 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Navigation logic may go here -- for example, create and push another view controller.
-	Observation *obs = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+//	Observation *obs = [[self fetchedResultsController] objectAtIndexPath:indexPath];
 	
-	if ([obs.sentStatus isEqualToString:kRKNotReady])
-		obs.sentStatus = kRKReady;
-	else if ([obs isValidForSubmission]) {
-		[[(RoadKillAppDelegate *)[[UIApplication sharedApplication] delegate] activeWebTransactions]
-		 addObject:[RKCROSSession submissionForObservation:obs
-											  withUsername:RKTestUsername 
-												  password:RKCorrectTestPassword 
-													 start:YES]];
-	}
+	//if ([obs.sentStatus isEqualToString:kRKNotReady])
+//		obs.sentStatus = kRKReady;
+//	else if ([obs isValidForSubmission]) {
+//		[[(RoadKillAppDelegate *)[[UIApplication sharedApplication] delegate] activeWebTransactions]
+//		 addObject:[RKCROSSession submissionForObservation:obs
+//											  withUsername:RKTestUsername 
+//												  password:RKCorrectTestPassword 
+//													 start:YES]];
+//	}
 	
 	/* // ...
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      [detailViewController release];
      */
+	
+//	UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+//	imagePicker.delegate = self;
+//	imagePicker.showsCameraControls=YES;
+//	[self presentModalViewController:imagePicker animated:YES];
+//	[imagePicker release];
+	
+	CameraViewController* cameraViewController = [[CameraViewController alloc]init];
+	[self.navigationController pushViewController:cameraViewController animated:YES];
+	
+	//TODO we should be able to release here 
+	//[cameraViewController release];
+	
+	
 }
 
 

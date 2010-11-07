@@ -59,6 +59,7 @@
 		2BA80DE112720FBA0071E8A3 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B088D461271200B00ECC691 /* MobileCoreServices.framework */; };
 		2BA80DE212720FBB0071E8A3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B088D421271200400ECC691 /* SystemConfiguration.framework */; };
 		2BA80DE512720FC90071E8A3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */; };
+		88BC03171286180C0021FDEB /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BC03161286180C0021FDEB /* CameraViewController.m */; };
 		8D8FE372126BFA4700336686 /* Species.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8FE370126BFA4700336686 /* Species.m */; };
 		8D8FE4BE126D1A4600336686 /* SpeciesCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8FE4BD126D1A4600336686 /* SpeciesCategory.m */; };
 /* End PBXBuildFile section */
@@ -121,6 +122,8 @@
 		2B790BA1125AA00F00EB101D /* RKCROSSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKCROSSession.m; sourceTree = "<group>"; };
 		2B9327BB126568FE00BADFA7 /* Observation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Observation.h; sourceTree = "<group>"; };
 		2B9327BC126568FE00BADFA7 /* Observation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Observation.m; sourceTree = "<group>"; };
+		88BC03151286180C0021FDEB /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
+		88BC03161286180C0021FDEB /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* RoadKill-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RoadKill-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		8D8FE36F126BFA4700336686 /* Species.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Species.h; sourceTree = "<group>"; };
 		8D8FE370126BFA4700336686 /* Species.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Species.m; sourceTree = "<group>"; };
@@ -167,6 +170,8 @@
 				28C286E00D94DF7D0034E888 /* RootViewController.m */,
 				1D3623240D0F684500981E51 /* RoadKillAppDelegate.h */,
 				1D3623250D0F684500981E51 /* RoadKillAppDelegate.m */,
+				88BC03151286180C0021FDEB /* CameraViewController.h */,
+				88BC03161286180C0021FDEB /* CameraViewController.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -447,6 +452,7 @@
 				2B088CF612711EBB00ECC691 /* ASINetworkQueue.m in Sources */,
 				2B088CF712711EBB00ECC691 /* ASIDownloadCache.m in Sources */,
 				2B64215D1277A867005BFC0C /* CSVParser.m in Sources */,
+				88BC03171286180C0021FDEB /* CameraViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
