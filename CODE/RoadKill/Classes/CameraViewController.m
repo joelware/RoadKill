@@ -36,17 +36,22 @@
     [super viewDidLoad];
 	self.title=@"Camera";
 	
-	UIImagePickerControllerSourceType sourceType=UIImagePickerControllerSourceTypeCamera;
+	//UIImagePickerControllerSourceType sourceType=UIImagePickerControllerSourceTypeCamera;
 	
-	self.imagePickerController.delegate = self;
-	self.imagePickerController.sourceType = sourceType;
-	
-	if ([UIImagePickerController isSourceTypeAvailable:sourceType])
+	if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
     {
-        [self presentModalViewController:self.imagePickerController animated:YES];
-    }
-	 
 		
+		self.imagePickerController.delegate = self;
+		self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+	    [self presentModalViewController:self.imagePickerController animated:YES];
+    }
+	else {
+		self.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+		self.imagePickerController.delegate = self;
+	    [self presentModalViewController:self.imagePickerController animated:YES];
+		
+	}
+
 }
 
 /**  *************   TEST CODE DELETE EVENTUALLY ***********************/
