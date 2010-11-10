@@ -196,7 +196,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Navigation logic may go here -- for example, create and push another view controller.
-	Observation *obs = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+//	Observation *obs = [[self fetchedResultsController] objectAtIndexPath:indexPath];
 	
 	//if ([obs.sentStatus isEqualToString:kRKNotReady])
 //		obs.sentStatus = kRKReady;
