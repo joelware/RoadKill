@@ -65,6 +65,8 @@
 		8D88C7B7127F5D8B002A7029 /* ExistingReportsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D88C7B6127F5D8B002A7029 /* ExistingReportsVC.m */; };
 		8D8FE372126BFA4700336686 /* Species.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8FE370126BFA4700336686 /* Species.m */; };
 		8D8FE4BE126D1A4600336686 /* SpeciesCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8FE4BD126D1A4600336686 /* SpeciesCategory.m */; };
+		8DFEE4B0128A422300AEADFD /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFEE4AF128A422300AEADFD /* Photo.m */; };
+		8DFEE4C5128A44C500AEADFD /* UIImageToDataTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFEE4C4128A44C500AEADFD /* UIImageToDataTransformer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -138,6 +140,10 @@
 		8D8FE370126BFA4700336686 /* Species.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Species.m; sourceTree = "<group>"; };
 		8D8FE4BC126D1A4600336686 /* SpeciesCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeciesCategory.h; sourceTree = "<group>"; };
 		8D8FE4BD126D1A4600336686 /* SpeciesCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeciesCategory.m; sourceTree = "<group>"; };
+		8DFEE4AE128A422300AEADFD /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
+		8DFEE4AF128A422300AEADFD /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
+		8DFEE4C3128A44C500AEADFD /* UIImageToDataTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageToDataTransformer.h; sourceTree = "<group>"; };
+		8DFEE4C4128A44C500AEADFD /* UIImageToDataTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageToDataTransformer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -323,6 +329,8 @@
 		2B9327E312656C8100BADFA7 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				8DFEE4AE128A422300AEADFD /* Photo.h */,
+				8DFEE4AF128A422300AEADFD /* Photo.m */,
 				2B9327BB126568FE00BADFA7 /* Observation.h */,
 				2B9327BC126568FE00BADFA7 /* Observation.m */,
 				2B7365D51269266E00E3CE18 /* State.h */,
@@ -334,6 +342,8 @@
 				8D8FE4BC126D1A4600336686 /* SpeciesCategory.h */,
 				8D8FE4BD126D1A4600336686 /* SpeciesCategory.m */,
 				28D3F201112F7DC200FD0661 /* RoadKill.xcdatamodeld */,
+				8DFEE4C3128A44C500AEADFD /* UIImageToDataTransformer.h */,
+				8DFEE4C4128A44C500AEADFD /* UIImageToDataTransformer.m */,
 			);
 			name = "Core Data";
 			path = Classes;
@@ -471,6 +481,8 @@
 				8D88C14F127E2BB2002A7029 /* SpeciesSelectionVC.m in Sources */,
 				8D88C682127F42BA002A7029 /* RootViewController.m in Sources */,
 				8D88C7B7127F5D8B002A7029 /* ExistingReportsVC.m in Sources */,
+				8DFEE4B0128A422300AEADFD /* Photo.m in Sources */,
+				8DFEE4C5128A44C500AEADFD /* UIImageToDataTransformer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
