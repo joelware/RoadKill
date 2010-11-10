@@ -7,6 +7,7 @@
 
 #import <CoreData/CoreData.h>
 
+@class Photo;
 @class Species;
 @class SpeciesCategory;
 @class State;
@@ -28,11 +29,20 @@
 @property (nonatomic, retain) NSDate * observationTimestamp;
 @property (nonatomic, retain) State * state;
 @property (nonatomic, retain) Species * species;
+@property (nonatomic, retain) NSSet* photos;
 @property (nonatomic, retain) User * user;
 
 + (Observation *)addObservationInContext:(NSManagedObjectContext *)moc;
 - (void)markAsTestObservation;
 - (BOOL)isValidForSubmission;
+
+@end
+
+@interface Observation (CoreDataGeneratedAccessors)
+- (void)addPhotosObject:(Photo *)value;
+- (void)removePhotosObject:(Photo *)value;
+- (void)addPhotos:(NSSet *)value;
+- (void)removePhotos:(NSSet *)value;
 
 @end
 

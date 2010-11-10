@@ -47,7 +47,7 @@ NSString *RKIsFirstLaunchKey = @"isFirstLaunch";
 }
 
 - (void)awakeFromNib {    
-    
+ 
     RootViewController *rootViewController = (RootViewController *)[navigationController topViewController];
     rootViewController.managedObjectContext = self.managedObjectContext;
 }
@@ -239,7 +239,9 @@ NSString *RKIsFirstLaunchKey = @"isFirstLaunch";
 - (void)handleParsedSpeciesInfo:(NSDictionary*)theRecord
 {
 	LogMethod();
-	RKLog(@"%@", theRecord);
+	RKLog(@"theRecord is %@", theRecord);
+	RKLog(@"the category is %@", [theRecord objectForKey:kCSVHeaderCategory]);
+
 	SpeciesCategory *category = [SpeciesCategory speciesCategoryWithName:[theRecord objectForKey:kCSVHeaderCategory]
 															   inContext:self.managedObjectContext];
 	
@@ -262,6 +264,8 @@ NSString *RKIsFirstLaunchKey = @"isFirstLaunch";
 {
 	NSError *error;
 	RKLog(@"MOC status: %d registered objects", self.managedObjectContext.registeredObjects.count);
+		//RKLog(@"MOC status - the registered objects descriptions: %@ ", self.managedObjectContext.registeredObjects.description);
+
 	CSVParser *speciesParser =
 	[[[CSVParser alloc]
 	  initWithString:request.responseString
@@ -274,6 +278,7 @@ NSString *RKIsFirstLaunchKey = @"isFirstLaunch";
 	 autorelease];
 	[speciesParser parseRowsForReceiver:self selector:@selector(handleParsedSpeciesInfo:)];
 	RKLog(@"MOC status: %d registered objects", self.managedObjectContext.registeredObjects.count);
+
 	[self.managedObjectContext save:&error];
 }
 
