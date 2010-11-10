@@ -198,15 +198,15 @@
     // Navigation logic may go here -- for example, create and push another view controller.
 	Observation *obs = [[self fetchedResultsController] objectAtIndexPath:indexPath];
 	
-	if ([obs.sentStatus isEqualToString:kRKNotReady])
-		obs.sentStatus = kRKReady;
-	else if ([obs isValidForSubmission]) {
-		[[(RoadKillAppDelegate *)[[UIApplication sharedApplication] delegate] activeWebTransactions]
-		 addObject:[RKCROSSession submissionForObservation:obs
-											  withUsername:RKTestUsername 
-												  password:RKCorrectTestPassword 
-													 start:YES]];
-	}
+	//if ([obs.sentStatus isEqualToString:kRKNotReady])
+//		obs.sentStatus = kRKReady;
+//	else if ([obs isValidForSubmission]) {
+//		[[(RoadKillAppDelegate *)[[UIApplication sharedApplication] delegate] activeWebTransactions]
+//		 addObject:[RKCROSSession submissionForObservation:obs
+//											  withUsername:RKTestUsername 
+//												  password:RKCorrectTestPassword 
+//													 start:YES]];
+//	}
 	
 	/* // ...
      // Pass the selected object to the new view controller.
@@ -216,18 +216,23 @@
 	
 		// Testing the SpeciesCategory view controller. This is only a test!
 	
-	if ([obs.sentStatus isEqualToString:kRKComplete]) 
-	{
-		SpeciesCategorySelectionVC *testVC = [[SpeciesCategorySelectionVC alloc] initWithNibName:@"SpeciesCategorySelectionVC" bundle:nil];
-		
-		if (testVC) 
-		{
-			[self.navigationController pushViewController:testVC animated:YES];
-		}
-		
-		[testVC release];
-	}
-
+	//if ([obs.sentStatus isEqualToString:kRKComplete]) 
+//	{
+//		SpeciesCategorySelectionVC *testVC = [[SpeciesCategorySelectionVC alloc] initWithNibName:@"SpeciesCategorySelectionVC" bundle:nil];
+//		
+//		if (testVC) 
+//		{
+//			[self.navigationController pushViewController:testVC animated:YES];
+//		}
+//		
+//		[testVC release];
+//	}
+//
+	CameraViewController* detailViewController = [[CameraViewController alloc]init];
+	[self.navigationController pushViewController:detailViewController animated:YES];
+	[detailViewController release];
+	
+	
 }
 
 

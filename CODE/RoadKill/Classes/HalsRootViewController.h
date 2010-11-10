@@ -7,7 +7,7 @@
 //
 
 	//#import are found in the Prefix file
-
+#import "CameraViewController.h"
 
 @interface HalsRootViewController : UITableViewController <NSFetchedResultsControllerDelegate> {
 
