@@ -13,10 +13,15 @@
 {
 	
     UIImagePickerController *imagePickerController;
-
+	UIButton *myButton;
+	
 }
 
 @property (nonatomic, retain) UIImagePickerController *imagePickerController;
 
+//** TEST CODE **/
+@property (nonatomic, retain) UIButton* myButton;
+-(void) buttonAction;
+-(void) setupDismissButton;
 
 @end

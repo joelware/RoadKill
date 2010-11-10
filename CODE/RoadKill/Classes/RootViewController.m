@@ -220,7 +220,7 @@
 	[self.navigationController pushViewController:cameraViewController animated:YES];
 	
 	//TODO we should be able to release here 
-	//[cameraViewController release];
+    [cameraViewController release];
 	
 	
 }

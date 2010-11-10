@@ -10,7 +10,7 @@
 
 
 @implementation CameraViewController
-@synthesize imagePickerController;
+@synthesize imagePickerController,myButton;
 
 
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -34,20 +34,46 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
+	self.title=@"Camera";
 	
 	UIImagePickerControllerSourceType sourceType=UIImagePickerControllerSourceTypeCamera;
 	
 	self.imagePickerController.delegate = self;
 	self.imagePickerController.sourceType = sourceType;
 	
-	
 	if ([UIImagePickerController isSourceTypeAvailable:sourceType])
     {
-      //  [self.overlayViewController setupImagePicker:sourceType];
         [self presentModalViewController:self.imagePickerController animated:YES];
     }
-	
+	 
+		
 }
+
+/**  *************   TEST CODE DELETE EVENTUALLY ***********************/
+-(void) setupDismissButton{
+	//myButton = [[UIButton buttonWithType:UIButtonTypeRoundedRect] initWithFrame:CGRectMake(50, 300, 200, 80) ];
+	CGRect rect = CGRectMake(50,300,200,80);
+	//	//UIButton *button = [[UIButton alloc] initWithFrame:rect];
+	//	
+	//	//myButton = [[UIButton buttonWithType:UIButtonTypeRoundedRect]retain] ;
+	myButton = [[UIButton alloc]initWithFrame:rect];
+	[myButton setTitle:@"And a button" forState:UIControlStateNormal];
+	[myButton setTitle:@"Alert  " forState:UIControlEventTouchDown];
+	[myButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+	myButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+	myButton.backgroundColor = [UIColor clearColor];
+	[myButton addTarget:self action:@selector(buttonAction) forControlEvents:UIControlEventTouchUpInside];
+	[self.view addSubview:myButton]; 
+	
+
+}
+
+-(void)buttonAction{
+	[self.navigationController popViewControllerAnimated:YES];
+
+}
+
+/** ******************    END TEST CODE  *******************/
 
 
 /*
@@ -68,25 +94,22 @@
 //
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-	NSLog(@"Finished Picking");
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
 	NSLog(@"Got image %@", image);
-	[self.imagePickerController dismissModalViewControllerAnimated:YES];
-	self.imagePickerController.delegate=nil;
+	
+	// wow, you can't animate this
+	// http://stackoverflow.com/questions/1298893/calling-poptorootviewcontrolleranimated-after-uiimagepicker-finish-or-cancel-ip
+	
+	[self.imagePickerController dismissModalViewControllerAnimated:NO];
 	[self.navigationController popViewControllerAnimated:YES];
 
-	NSLog(@"Finished Picking Complete");
-
-   
+	
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-	NSLog(@"Cancel");
-	self.imagePickerController.delegate=nil;
-	[self.imagePickerController dismissModalViewControllerAnimated:YES];
+	[self.imagePickerController dismissModalViewControllerAnimated:NO];
 	[self.navigationController popViewControllerAnimated:YES];
-	NSLog(@"Cancel Complete");
 
 }
 
@@ -109,7 +132,6 @@
 - (void)dealloc {
 	self.imagePickerController=nil;
     [super dealloc];
-	NSLog(@"Deallocating CameraViewController");
 }
 
 
