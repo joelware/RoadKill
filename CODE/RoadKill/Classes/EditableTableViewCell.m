@@ -1,6 +1,8 @@
-
+	//
+	//  EditableTableViewCell.m
+	//  RoadKill
+	//
 /*
-     File: EditableTableViewCell.m
  Abstract: Table view cell to present an editable text field.
  The cell layout is defined in the accompanying nib file -- EditableTableViewCell.
  

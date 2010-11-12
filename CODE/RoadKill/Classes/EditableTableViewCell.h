@@ -1,6 +1,11 @@
-
+	//
+	//  EditableTableViewCell.h
+	//  RoadKill
+	//
+	//  Created by Pamela on 11/9/10.
+	//  Copyright 2010 Seattle RoadKill Team. All rights reserved.
+	//
 /*
-     File: EditableTableViewCell.h
  Abstract: Table view cell to present an editable text field.
  The cell layout is defined in the accompanying nib file -- EditableTableViewCell.
  

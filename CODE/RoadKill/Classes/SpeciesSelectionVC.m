@@ -15,6 +15,29 @@
 #import "SpeciesWriteInVC.h"
 	//#import "SpeciesCategorySelectionVC.h"
 
+	//a category to prepare for the index table view style (using alphabetical headers and fast index scroller)
+	//http://stackoverflow.com/questions/1741093/how-to-use-the-first-character-as-a-section-name/1741131#1741131
+@interface Species (FirstLetter)
+- (NSString *)uppercaseFirstLetterOfName;
+@end
+
+@implementation Species (FirstLetter)
+- (NSString *)uppercaseFirstLetterOfName 
+{
+    [self willAccessValueForKey:@"uppercaseFirstLetterOfName"];
+    NSString *aString = [[self valueForKey:@"commonName"] uppercaseString];
+	
+		// support UTF-16:
+    NSString *stringToReturn = [aString substringWithRange:[aString rangeOfComposedCharacterSequenceAtIndex:0]];
+	
+		// OR no UTF-16 support:
+		//NSString *stringToReturn = [aString substringToIndex:1];
+	
+    [self didAccessValueForKey:@"uppercaseFirstLetterOfName"];
+    return stringToReturn;
+}
+@end
+
 @interface SpeciesSelectionVC ()
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
@@ -117,6 +140,25 @@
 	
 	cell.accessoryType = (row == oldRow && self.lastIndexPath != nil) ? 
     UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+}
+
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section 
+{
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+    return [sectionInfo name];
+}
+
+
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView 
+{
+    return [self.fetchedResultsController sectionIndexTitles];
+}
+
+
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index 
+{
+    return [self.fetchedResultsController sectionForSectionIndexTitle:title atIndex:index];
 }
 
 
@@ -276,7 +318,7 @@
 		// nil for section name key path means "no sections".
     NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest 
 																								managedObjectContext:self.managedObjectContext  
-																								  sectionNameKeyPath:nil 
+																								  sectionNameKeyPath:@"uppercaseFirstLetterOfName" 
 																										   cacheName:@"Species"];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
