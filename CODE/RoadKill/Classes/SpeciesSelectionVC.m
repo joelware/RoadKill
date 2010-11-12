@@ -12,6 +12,7 @@
 #import "Observation.h"
 #import "Species.h"
 #import "RootViewController.h"
+#import "SpeciesWriteInVC.h"
 	//#import "SpeciesCategorySelectionVC.h"
 
 @interface SpeciesSelectionVC ()
@@ -21,6 +22,8 @@
 
 @implementation SpeciesSelectionVC
 
+@synthesize headerView = headerView_;
+	//@synthesize writeInLabel = writeInLabel_;
 @synthesize observation = observation_, species = species_;
 @synthesize lastIndexPath = lastIndexPath_; 
 @synthesize selectedSpeciesString = selectedSpeciesString_, selectedCategoryString = selectedCategoryString_;
@@ -35,11 +38,7 @@
     [super viewDidLoad];
 		// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
 		// self.navigationItem.rightBarButtonItem = self.editButtonItem;
-		//TODO: which title is better?
-		//self.navigationItem.title = @"Species";
-	self.navigationItem.title = self.selectedCategoryString;
-	
-		//NSLog(@"%@",[NSString stringWithFormat:@"I am adding this string:%@.", box.name]);
+	self.navigationItem.title = self.selectedCategoryString;	
 }
 
 
@@ -209,6 +208,26 @@
 	[newViewController release];
 }
 
+
+#pragma mark -
+#pragma mark Action methods
+
+- (IBAction)speciesWriteInButton:(id)sender
+{
+	UIViewController *nextViewController = nil;
+				
+	nextViewController = [[SpeciesWriteInVC alloc] initWithStyle:UITableViewStyleGrouped];
+		//TODO: this should pass the information about the observation to the next view
+	((SpeciesWriteInVC *)nextViewController).observation = self.observation;
+	
+		// If we got a new view controller, push it .
+	if (nextViewController) 
+	{
+		[self.navigationController pushViewController:nextViewController animated:YES];
+		[nextViewController release];
+	}
+}
+
 #pragma mark -
 #pragma mark Fetched results controller
 	//see Apress More iPhone 3 Development
@@ -363,11 +382,15 @@
 - (void)viewDidUnload {
 		// Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
 		// For example: self.myOutlet = nil;
+	self.headerView = nil;
+		//self.writeInLabel = nil;
 }
 
 
 - (void)dealloc 
 {
+	[headerView_ release], headerView_ = nil;
+		//[writeInLabel_ release], writeInLabel_ = nil;
 	[observation_ release], observation_ = nil;
 	[species_ release], species_ = nil;
 	[lastIndexPath_ release], lastIndexPath_ = nil;

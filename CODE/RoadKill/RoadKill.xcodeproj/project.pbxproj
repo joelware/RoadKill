@@ -68,6 +68,12 @@
 		8D8FE4BE126D1A4600336686 /* SpeciesCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8FE4BD126D1A4600336686 /* SpeciesCategory.m */; };
 		8DFEE4B0128A422300AEADFD /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFEE4AF128A422300AEADFD /* Photo.m */; };
 		8DFEE4C5128A44C500AEADFD /* UIImageToDataTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFEE4C4128A44C500AEADFD /* UIImageToDataTransformer.m */; };
+		8DFEEA75128CFE0800AEADFD /* SpeciesSelectionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DFEEA74128CFE0800AEADFD /* SpeciesSelectionVC.xib */; };
+		8DFEEAFE128D0F4000AEADFD /* SpeciesWriteInVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFEEAFD128D0F4000AEADFD /* SpeciesWriteInVC.m */; };
+		8DFEEB0E128D159900AEADFD /* EditableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFEEB0B128D159900AEADFD /* EditableTableViewCell.m */; };
+		8DFEEB0F128D159900AEADFD /* EditableTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DFEEB0C128D159900AEADFD /* EditableTableViewCell.xib */; };
+		8DFEEB51128D1A0700AEADFD /* PreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFEEB4F128D1A0700AEADFD /* PreviewViewController.m */; };
+		8DFEEB52128D1A0700AEADFD /* PreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DFEEB50128D1A0700AEADFD /* PreviewViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -147,6 +153,15 @@
 		8DFEE4AF128A422300AEADFD /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
 		8DFEE4C3128A44C500AEADFD /* UIImageToDataTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageToDataTransformer.h; sourceTree = "<group>"; };
 		8DFEE4C4128A44C500AEADFD /* UIImageToDataTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageToDataTransformer.m; sourceTree = "<group>"; };
+		8DFEEA74128CFE0800AEADFD /* SpeciesSelectionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SpeciesSelectionVC.xib; sourceTree = "<group>"; };
+		8DFEEAFC128D0F4000AEADFD /* SpeciesWriteInVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeciesWriteInVC.h; sourceTree = "<group>"; };
+		8DFEEAFD128D0F4000AEADFD /* SpeciesWriteInVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeciesWriteInVC.m; sourceTree = "<group>"; };
+		8DFEEB0A128D159900AEADFD /* EditableTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditableTableViewCell.h; sourceTree = "<group>"; };
+		8DFEEB0B128D159900AEADFD /* EditableTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditableTableViewCell.m; sourceTree = "<group>"; };
+		8DFEEB0D128D159900AEADFD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/EditableTableViewCell.xib; sourceTree = "<group>"; };
+		8DFEEB4E128D1A0700AEADFD /* PreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewViewController.h; sourceTree = "<group>"; };
+		8DFEEB4F128D1A0700AEADFD /* PreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewViewController.m; sourceTree = "<group>"; };
+		8DFEEB50128D1A0700AEADFD /* PreviewViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = PreviewViewController.xib; path = Classes/PreviewViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,8 +211,14 @@
 				8D88BBA5127CDDE1002A7029 /* SpeciesCategorySelectionVC.m */,
 				8D88C14D127E2BB2002A7029 /* SpeciesSelectionVC.h */,
 				8D88C14E127E2BB2002A7029 /* SpeciesSelectionVC.m */,
+				8DFEEAFC128D0F4000AEADFD /* SpeciesWriteInVC.h */,
+				8DFEEAFD128D0F4000AEADFD /* SpeciesWriteInVC.m */,
+				8DFEEB0A128D159900AEADFD /* EditableTableViewCell.h */,
+				8DFEEB0B128D159900AEADFD /* EditableTableViewCell.m */,
 				8D88C7B5127F5D8B002A7029 /* ExistingReportsVC.h */,
 				8D88C7B6127F5D8B002A7029 /* ExistingReportsVC.m */,
+				8DFEEB4E128D1A0700AEADFD /* PreviewViewController.h */,
+				8DFEEB4F128D1A0700AEADFD /* PreviewViewController.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -244,6 +265,9 @@
 			children = (
 				2899E55F0DE3E45000AC0155 /* RootViewController.xib */,
 				28AD735F0D9D9599002E5188 /* MainWindow.xib */,
+				8DFEEA74128CFE0800AEADFD /* SpeciesSelectionVC.xib */,
+				8DFEEB0C128D159900AEADFD /* EditableTableViewCell.xib */,
+				8DFEEB50128D1A0700AEADFD /* PreviewViewController.xib */,
 				8D1107310486CEB800E47090 /* RoadKill-Info.plist */,
 				2B088E831271425B00ECC691 /* demoSkunk.jpg */,
 				2B244431125BE720005152E6 /* Icon.png */,
@@ -431,6 +455,9 @@
 				2B244433125BE720005152E6 /* Icon.png in Resources */,
 				2B244434125BE720005152E6 /* Icon@2x.png in Resources */,
 				2B088E841271425B00ECC691 /* demoSkunk.jpg in Resources */,
+				8DFEEA75128CFE0800AEADFD /* SpeciesSelectionVC.xib in Resources */,
+				8DFEEB0F128D159900AEADFD /* EditableTableViewCell.xib in Resources */,
+				8DFEEB52128D1A0700AEADFD /* PreviewViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -489,6 +516,9 @@
 				8DFEE4B0128A422300AEADFD /* Photo.m in Sources */,
 				8DFEE4C5128A44C500AEADFD /* UIImageToDataTransformer.m in Sources */,
 				88BC05F4128A4D2D0021FDEB /* CameraViewController.m in Sources */,
+				8DFEEAFE128D0F4000AEADFD /* SpeciesWriteInVC.m in Sources */,
+				8DFEEB0E128D159900AEADFD /* EditableTableViewCell.m in Sources */,
+				8DFEEB51128D1A0700AEADFD /* PreviewViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -517,6 +547,18 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		8DFEEB0C128D159900AEADFD /* EditableTableViewCell.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8DFEEB0D128D159900AEADFD /* en */,
+			);
+			name = EditableTableViewCell.xib;
+			path = Classes;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		1D6058940D05DD3E006BFB54 /* Debug */ = {

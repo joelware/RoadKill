@@ -13,6 +13,9 @@
 
 @interface SpeciesSelectionVC : UITableViewController <NSFetchedResultsControllerDelegate>
 {
+	UIView *headerView_;
+		//UILabel *writeInLabel_;
+
 	Observation *observation_;
 	Species *species_;
 		
@@ -24,6 +27,8 @@
 	NSFetchedResultsController *fetchedResultsController_;
 }
 
+@property (nonatomic, retain) IBOutlet UIView *headerView;
+	//@property (nonatomic, retain) IBOutlet UILabel *writeInLabel;
 @property (nonatomic, retain) Observation *observation;
 @property (nonatomic, retain) Species *species;
 @property (nonatomic, retain) NSIndexPath * lastIndexPath;
@@ -31,5 +36,8 @@
 @property (nonatomic, retain) NSString *selectedCategoryString;
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
+
+- (IBAction)speciesWriteInButton:(id)sender;
+
 
 @end

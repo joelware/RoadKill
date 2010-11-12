@@ -192,8 +192,7 @@
 		//RKLog(@"AFTER category selection: %@", self.selectedCategoryString);
 	
 		//push the SpeciesSelectionVC when a category is selected
-	SpeciesSelectionVC *newViewController = [[SpeciesSelectionVC alloc] initWithStyle:UITableViewStylePlain];
-	
+	SpeciesSelectionVC *newViewController = [[SpeciesSelectionVC alloc] initWithNibName:@"SpeciesSelectionVC" bundle:nil];
 	if (newViewController) 
 	{
 			//pass the selection to the next view
@@ -204,6 +203,7 @@
 	}	
 	[newViewController release];
 }
+
 
 #pragma mark -
 #pragma mark Fetched results controller
