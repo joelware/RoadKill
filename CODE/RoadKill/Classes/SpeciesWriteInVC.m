@@ -163,6 +163,9 @@
 			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
 			exit(-1);  // Fail
 		}
+		RKLog(@"(DATA IS NOT PERSISTED YET) The free text is %@", self.observation.freeText);
+		RKLog(@"The free text is %@", cell.textField.text);
+
 	}
 }
 
@@ -172,28 +175,8 @@
 
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField 
-{
-		//this is called when the user taps the Done key on the keyboard
-	self.observation.freeText = textField.text;	
-	NSLog(@"1. DATA IS NOT PERSISTED YET: The name of the free text in SpeciesWriteInVC's textFieldShouldEndEditing: is %@", self.observation.freeText);
-		NSLog(@"2. The name of the free text in SpeciesWriteInVC's textFieldShouldEndEditing: is %@", textField.text);
-	
-		// Save the change right when the user finishes typing
-	
-		//TODO: is this the best way to pass the MOC? Ideally I probably don't want to query the app delegate for the MOC?	
-	self.managedObjectContext = [(RoadKillAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
-	
-	NSError *error = nil;
-		//TODO: use self here? (self.managedObjectContext)
-	if (![managedObjectContext_ save:&error]) 
-	{
-			// Handle the error.
-		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-		exit(-1);  // Fail
-	}	
-	
-	[self setEditing:NO];
-	
+{	
+	[self setEditing:NO];	
 	return YES;
 }	
 

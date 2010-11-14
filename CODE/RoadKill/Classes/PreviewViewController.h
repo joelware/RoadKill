@@ -6,11 +6,22 @@
 //  Copyright 2010 Seattle RoadKill Team. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+	//#import are found in the Prefix file
+
+@class Observation;
+@class Species;
 
 
-@interface PreviewViewController : UITableViewController {
-
+@interface PreviewViewController : UITableViewController 
+{
+	Observation *observation_;
+	Species *species_;
+	NSString *selectedSpeciesString_;
 }
+
+@property (nonatomic, retain) Observation *observation;
+@property (nonatomic, retain) NSString *selectedSpeciesString;
+@property (nonatomic, retain) Species *species;
+
 
 @end

@@ -6,6 +6,10 @@
 	//  Copyright 2010 Seattle RoadKill Team. All rights reserved.
 	//
 
+	//search code based on Apple's TableSearch
+	//and http://blog.originalfunction.com/index.php/2010/02/uitableviewcontroller-with-uisearchdisplaycontroller-for-core-data/
+
+
 #import "SpeciesSelectionVC.h"
 #import "RKConstants.h"
 #import "RoadKillAppDelegate.h"
@@ -13,7 +17,31 @@
 #import "Species.h"
 #import "RootViewController.h"
 #import "SpeciesWriteInVC.h"
-	//#import "SpeciesCategorySelectionVC.h"
+#import "PreviewViewController.h"
+
+
+	//a category to prepare for the index table view style (using alphabetical headers and fast index scroller)
+	//http://stackoverflow.com/questions/1741093/how-to-use-the-first-character-as-a-section-name/1741131#1741131
+@interface Species (FirstLetter)
+- (NSString *)uppercaseFirstLetterOfName;
+@end
+
+@implementation Species (FirstLetter)
+- (NSString *)uppercaseFirstLetterOfName 
+{
+    [self willAccessValueForKey:@"uppercaseFirstLetterOfName"];
+    NSString *aString = [[self valueForKey:@"commonName"] uppercaseString];
+	
+		// support UTF-16:
+    NSString *stringToReturn = [aString substringWithRange:[aString rangeOfComposedCharacterSequenceAtIndex:0]];
+	
+		// OR no UTF-16 support:
+		//NSString *stringToReturn = [aString substringToIndex:1];
+	
+    [self didAccessValueForKey:@"uppercaseFirstLetterOfName"];
+    return stringToReturn;
+}
+@end
 
 @interface SpeciesSelectionVC ()
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
@@ -23,12 +51,14 @@
 @implementation SpeciesSelectionVC
 
 @synthesize headerView = headerView_;
+@synthesize searchBar = searchBar_;
 	//@synthesize writeInLabel = writeInLabel_;
 @synthesize observation = observation_, species = species_;
 @synthesize lastIndexPath = lastIndexPath_; 
-@synthesize selectedSpeciesString = selectedSpeciesString_;
-@synthesize selectedCategoryString = selectedCategoryString_;
+@synthesize selectedSpeciesString = selectedSpeciesString_, selectedCategoryString = selectedCategoryString_;
 @synthesize managedObjectContext = managedObjectContext_, fetchedResultsController=fetchedResultsController_;
+@synthesize filteredListContent = filteredListContent_, savedSearchTerm = savedSearchTerm_, searchWasActive = searchWasActive_;
+
 
 #pragma mark -
 #pragma mark View lifecycle
@@ -40,14 +70,41 @@
 		// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
 		// self.navigationItem.rightBarButtonItem = self.editButtonItem;
 	self.navigationItem.title = self.selectedCategoryString;	
+	
+		// create a filtered list that will contain results for the search results table.
+	self.filteredListContent = [NSMutableArray arrayWithCapacity:[[[self fetchedResultsController] fetchedObjects] count]];
+	
+		// restore search settings if they were saved in didReceiveMemoryWarning.
+	/*
+    if (self.savedSearchTerm)
+	{
+        [self.searchDisplayController setActive:self.searchWasActive];
+        [self.searchDisplayController.searchBar setText:self.savedSearchTerm];
+        self.savedSearchTerm = nil;
+    }
+	 */
+		// this is in Apple's TableSearch sample code
+	self.tableView.scrollEnabled = YES;
 }
 
 
-/*
- - (void)viewWillAppear:(BOOL)animated {
- [super viewWillAppear:animated];
- }
- */
+- (void)viewWillAppear:(BOOL)animated 
+{	
+	[super viewWillAppear:animated];
+	[self.tableView reloadData];
+	
+		// hide the pull-down search bar under the navigation bar
+	[self.tableView setContentOffset:CGPointMake(0,40)];
+	
+		//use the next line to deactivate or cancel search
+	[self.searchDisplayController setActive:NO animated: YES];
+	
+		//FIXME: trying to get the view to scroll to the selected cell when popped from the next view controller
+		//https://devforums.apple.com/message/325662#325662
+	[self.tableView scrollToNearestSelectedRowAtScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+}
+
+
 /*
  - (void)viewDidAppear:(BOOL)animated {
  [super viewDidAppear:animated];
@@ -58,11 +115,16 @@
  [super viewWillDisappear:animated];
  }
  */
+
 /*
- - (void)viewDidDisappear:(BOOL)animated {
- [super viewDidDisappear:animated];
- }
+- (void)viewDidDisappear:(BOOL)animated 
+{
+	[super viewDidDisappear:animated];	
+    self.searchWasActive = [self.searchDisplayController isActive];
+    self.savedSearchTerm = [self.searchDisplayController.searchBar text];	
+}
  */
+
 /*
  // Override to allow orientations other than the default portrait orientation.
  - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -83,8 +145,17 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section 
 {
-    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
-    return [sectionInfo numberOfObjects];
+		//if (self.searchWasActive) 
+		//Apple sample code uses this instead:
+	if (tableView == self.searchDisplayController.searchResultsTableView)
+	{
+        return [self.filteredListContent count];
+    }	
+	else 
+	{
+		id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+		return [sectionInfo numberOfObjects];
+	}
 }
 
 
@@ -94,6 +165,7 @@
     static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+	
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
@@ -106,18 +178,59 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath 
 {	
-		//Apress Beginning iPhone 3 Chapter 9 - Project 09 Nav: see CheckListController files
-	
-	NSUInteger row = [indexPath row];
-    NSUInteger oldRow = [self.lastIndexPath row];
+		// See also Apress Beginning iPhone 3 Chapter 9 - Project 09 Nav: see CheckListController files
 	
 	self.species = nil;
-	self.species = (Species *) [self.fetchedResultsController objectAtIndexPath:indexPath];
+	
+		//FIXME: need to clear any checkmark from the list if the write-in is done instead
+		//might have to add a BOOL attribute for isChecked to Species in the data model?
+		//or call viewDidLoad to start view over?
+	if (self.observation.freeText != nil)
+	{
+		cell.accessoryType = UITableViewCellAccessoryNone;
+		[self.tableView reloadData];
+	}
+	
+	if (self.searchWasActive)
+	{
+		self.species = [self.filteredListContent objectAtIndex:indexPath.row];
+	}
+	else
+	{
+		self.species = [self.fetchedResultsController objectAtIndexPath:indexPath];
+			//self.species = (Species *) [self.fetchedResultsController objectAtIndexPath:indexPath];
+	}
 	
 	cell.textLabel.text = [self.species valueForKey:@"commonName"];
+	cell.accessoryType = UITableViewCellAccessoryNone;
 	
-	cell.accessoryType = (row == oldRow && self.lastIndexPath != nil) ? 
-    UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+	if (self.selectedSpeciesString != nil && self.selectedSpeciesString == cell.textLabel.text) 
+	{
+		cell.accessoryType = UITableViewCellAccessoryCheckmark;
+	}
+	else 
+	{
+		cell.accessoryType = UITableViewCellAccessoryNone;
+	}
+}
+
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section 
+{
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+    return [sectionInfo name];
+}
+
+
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView 
+{
+    return [self.fetchedResultsController sectionIndexTitles];
+}
+
+
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index 
+{
+    return [self.fetchedResultsController sectionForSectionIndexTitle:title atIndex:index];
 }
 
 
@@ -166,47 +279,101 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
 {		
+	RKLog(@"BEFORE species selection: %@", self.selectedSpeciesString);
+
+	Species *selectedObject = nil;
+	
+	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+	if (tableView == self.searchDisplayController.searchResultsTableView)
+			//if (self.searchWasActive)
+	{
+		selectedObject = [[self filteredListContent] objectAtIndex:[indexPath row]];
+			//selectedObject = (Species *) [[self filteredListContent] objectAtIndex:[indexPath row]];
+		
+			//http://www.iphonedevsdk.com/forum/iphone-sdk-development/41522-searchdisplaycontroller-hide-results.html
+			//use the next line to deactivate or cancel search automatically after selecting a row from the filtered selections
+			//if we want search to stay active continuously, then comment out this line
+			//and comment out self.searchWasActive = NO;
+		[self.searchDisplayController setActive:NO animated: YES];
+		
+			//set searchWasActive to NO now that we have selected a row and so finished the search
+		self.searchWasActive = NO;
+	}
+	else
+	{
+		selectedObject = [[self fetchedResultsController] objectAtIndexPath:indexPath];		
+			//selectedObject = (Species *) [[self fetchedResultsController] objectAtIndexPath:indexPath];
+	}
+	
+		// Be sure the list is exclusive
+#if 1	
 		//http://stackoverflow.com/questions/974170/uitableview-having-problems-changing-accessory-when-selected
-		//http://developer.apple.com/library/ios/#documentation/userexperience/conceptual/TableView_iPhone/ManageSelections/ManageSelections.html see listing 6-3  Managing a selection list—exclusive list
 		//Apress Beginning iPhone 3 Chapter 9 - Project 09 Nav: see CheckListController files
 	
-		//Be sure the list is exclusive
-	
-		//RKLog(@"BEFORE species selection: %@", self.selectedSpeciesString);
-	
 	int newRow = [indexPath row];
-    int oldRow = (self.lastIndexPath != nil) ? [self.lastIndexPath row] : -1;
-    
-    if (newRow != oldRow)
-    {
-        UITableViewCell *newCell = [tableView cellForRowAtIndexPath:indexPath];
-        newCell.accessoryType = UITableViewCellAccessoryCheckmark;
-        
-        UITableViewCell *oldCell = [tableView cellForRowAtIndexPath:self.lastIndexPath]; 
-        oldCell.accessoryType = UITableViewCellAccessoryNone;
-        self.lastIndexPath = indexPath;		
-    }
+	int oldRow = (self.lastIndexPath != nil) ? [self.lastIndexPath row] : -1;	
 	
-		//remember the species selected
-		//FIXME: need to persist this selection for the new observation
-    UITableViewCell *selectedCell = [self.tableView cellForRowAtIndexPath:self.lastIndexPath];
-    self.selectedSpeciesString = selectedCell.textLabel.text;
-	
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-	
-		//RKLog(@"AFTER species selection: %@", self.selectedSpeciesString);
-	
-		//push the next view controller when a category is selected
-		//FIXME: what will the next view be? See note below.
-	RootViewController *newViewController = [[RootViewController alloc] initWithStyle:UITableViewStylePlain];
-	
-	if (newViewController) 
+	if (newRow != oldRow)
 	{
-			//FIXME: the species selection is not persisted yet
-			//FIXME: temporarily return to rootView per Gerard's plan?
-			//[self.navigationController pushViewController:newViewController animated:YES];
+		UITableViewCell *newCell = [tableView cellForRowAtIndexPath:indexPath];
+		newCell.accessoryType = UITableViewCellAccessoryCheckmark;
+		
+		UITableViewCell *oldCell = [tableView cellForRowAtIndexPath:self.lastIndexPath]; 
+		oldCell.accessoryType = UITableViewCellAccessoryNone;
+		self.lastIndexPath = indexPath;		
+	}
+#endif
+	
+	
+#if 0	
+		// Or use this code from the Apple doc Table View Programming Guide for iPhone OS?
+		// http://developer.apple.com/library/ios/#documentation/userexperience/conceptual/TableView_iPhone/ManageSelections/ManageSelections.html see Listing 6-3  Managing a selection list—exclusive list
+		
+	NSInteger catIndex = [[self.fetchedResultsController sections] indexOfObject:self.species]; 
+	if (catIndex == indexPath.row) 
+	{
+		return;
+	}
+
+	NSIndexPath *oldIndexPath = [NSIndexPath indexPathForRow:catIndex inSection:0];
+	UITableViewCell *newCell = [tableView cellForRowAtIndexPath:indexPath]; 
+	if (newCell.accessoryType == UITableViewCellAccessoryNone) 
+	{
+		newCell.accessoryType = UITableViewCellAccessoryCheckmark; 
+		self.species = [[self.fetchedResultsController sections] objectAtIndex:indexPath.row];
+	}
+	UITableViewCell *oldCell = [tableView cellForRowAtIndexPath:oldIndexPath]; 
+	if (oldCell.accessoryType == UITableViewCellAccessoryCheckmark) 
+	{
+		oldCell.accessoryType = UITableViewCellAccessoryNone;
+	}
+#endif	
+	
+		//remember the species selected so it can be passed to the next view
+		//FIXME: need to persist this selection for the new observation
+	
+	self.selectedSpeciesString = [selectedObject valueForKey:@"commonName"];
+	RKLog(@"AFTER species selection: %@", self.selectedSpeciesString);
+	
+		//needed for checkmarks to be up to date
+	[self.tableView reloadData];
+		
+		//push the PreviewViewController when a species is selected
+	PreviewViewController *nextViewController = [[PreviewViewController alloc] initWithNibName:@"PreviewViewController" bundle:nil];
+		//TODO: this should pass the information about the observation to the next view
+	nextViewController.observation = self.observation;
+	
+	if (nextViewController) 
+	{
+			//pass the selection to the next view
+			//TODO: or is this included in the observation above?
+			//nextViewController.selectedSpeciesString = self.selectedSpeciesString;
+		nextViewController.species = selectedObject;
+		
+		[self.navigationController pushViewController:nextViewController animated:YES];
 	}	
-	[newViewController release];
+	[nextViewController release];
 }
 
 
@@ -216,7 +383,7 @@
 - (IBAction)speciesWriteInButton:(id)sender
 {
 	UIViewController *nextViewController = nil;
-				
+	
 	nextViewController = [[SpeciesWriteInVC alloc] initWithStyle:UITableViewStyleGrouped];
 		//TODO: this should pass the information about the observation to the next view
 	((SpeciesWriteInVC *)nextViewController).observation = self.observation;
@@ -277,7 +444,7 @@
 		// nil for section name key path means "no sections".
     NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest 
 																								managedObjectContext:self.managedObjectContext  
-																								  sectionNameKeyPath:nil 
+																								  sectionNameKeyPath:@"uppercaseFirstLetterOfName" 
 																										   cacheName:@"Species"];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
@@ -307,55 +474,99 @@
 
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
-    [self.tableView beginUpdates];
+	if ([self.searchDisplayController isActive])
+	{
+		RKLog(@"THE searchDisplayController IS ACTIVE");
+		return;
+	}
+	else 
+	{
+		RKLog(@"THE searchDisplayController IS NOT ACTIVE");
+		[self.tableView beginUpdates];
+	}
 }
 
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
-           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
-    
-    switch(type) {
-        case NSFetchedResultsChangeInsert:
-            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeDelete:
-            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
+           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type 
+{
+	if ([self.searchDisplayController isActive])
+	{
+		RKLog(@"THE searchDisplayController IS ACTIVE");
+		return;
+	}
+	else 
+	{
+		RKLog(@"THE searchDisplayController IS NOT ACTIVE");
+		
+		switch(type) 
+		{
+			case NSFetchedResultsChangeInsert:
+				[self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+				break;
+				
+			case NSFetchedResultsChangeDelete:
+				[self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+				break;
+		}
     }
 }
 
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
-      newIndexPath:(NSIndexPath *)newIndexPath {
-    
-    UITableView *tableView = self.tableView;
-    
-    switch(type) {
-            
-        case NSFetchedResultsChangeInsert:
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeUpdate:
-            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
-            break;
-            
-        case NSFetchedResultsChangeMove:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
-            break;
+      newIndexPath:(NSIndexPath *)newIndexPath 
+{
+	if ([self.searchDisplayController isActive])
+	{
+		RKLog(@"THE searchDisplayController IS ACTIVE");
+		return;
+	}
+	else
+	{
+		RKLog(@"THE searchDisplayController IS NOT ACTIVE");
+		
+		UITableView *tableView = self.tableView;
+		
+		switch(type) 
+		{
+				
+			case NSFetchedResultsChangeInsert:
+				[tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+				break;
+				
+			case NSFetchedResultsChangeDelete:
+				[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+				break;
+				
+			case NSFetchedResultsChangeUpdate:
+				[self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+				break;
+				
+			case NSFetchedResultsChangeMove:
+				[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+				[tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
+				break;
+		}
     }
 }
 
 
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-    [self.tableView endUpdates];
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller 
+{
+	if ([self.searchDisplayController isActive]) 
+	{
+		RKLog(@"THE searchDisplayController IS ACTIVE");
+		
+		[self searchDisplayController:[self searchDisplayController] shouldReloadTableForSearchString:[[[self searchDisplayController] searchBar] text]];
+		[self.searchDisplayController.searchResultsTableView reloadData];
+	}
+	else 
+	{
+		RKLog(@"THE searchDisplayController IS NOT ACTIVE");
+		
+		[self.tableView endUpdates];
+	}
 }
 
 
@@ -368,29 +579,91 @@
  }
  */
 
+#pragma mark -
+#pragma mark Content Filtering
+
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
+{
+	
+	/*
+	 Update the filtered array based on the search text.
+	 */
+	
+		// First clear the filtered array.
+	self.filteredListContent = nil;
+	
+	/*
+	 Search the main list for products whose type matches the scope (if selected) and whose name matches searchText; add items that match to the filtered array.
+	 */
+	
+	NSPredicate * predicate = [NSPredicate predicateWithFormat:@"commonName CONTAINS[cd] %@", searchText];	
+	self.filteredListContent = [[[self fetchedResultsController] fetchedObjects] filteredArrayUsingPredicate:predicate];
+}
+
+
+#pragma mark -
+#pragma mark UISearchDisplayController Delegate Methods
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{	
+    [self filterContentForSearchText:searchString scope:
+	 [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:
+	  [self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
+		
+    return YES;
+}
+
+	//Not using scopeButtonTitles right now
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption
+{	
+    [self filterContentForSearchText:[self.searchDisplayController.searchBar text] scope:
+	 [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:searchOption]];
+		
+    return YES;
+}
+
+- (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller 
+{
+	self.searchWasActive = YES;	
+		//this is needed to prevent a crash due to the array being equal to the last filtered array rather than the fetchedResultsController list
+	self.filteredListContent = [[self fetchedResultsController] fetchedObjects];
+}
+
+- (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller 
+{
+	self.searchWasActive = NO;
+	[self.tableView reloadData];	
+}
+
+
 
 
 #pragma mark -
 #pragma mark Memory management
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning 
+{
 		// Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
+	[super didReceiveMemoryWarning];	
 		// Relinquish ownership any cached data, images, etc that aren't in use.
 }
 
-- (void)viewDidUnload {
+- (void)viewDidUnload 
+{
 		// Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
 		// For example: self.myOutlet = nil;
 	self.headerView = nil;
 		//self.writeInLabel = nil;
+	self.searchBar = nil;
+	self.filteredListContent = nil;
 }
 
 
 - (void)dealloc 
 {
 	[headerView_ release], headerView_ = nil;
+	[searchBar_ release], searchBar_ = nil;
 		//[writeInLabel_ release], writeInLabel_ = nil;
 	[observation_ release], observation_ = nil;
 	[species_ release], species_ = nil;
@@ -399,7 +672,11 @@
 	[selectedCategoryString_ release], selectedCategoryString_ = nil;
 	[managedObjectContext_ release], managedObjectContext_ = nil;
 	[fetchedResultsController_ release], fetchedResultsController_ = nil;
-    [super dealloc];
+	[filteredListContent_ release], filteredListContent_ = nil;
+	[savedSearchTerm_ release], savedSearchTerm_ = nil;
+	
+	
+	[super dealloc];
 }
 
 

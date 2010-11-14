@@ -7,9 +7,15 @@
 //
 
 #import "PreviewViewController.h"
+#import "Observation.h"
+#import "Species.h"
 
 
 @implementation PreviewViewController
+
+@synthesize selectedSpeciesString = selectedSpeciesString_;
+@synthesize observation = observation_;
+@synthesize species = species_;
 
 
 #pragma mark -
@@ -159,7 +165,11 @@
 }
 
 
-- (void)dealloc {
+- (void)dealloc 
+{
+	[observation_ release], observation_ = nil;
+	[selectedSpeciesString_ release], selectedSpeciesString_ = nil;
+	[species_ release], species_ = nil;
     [super dealloc];
 }
 
