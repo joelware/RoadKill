@@ -16,7 +16,7 @@
 
 @interface SpeciesSelectionVC : UITableViewController <NSFetchedResultsControllerDelegate, UISearchDisplayDelegate, UISearchBarDelegate>
 {
-	UIView *headerView_;
+	UIView *headerView_; //for IB
 		//UILabel *writeInLabel_;
 	UISearchBar *searchBar_;
 	

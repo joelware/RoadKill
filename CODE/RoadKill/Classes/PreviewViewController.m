@@ -5,6 +5,8 @@
 //  Created by Pamela on 11/11/10.
 //  Copyright 2010 Seattle RoadKill Team. All rights reserved.
 //
+//  based on Apple sample code, HeaderFooter
+
 
 #import "PreviewViewController.h"
 #import "Observation.h"
@@ -13,6 +15,7 @@
 
 @implementation PreviewViewController
 
+@synthesize headerView = headerView_, footerView = footerView_;
 @synthesize selectedSpeciesString = selectedSpeciesString_;
 @synthesize observation = observation_;
 @synthesize species = species_;
@@ -28,7 +31,19 @@
 
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-	self.navigationItem.title = @"Under construction";
+	self.navigationItem.title = @"Preview";
+	
+		// set up the table's header view based on our UIView 'myHeaderView' outlet
+	CGRect newFrame = CGRectMake(0.0, 0.0, self.tableView.bounds.size.width, self.headerView.frame.size.height);
+	self.headerView.backgroundColor = [UIColor clearColor];
+	self.headerView.frame = newFrame;
+	self.tableView.tableHeaderView = self.headerView;	// note this will override UITableView's 'sectionHeaderHeight' property
+	
+		// set up the table's footer view based on our UIView 'myFooterView' outlet
+	newFrame = CGRectMake(0.0, 0.0, self.tableView.bounds.size.width, self.footerView.frame.size.height);
+	self.footerView.backgroundColor = [UIColor clearColor];
+	self.footerView.frame = newFrame;
+	self.tableView.tableFooterView = self.footerView;	// note this will override UITableView's 'sectionFooterHeight' property
 
 }
 
@@ -74,7 +89,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
 	//TODO: implement this
-    return 1;
+    return 5;
 }
 
 
@@ -148,6 +163,24 @@
 	 */
 }
 
+#pragma mark -
+#pragma mark Action methods
+
+- (IBAction)submitNow:(id)sender
+{
+	
+}
+
+- (IBAction)saveForLater:(id)sender
+{
+	
+}
+
+- (IBAction)addInfo:(id)sender
+{
+	
+}
+
 
 #pragma mark -
 #pragma mark Memory management
@@ -162,11 +195,15 @@
 - (void)viewDidUnload {
     // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
     // For example: self.myOutlet = nil;
+	self.headerView = nil;
+	self.footerView  = nil;
 }
 
 
 - (void)dealloc 
 {
+	[headerView_ release], headerView_ = nil;
+	[footerView_ release], footerView_ = nil;
 	[observation_ release], observation_ = nil;
 	[selectedSpeciesString_ release], selectedSpeciesString_ = nil;
 	[species_ release], species_ = nil;

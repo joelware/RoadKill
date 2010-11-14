@@ -74,6 +74,7 @@
 		8DFEEB0F128D159900AEADFD /* EditableTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DFEEB0C128D159900AEADFD /* EditableTableViewCell.xib */; };
 		8DFEEB51128D1A0700AEADFD /* PreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFEEB4F128D1A0700AEADFD /* PreviewViewController.m */; };
 		8DFEEB52128D1A0700AEADFD /* PreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DFEEB50128D1A0700AEADFD /* PreviewViewController.xib */; };
+		8DFEF81F12906C2C00AEADFD /* GenericContact.png in Resources */ = {isa = PBXBuildFile; fileRef = 8DFEF81E12906C2C00AEADFD /* GenericContact.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -162,6 +163,7 @@
 		8DFEEB4E128D1A0700AEADFD /* PreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewViewController.h; sourceTree = "<group>"; };
 		8DFEEB4F128D1A0700AEADFD /* PreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewViewController.m; sourceTree = "<group>"; };
 		8DFEEB50128D1A0700AEADFD /* PreviewViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = PreviewViewController.xib; path = Classes/PreviewViewController.xib; sourceTree = "<group>"; };
+		8DFEF81E12906C2C00AEADFD /* GenericContact.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GenericContact.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -270,6 +272,7 @@
 				8DFEEB50128D1A0700AEADFD /* PreviewViewController.xib */,
 				8D1107310486CEB800E47090 /* RoadKill-Info.plist */,
 				2B088E831271425B00ECC691 /* demoSkunk.jpg */,
+				8DFEF81E12906C2C00AEADFD /* GenericContact.png */,
 				2B244431125BE720005152E6 /* Icon.png */,
 				2B244432125BE720005152E6 /* Icon@2x.png */,
 			);
@@ -458,6 +461,7 @@
 				8DFEEA75128CFE0800AEADFD /* SpeciesSelectionVC.xib in Resources */,
 				8DFEEB0F128D159900AEADFD /* EditableTableViewCell.xib in Resources */,
 				8DFEEB52128D1A0700AEADFD /* PreviewViewController.xib in Resources */,
+				8DFEF81F12906C2C00AEADFD /* GenericContact.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
