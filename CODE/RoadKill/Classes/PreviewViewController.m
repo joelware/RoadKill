@@ -32,19 +32,9 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 	self.navigationItem.title = @"Preview";
-	
-		// set up the table's header view based on our UIView 'myHeaderView' outlet
-	CGRect newFrame = CGRectMake(0.0, 0.0, self.tableView.bounds.size.width, self.headerView.frame.size.height);
-	self.headerView.backgroundColor = [UIColor clearColor];
-	self.headerView.frame = newFrame;
-	self.tableView.tableHeaderView = self.headerView;	// note this will override UITableView's 'sectionHeaderHeight' property
-	
-		// set up the table's footer view based on our UIView 'myFooterView' outlet
-	newFrame = CGRectMake(0.0, 0.0, self.tableView.bounds.size.width, self.footerView.frame.size.height);
-	self.footerView.backgroundColor = [UIColor clearColor];
-	self.footerView.frame = newFrame;
-	self.tableView.tableFooterView = self.footerView;	// note this will override UITableView's 'sectionFooterHeight' property
 
+	self.tableView.tableHeaderView = self.headerView;	
+	self.tableView.tableFooterView = self.footerView;
 }
 
 
