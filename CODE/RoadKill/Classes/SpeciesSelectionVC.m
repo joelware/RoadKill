@@ -76,12 +76,12 @@
 	
 		// restore search settings if they were saved in didReceiveMemoryWarning.
 	/*
-    if (self.savedSearchTerm)
-	{
-        [self.searchDisplayController setActive:self.searchWasActive];
-        [self.searchDisplayController.searchBar setText:self.savedSearchTerm];
-        self.savedSearchTerm = nil;
-    }
+	 if (self.savedSearchTerm)
+	 {
+	 [self.searchDisplayController setActive:self.searchWasActive];
+	 [self.searchDisplayController.searchBar setText:self.savedSearchTerm];
+	 self.savedSearchTerm = nil;
+	 }
 	 */
 		// this is in Apple's TableSearch sample code
 	self.tableView.scrollEnabled = YES;
@@ -117,12 +117,12 @@
  */
 
 /*
-- (void)viewDidDisappear:(BOOL)animated 
-{
-	[super viewDidDisappear:animated];	
-    self.searchWasActive = [self.searchDisplayController isActive];
-    self.savedSearchTerm = [self.searchDisplayController.searchBar text];	
-}
+ - (void)viewDidDisappear:(BOOL)animated 
+ {
+ [super viewDidDisappear:animated];	
+ self.searchWasActive = [self.searchDisplayController isActive];
+ self.savedSearchTerm = [self.searchDisplayController.searchBar text];	
+ }
  */
 
 /*
@@ -139,7 +139,16 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView 
 {
-    return [[self.fetchedResultsController sections] count];
+		//if (self.searchWasActive) 
+		//Apple sample code uses this instead:
+	if (tableView == self.searchDisplayController.searchResultsTableView)
+	{
+		return 1;	
+	}
+	else 
+	{
+		return [[self.fetchedResultsController sections] count];
+	}
 }
 
 
@@ -216,21 +225,48 @@
 
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section 
-{
-    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
-    return [sectionInfo name];
+{	
+		//if (self.searchWasActive) 
+		//Apple sample code uses this instead:
+	if (tableView == self.searchDisplayController.searchResultsTableView)
+	{
+		return 0;
+	}
+	else
+	{
+		id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+		return [sectionInfo name];
+	}
 }
 
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView 
 {
-    return [self.fetchedResultsController sectionIndexTitles];
+		//if (self.searchWasActive) 
+		//Apple sample code uses this instead:
+	if (tableView == self.searchDisplayController.searchResultsTableView)
+	{
+		return 0;
+	}
+	else
+	{	
+		return [self.fetchedResultsController sectionIndexTitles];
+	}
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index 
 {
-    return [self.fetchedResultsController sectionForSectionIndexTitle:title atIndex:index];
+		//if (self.searchWasActive) 
+		//Apple sample code uses this instead:
+	if (tableView == self.searchDisplayController.searchResultsTableView)
+	{
+		return 0;
+	}
+	else
+	{
+		return [self.fetchedResultsController sectionForSectionIndexTitle:title atIndex:index];
+	}
 }
 
 
@@ -280,11 +316,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
 {		
 	RKLog(@"BEFORE species selection: %@", self.selectedSpeciesString);
-
+	
 	Species *selectedObject = nil;
 	
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
-
+	
 	if (tableView == self.searchDisplayController.searchResultsTableView)
 			//if (self.searchWasActive)
 	{
@@ -329,13 +365,13 @@
 #if 0	
 		// Or use this code from the Apple doc Table View Programming Guide for iPhone OS?
 		// http://developer.apple.com/library/ios/#documentation/userexperience/conceptual/TableView_iPhone/ManageSelections/ManageSelections.html see Listing 6-3  Managing a selection list—exclusive list
-		
+	
 	NSInteger catIndex = [[self.fetchedResultsController sections] indexOfObject:self.species]; 
 	if (catIndex == indexPath.row) 
 	{
 		return;
 	}
-
+	
 	NSIndexPath *oldIndexPath = [NSIndexPath indexPathForRow:catIndex inSection:0];
 	UITableViewCell *newCell = [tableView cellForRowAtIndexPath:indexPath]; 
 	if (newCell.accessoryType == UITableViewCellAccessoryNone) 
@@ -358,7 +394,7 @@
 	
 		//needed for checkmarks to be up to date
 	[self.tableView reloadData];
-		
+	
 		//push the PreviewViewController when a species is selected
 	PreviewViewController *nextViewController = [[PreviewViewController alloc] initWithNibName:@"PreviewViewController" bundle:nil];
 		//TODO: this should pass the information about the observation to the next view
@@ -609,7 +645,7 @@
     [self filterContentForSearchText:searchString scope:
 	 [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:
 	  [self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
-		
+	
     return YES;
 }
 
@@ -619,7 +655,7 @@
 {	
     [self filterContentForSearchText:[self.searchDisplayController.searchBar text] scope:
 	 [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:searchOption]];
-		
+	
     return YES;
 }
 
