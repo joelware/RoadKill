@@ -99,7 +99,8 @@
 		//use the next line to deactivate or cancel search
 	[self.searchDisplayController setActive:NO animated: YES];
 	
-		//FIXME: trying to get the view to scroll to the selected cell when popped from the next view controller
+		//FIXME: the view needs to scroll to return to the selected cell in the list when popped back from deeper view controller
+		//right now the view returns with the table placed at the top. If a selection was made, the table should return to where it was left
 		//https://devforums.apple.com/message/325662#325662
 	[self.tableView scrollToNearestSelectedRowAtScrollPosition:UITableViewScrollPositionMiddle animated:NO];
 }
@@ -191,9 +192,10 @@
 	
 	self.species = nil;
 	
-		//FIXME: need to clear any checkmark from the list if the write-in is done instead
+		//FIXME: need to clear any checkmark from the list if a write-in is made
 		//might have to add a BOOL attribute for isChecked to Species in the data model?
 		//or call viewDidLoad to start view over?
+		//FIXME: be sure that any existing write-in is cleared if a selection is made from the list
 	if (self.observation.freeText != nil)
 	{
 		cell.accessoryType = UITableViewCellAccessoryNone;
@@ -387,7 +389,7 @@
 #endif	
 	
 		//remember the species selected so it can be passed to the next view
-		//FIXME: need to persist this selection for the new observation
+		//FIXME: need to persist this selection for the new observation. Need to persist all data...
 	
 	self.selectedSpeciesString = [selectedObject valueForKey:@"commonName"];
 	RKLog(@"AFTER species selection: %@", self.selectedSpeciesString);
