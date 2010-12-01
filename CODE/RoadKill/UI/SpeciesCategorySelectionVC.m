@@ -213,6 +213,7 @@
 
 - (void)setReturnToVC:(UIViewController *) viewController {
     self.observationEntryVC = viewController;
+    [self.observationEntryVC retain];
 }
 
 
@@ -370,7 +371,8 @@
 	[selectedCategoryString_ release], selectedCategoryString_ = nil;
 	[managedObjectContext_ release], managedObjectContext_ = nil;
 	[fetchedResultsController_ release], fetchedResultsController_ = nil;
-	
+    [self.observationEntryVC release]; self.observationEntryVC = nil;
+    
     [super dealloc];
 }
 

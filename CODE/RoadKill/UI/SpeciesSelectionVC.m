@@ -438,6 +438,7 @@
 
 - (void)setReturnToVC:(UIViewController *) viewController {
     self.observationEntryVC = viewController;
+    [self.observationEntryVC retain];
 }
 
 
@@ -720,7 +721,7 @@
 	[fetchedResultsController_ release], fetchedResultsController_ = nil;
 	[filteredListContent_ release], filteredListContent_ = nil;
 	[savedSearchTerm_ release], savedSearchTerm_ = nil;
-	
+    [self.observationEntryVC release]; self.observationEntryVC = nil;
 	
 	[super dealloc];
 }
