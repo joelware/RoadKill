@@ -408,7 +408,6 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:RKSpeciesSelectedNotification
                                                         object:self
                                                       userInfo:userInfo];
-    [userInfo release]; userInfo = nil;
 }
 
 
