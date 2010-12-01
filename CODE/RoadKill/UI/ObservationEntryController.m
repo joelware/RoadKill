@@ -6,6 +6,7 @@
 //  Copyright 2010 Seattle RoadKill Team. All rights reserved.
 //
 
+#import "RKConstants.h"
 #import "ObservationEntryController.h"
 #import "SpeciesCategorySelectionVC.h"
 #import "SpeciesSelectionVC.h"
@@ -159,6 +160,7 @@
 
 - (IBAction) doSpecies:(id)sender {
     UIViewController *speciesCategorySelectionVC = [[SpeciesCategorySelectionVC alloc] initWithStyle:UITableViewStyleGrouped];
+    [speciesCategorySelectionVC setReturnToVC:self];
     [self.navigationController pushViewController:speciesCategorySelectionVC animated:YES];
     [speciesCategorySelectionVC release]; speciesCategorySelectionVC = nil;
     if (![[speciesButton titleForState:UIControlStateNormal] isEqualToString:@"Species"]) {
@@ -167,6 +169,7 @@
             TODO: Need to formalize how to inform SpeciesSelectionVC of a category
         */
         speciesSelectionVC.selectedCategoryString = @"Bird"; // hack!!!
+        [speciesCategorySelectionVC setReturnToVC:self];
         [self.navigationController pushViewController:speciesSelectionVC
                                              animated:YES];
         [speciesSelectionVC release]; speciesSelectionVC = nil;

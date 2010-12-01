@@ -23,7 +23,7 @@
 @synthesize lastIndexPath = lastIndexPath_;
 @synthesize selectedCategoryString = selectedCategoryString_;
 @synthesize managedObjectContext = managedObjectContext_, fetchedResultsController=fetchedResultsController_;
-
+@synthesize observationEntryVC;
 
 #pragma mark -
 #pragma mark View lifecycle
@@ -198,10 +198,21 @@
 			//pass the selection to the next view
 		newViewController.selectedCategoryString = self.selectedCategoryString;
 			//RKLog(@"PASSED to the next view: %@", testVC.selectedCategoryString);
+			
+			// Set the view controller to return to
+        [newViewController setReturnToVC:self.observationEntryVC];
 		
 		[self.navigationController pushViewController:newViewController animated:YES];
 	}	
 	[newViewController release];
+}
+
+
+#pragma mark -
+#pragma mark Accessors
+
+- (void)setReturnToVC:(UIViewController *) viewController {
+    self.observationEntryVC = viewController;
 }
 
 

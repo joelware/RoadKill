@@ -16,6 +16,8 @@
 
 	NSIndexPath * lastIndexPath_;
 	NSString *selectedCategoryString_;
+	
+    UIViewController *observationEntryVC;
 
 	NSManagedObjectContext *managedObjectContext_;
 	NSFetchedResultsController *fetchedResultsController_;
@@ -26,7 +28,8 @@
 @property (nonatomic, retain) NSString *selectedCategoryString;
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, retain) UIViewController *observationEntryVC;
 
-
+- (void)setReturnToVC:(UIViewController *) viewController;
 
 @end

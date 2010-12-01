@@ -27,6 +27,8 @@
 	NSString *selectedSpeciesString_;
 	NSString *selectedCategoryString_;
 	
+    UIViewController *observationEntryVC;
+
 	NSManagedObjectContext *managedObjectContext_;
 	NSFetchedResultsController *fetchedResultsController_;
 	
@@ -51,7 +53,9 @@
 @property (nonatomic, retain) NSArray *filteredListContent;
 @property (nonatomic, copy) NSString *savedSearchTerm;
 @property (nonatomic) BOOL searchWasActive;
+@property (nonatomic, retain) UIViewController *observationEntryVC;
 
+- (void)setReturnToVC:(UIViewController *) viewController;
 - (IBAction)speciesWriteInButton:(id)sender;
 
 

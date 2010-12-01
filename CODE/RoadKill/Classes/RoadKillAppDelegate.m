@@ -77,6 +77,7 @@ NSString *RKIsFirstLaunchKey = @"isFirstLaunch";
     UIViewController *entryVC = [[ObservationEntryController alloc] initWithNibName:@"ObservationEntryController" 
                                                                              bundle:nil];
     [navigationController pushViewController:entryVC animated:YES];
+	[entryVC release]; entryVC = nil;
                                                                           
     return YES;
 }

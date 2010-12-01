@@ -58,6 +58,7 @@
 @synthesize selectedSpeciesString = selectedSpeciesString_, selectedCategoryString = selectedCategoryString_;
 @synthesize managedObjectContext = managedObjectContext_, fetchedResultsController=fetchedResultsController_;
 @synthesize filteredListContent = filteredListContent_, savedSearchTerm = savedSearchTerm_, searchWasActive = searchWasActive_;
+@synthesize observationEntryVC;
 
 
 #pragma mark -
@@ -397,21 +398,17 @@
 		//needed for checkmarks to be up to date
 	[self.tableView reloadData];
 	
-		//push the PreviewViewController when a species is selected
-	PreviewViewController *nextViewController = [[PreviewViewController alloc] initWithNibName:@"PreviewViewController" bundle:nil];
-		//TODO: this should pass the information about the observation to the next view
-	nextViewController.observation = self.observation;
-	
-	if (nextViewController) 
-	{
-			//pass the selection to the next view
-			//TODO: or is this included in the observation above?
-			//nextViewController.selectedSpeciesString = self.selectedSpeciesString;
-		nextViewController.species = selectedObject;
-		
-		[self.navigationController pushViewController:nextViewController animated:YES];
-	}	
-	[nextViewController release];
+	// Pop to the observation entry controller
+    [self.navigationController popToViewController:self.observationEntryVC
+                                          animated:YES];
+    
+    // Send notification of selection
+    NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithObject:selectedObject
+                                                                       forKey:@"species"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:RKSpeciesSelectedNotification
+                                                        object:self
+                                                      userInfo:userInfo];
+    [userInfo release]; userInfo = nil;
 }
 
 
@@ -433,6 +430,17 @@
 		[nextViewController release];
 	}
 }
+
+
+
+#pragma mark -
+#pragma mark Accessors
+
+- (void)setReturnToVC:(UIViewController *) viewController {
+    self.observationEntryVC = viewController;
+}
+
+
 
 #pragma mark -
 #pragma mark Fetched results controller

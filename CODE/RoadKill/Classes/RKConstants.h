@@ -26,7 +26,7 @@
 #define kRKQueued @"queued"
 #define kRKComplete @"complete"
 
-	//observation confidence levels
+//observation confidence levels
 #define kRK100PercentCertain @"100% Certain"
 #define kRKSomewhatConfident @"Somewhat confident"
 #define kRKBestGuess @"Best guess"
@@ -39,3 +39,7 @@
 #define kCSVHeaderLatin @"Scientific Name"
 
 #define kNinetyDaysInSeconds 90.*24.*60.*60.
+
+
+// Notification message constants
+#define RKSpeciesSelectedNotification      @"RKSpeciesSelected"
