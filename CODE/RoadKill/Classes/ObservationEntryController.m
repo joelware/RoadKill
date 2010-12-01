@@ -157,7 +157,7 @@
 
 
 - (IBAction) doSpecies:(id)sender {
-    UIViewController *speciesCategorySelectionVC = [[SpeciesCategorySelectionVC alloc] initWithNibName:@"SpeciesCategorySelectionVC" bundle:nil];
+    UIViewController *speciesCategorySelectionVC = [[SpeciesCategorySelectionVC alloc] initWithStyle:UITableViewStyleGrouped];
     [self.navigationController pushViewController:speciesCategorySelectionVC animated:YES];
     [speciesCategorySelectionVC release];
     
