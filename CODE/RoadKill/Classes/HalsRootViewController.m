@@ -214,20 +214,10 @@
      [detailViewController release];
      */
 	
-		// Testing the SpeciesCategory view controller. This is only a test!
+	CameraViewController* detailViewController = [[CameraViewController alloc]init];
+	[self.navigationController pushViewController:detailViewController animated:YES];
+	[detailViewController release];
 	
-	if ([obs.sentStatus isEqualToString:kRKComplete]) 
-	{
-		SpeciesCategorySelectionVC *testVC = [[SpeciesCategorySelectionVC alloc] initWithNibName:@"SpeciesCategorySelectionVC" bundle:nil];
-		
-		if (testVC) 
-		{
-			[self.navigationController pushViewController:testVC animated:YES];
-		}
-		
-		[testVC release];
-	}
-
 }
 
 

@@ -7,10 +7,12 @@
 
 #import "Observation.h"
 
+#import "Photo.h"
 #import "Species.h"
 #import "SpeciesCategory.h"
 #import "State.h"
 #import "User.h"
+
 #import "RKConstants.h"
 
 @implementation Observation 
@@ -27,6 +29,7 @@
 @dynamic observationTimestamp;
 @dynamic state;
 @dynamic species;
+@dynamic photos;
 @dynamic user;
 
 + (Observation *)addObservationInContext:(NSManagedObjectContext *)moc

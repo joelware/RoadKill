@@ -6,8 +6,8 @@
 //  Copyright University of Washington 2010. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <CoreData/CoreData.h>
+	//#import are found in the Prefix file
+#import "CameraViewController.h"
 
 @interface HalsRootViewController : UITableViewController <NSFetchedResultsControllerDelegate> {
 

@@ -1,16 +1,14 @@
-//
-//  SpeciesCategorySelectionVC.m
-//  RoadKill
-//
-//  Created by Pamela on 10/30/10.
-//  Copyright 2010 Seattle RoadKill Team. All rights reserved.
-//
+	//
+	//  SpeciesCategorySelectionVC.m
+	//  RoadKill
+	//
+	//  Created by Pamela on 10/30/10.
+	//  Copyright 2010 Seattle RoadKill Team. All rights reserved.
+	//
 
 #import "SpeciesCategorySelectionVC.h"
 #import "RKConstants.h"
 #import "RoadKillAppDelegate.h"
-
-#import "Observation.h"
 #import "SpeciesCategory.h"
 #import "SpeciesSelectionVC.h"
 
@@ -21,10 +19,9 @@
 
 @implementation SpeciesCategorySelectionVC
 
-@synthesize observation = observation_;
 @synthesize category = category_;
-	//@synthesize categoryArray = categoryArray_;
 @synthesize lastIndexPath = lastIndexPath_;
+@synthesize selectedCategoryString = selectedCategoryString_;
 @synthesize managedObjectContext = managedObjectContext_, fetchedResultsController=fetchedResultsController_;
 
 
@@ -32,75 +29,61 @@
 #pragma mark View lifecycle
 
 
-- (void)viewDidLoad {
+- (void)viewDidLoad 
+{
     [super viewDidLoad];
-
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+	
+		// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+		// self.navigationItem.rightBarButtonItem = self.editButtonItem;
 	self.navigationItem.title = @"Species Category";
 }
- 
+
 
 /*
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-}
-*/
+ - (void)viewWillAppear:(BOOL)animated {
+ [super viewWillAppear:animated];
+ }
+ */
 /*
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-}
-*/
+ - (void)viewDidAppear:(BOOL)animated {
+ [super viewDidAppear:animated];
+ }
+ */
 /*
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-}
-*/
+ - (void)viewWillDisappear:(BOOL)animated {
+ [super viewWillDisappear:animated];
+ }
+ */
 /*
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-}
-*/
+ - (void)viewDidDisappear:(BOOL)animated {
+ [super viewDidDisappear:animated];
+ }
+ */
 /*
-// Override to allow orientations other than the default portrait orientation.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-*/
+ // Override to allow orientations other than the default portrait orientation.
+ - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+ // Return YES for supported orientations
+ return (interfaceOrientation == UIInterfaceOrientationPortrait);
+ }
+ */
 
 
 #pragma mark -
 #pragma mark Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    // Return the number of sections.
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView 
+{
     return [[self.fetchedResultsController sections] count];
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section 
 {
-	NSString *footer = nil;
-	switch (section) 
-	{
-		case 0:
-			footer = [NSString stringWithFormat:@"\nTo continue, after selecting the Category, select a Confidence Level"];
-			break;
-		default:
-			footer = nil;
-			break;
-	}
-	return footer;
-}
-
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
     return [sectionInfo numberOfObjects];
 }
 
 
-// Customize the appearance of table view cells.
+	// Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *CellIdentifier = @"Cell";
@@ -110,7 +93,7 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     
-    // Configure the cell...
+		// Configure the cell...
 	[self configureCell:cell atIndexPath:indexPath];
     
     return cell;
@@ -119,10 +102,10 @@
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath 
 {	
 		//Apress Beginning iPhone 3 Chapter 9 - Project 09 Nav: see CheckListController files
-
+	
 	NSUInteger row = [indexPath row];
     NSUInteger oldRow = [self.lastIndexPath row];
-
+	
 	self.category = nil;
 	self.category = (SpeciesCategory *) [self.fetchedResultsController objectAtIndexPath:indexPath];
 	
@@ -134,135 +117,91 @@
 
 
 /*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
+ // Override to support conditional editing of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+ // Return NO if you do not want the specified item to be editable.
+ return YES;
+ }
+ */
 
 
 /*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
+ // Override to support editing the table view.
+ - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+ 
+ if (editingStyle == UITableViewCellEditingStyleDelete) {
+ // Delete the row from the data source
+ [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+ }   
+ else if (editingStyle == UITableViewCellEditingStyleInsert) {
+ // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+ }   
+ }
+ */
 
 
 /*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
+ // Override to support rearranging the table view.
+ - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+ }
+ */
 
 
 /*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
+ // Override to support conditional rearranging of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+ // Return NO if you do not want the item to be re-orderable.
+ return YES;
+ }
+ */
 
 
 #pragma mark -
 #pragma mark Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
-{
-    // Navigation logic may go here. Create and push another view controller.
-	/*
-	 <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-	 [self.navigationController pushViewController:detailViewController animated:YES];
-	 [detailViewController release];
-	 */
 
-		//TODO: save/persist the selection
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
+{		
 		//http://stackoverflow.com/questions/974170/uitableview-having-problems-changing-accessory-when-selected
 		//http://developer.apple.com/library/ios/#documentation/userexperience/conceptual/TableView_iPhone/ManageSelections/ManageSelections.html see listing 6-3  Managing a selection list—exclusive list
 		//Apress Beginning iPhone 3 Chapter 9 - Project 09 Nav: see CheckListController files
+	
+		//Be sure the list is exclusive
+	
+		//RKLog(@"BEFORE category selection: %@", self.selectedCategoryString);
 	
 	int newRow = [indexPath row];
     int oldRow = (self.lastIndexPath != nil) ? [self.lastIndexPath row] : -1;
     
     if (newRow != oldRow)
     {
-        UITableViewCell *newCell = [tableView cellForRowAtIndexPath:
-                                    indexPath];
+        UITableViewCell *newCell = [tableView cellForRowAtIndexPath:indexPath];
         newCell.accessoryType = UITableViewCellAccessoryCheckmark;
         
-        UITableViewCell *oldCell = [tableView cellForRowAtIndexPath: 
-                                    self.lastIndexPath]; 
+        UITableViewCell *oldCell = [tableView cellForRowAtIndexPath:self.lastIndexPath]; 
         oldCell.accessoryType = UITableViewCellAccessoryNone;
-        self.lastIndexPath = indexPath;
+        self.lastIndexPath = indexPath;		
     }
-    
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-#pragma mark -
-#pragma mark SegmentedControl
-	//FIXME: this isn't working, probably because I'm not yet using a new observation?
-- (IBAction)setConfidenceLevel:(id)sender
-{
-    switch (((UISegmentedControl *)sender).selectedSegmentIndex)
-    {
-        case 0:
-        {
-			self.observation.formIDConfidence = kRK100PercentCertain;
-            break;
-        } 
-        case 1:
-        {
-            self.observation.formIDConfidence = kRKSomewhatConfident;
-            break;
-        } 
-        default:
-        {
-            self.observation.formIDConfidence = kRKBestGuess;
-            break;
-        } 
-    }
-	RKLog(@"The selected Confidence level is: %@", self.observation.formIDConfidence);
 	
-		//FIXME: this won't work until I create a new observation separate from Hal's test obs?
-		//if no Category was selected, remind the user to do that
-	if (self.category == nil)
+		//remember the category selected so the next view will filter for species members of that category
+    UITableViewCell *selectedCell = [self.tableView cellForRowAtIndexPath:self.lastIndexPath];
+    self.selectedCategoryString = selectedCell.textLabel.text;
+	
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+	
+		//RKLog(@"AFTER category selection: %@", self.selectedCategoryString);
+	
+		//push the SpeciesSelectionVC when a category is selected
+	SpeciesSelectionVC *newViewController = [[SpeciesSelectionVC alloc] initWithNibName:@"SpeciesSelectionVC" bundle:nil];
+	if (newViewController) 
 	{
-        RKLog(@"No Category was selected");
-		UIAlertView *noCategoryAlert = [[UIAlertView alloc] initWithTitle:@"Please select a species category"
-																 message:NULL
-																delegate:NULL 
-													   cancelButtonTitle:@"OK" 
-													   otherButtonTitles:NULL];
-		[noCategoryAlert show]; 
-		[noCategoryAlert release]; 
-		return;
-	}
-	else 
-	{
-			//TODO: which is better UI?
-			//this moves the user to the SpeciesSelection view when the Confidence selection is made (saves the user a tap)? 
-			//or should we use a Done button on the navigation bar?
-		SpeciesSelectionVC *testVC = [[SpeciesSelectionVC alloc] initWithNibName:@"SpeciesSelectionVC" bundle:nil];
+			//pass the selection to the next view
+		newViewController.selectedCategoryString = self.selectedCategoryString;
+			//RKLog(@"PASSED to the next view: %@", testVC.selectedCategoryString);
 		
-		if (testVC) 
-		{
-			[self.navigationController pushViewController:testVC animated:YES];
-		}
-		
-		[testVC release];
-	}
+		[self.navigationController pushViewController:newViewController animated:YES];
+	}	
+	[newViewController release];
 }
 
 
@@ -303,7 +242,10 @@
     
 		// Edit the section name key path and cache name if appropriate.
 		// nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext  sectionNameKeyPath:nil cacheName:@"Category"];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest 
+																								managedObjectContext:self.managedObjectContext  
+																								  sectionNameKeyPath:nil 
+																										   cacheName:@"Category"];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
 	
@@ -398,27 +340,26 @@
 #pragma mark Memory management
 
 - (void)didReceiveMemoryWarning {
-    // Releases the view if it doesn't have a superview.
+		// Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
     
-    // Relinquish ownership any cached data, images, etc that aren't in use.
+		// Relinquish ownership any cached data, images, etc that aren't in use.
 }
 
 - (void)viewDidUnload {
-    // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
-    // For example: self.myOutlet = nil;
+		// Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
+		// For example: self.myOutlet = nil;
 }
 
 
 - (void)dealloc 
 {
-	[observation_ release], observation_ = nil;
 	[category_ release], category_ = nil;
-		//[categoryArray_ release], categoryArray_ = nil;
 	[lastIndexPath_ release], lastIndexPath_ = nil;
+	[selectedCategoryString_ release], selectedCategoryString_ = nil;
 	[managedObjectContext_ release], managedObjectContext_ = nil;
 	[fetchedResultsController_ release], fetchedResultsController_ = nil;
-
+	
     [super dealloc];
 }
 

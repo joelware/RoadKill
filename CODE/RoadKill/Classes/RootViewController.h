@@ -6,8 +6,8 @@
 //  Copyright 2010 Seattle RoadKill Team. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <CoreData/CoreData.h>
+	//#import are found in the Prefix file
+
 
 @class Observation;
 

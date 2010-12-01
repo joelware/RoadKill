@@ -62,14 +62,22 @@
 		7B0FE26512820339009AED15 /* ObservationEntryController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7B0FE26412820339009AED15 /* ObservationEntryController.xib */; };
 		7B0FE2681282034A009AED15 /* ObservationEntryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FE26712820349009AED15 /* ObservationEntryController.m */; };
 		7B0FE28612820403009AED15 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B0FE28512820403009AED15 /* Default.png */; };
-		8D88BBA2127CDCCA002A7029 /* SpeciesCategorySelectionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D88BBA0127CDCCA002A7029 /* SpeciesCategorySelectionVC.xib */; };
+		88BC05F4128A4D2D0021FDEB /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BC05F2128A4D2D0021FDEB /* CameraViewController.m */; };
 		8D88BBA6127CDDE1002A7029 /* SpeciesCategorySelectionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D88BBA5127CDDE1002A7029 /* SpeciesCategorySelectionVC.m */; };
-		8D88C139127E2B66002A7029 /* SpeciesSelectionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D88C137127E2B66002A7029 /* SpeciesSelectionVC.xib */; };
 		8D88C14F127E2BB2002A7029 /* SpeciesSelectionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D88C14E127E2BB2002A7029 /* SpeciesSelectionVC.m */; };
 		8D88C682127F42BA002A7029 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D88C681127F42BA002A7029 /* RootViewController.m */; };
 		8D88C7B7127F5D8B002A7029 /* ExistingReportsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D88C7B6127F5D8B002A7029 /* ExistingReportsVC.m */; };
 		8D8FE372126BFA4700336686 /* Species.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8FE370126BFA4700336686 /* Species.m */; };
 		8D8FE4BE126D1A4600336686 /* SpeciesCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8FE4BD126D1A4600336686 /* SpeciesCategory.m */; };
+		8DFEE4B0128A422300AEADFD /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFEE4AF128A422300AEADFD /* Photo.m */; };
+		8DFEE4C5128A44C500AEADFD /* UIImageToDataTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFEE4C4128A44C500AEADFD /* UIImageToDataTransformer.m */; };
+		8DFEEA75128CFE0800AEADFD /* SpeciesSelectionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DFEEA74128CFE0800AEADFD /* SpeciesSelectionVC.xib */; };
+		8DFEEAFE128D0F4000AEADFD /* SpeciesWriteInVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFEEAFD128D0F4000AEADFD /* SpeciesWriteInVC.m */; };
+		8DFEEB0E128D159900AEADFD /* EditableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFEEB0B128D159900AEADFD /* EditableTableViewCell.m */; };
+		8DFEEB0F128D159900AEADFD /* EditableTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DFEEB0C128D159900AEADFD /* EditableTableViewCell.xib */; };
+		8DFEEB51128D1A0700AEADFD /* PreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFEEB4F128D1A0700AEADFD /* PreviewViewController.m */; };
+		8DFEEB52128D1A0700AEADFD /* PreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DFEEB50128D1A0700AEADFD /* PreviewViewController.xib */; };
+		8DFEF81F12906C2C00AEADFD /* GenericContact.png in Resources */ = {isa = PBXBuildFile; fileRef = 8DFEF81E12906C2C00AEADFD /* GenericContact.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -134,11 +142,11 @@
 		7B0FE26612820349009AED15 /* ObservationEntryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObservationEntryController.h; sourceTree = "<group>"; };
 		7B0FE26712820349009AED15 /* ObservationEntryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObservationEntryController.m; sourceTree = "<group>"; };
 		7B0FE28512820403009AED15 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Resources/Default.png; sourceTree = "<group>"; };
+		88BC05F2128A4D2D0021FDEB /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
+		88BC05F3128A4D2D0021FDEB /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* RoadKill-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RoadKill-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
-		8D88BBA0127CDCCA002A7029 /* SpeciesCategorySelectionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SpeciesCategorySelectionVC.xib; sourceTree = "<group>"; };
 		8D88BBA4127CDDE1002A7029 /* SpeciesCategorySelectionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeciesCategorySelectionVC.h; sourceTree = "<group>"; };
 		8D88BBA5127CDDE1002A7029 /* SpeciesCategorySelectionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeciesCategorySelectionVC.m; sourceTree = "<group>"; };
-		8D88C137127E2B66002A7029 /* SpeciesSelectionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SpeciesSelectionVC.xib; sourceTree = "<group>"; };
 		8D88C14D127E2BB2002A7029 /* SpeciesSelectionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeciesSelectionVC.h; sourceTree = "<group>"; };
 		8D88C14E127E2BB2002A7029 /* SpeciesSelectionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeciesSelectionVC.m; sourceTree = "<group>"; };
 		8D88C680127F42BA002A7029 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
@@ -149,6 +157,20 @@
 		8D8FE370126BFA4700336686 /* Species.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Species.m; sourceTree = "<group>"; };
 		8D8FE4BC126D1A4600336686 /* SpeciesCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeciesCategory.h; sourceTree = "<group>"; };
 		8D8FE4BD126D1A4600336686 /* SpeciesCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeciesCategory.m; sourceTree = "<group>"; };
+		8DFEE4AE128A422300AEADFD /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
+		8DFEE4AF128A422300AEADFD /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
+		8DFEE4C3128A44C500AEADFD /* UIImageToDataTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageToDataTransformer.h; sourceTree = "<group>"; };
+		8DFEE4C4128A44C500AEADFD /* UIImageToDataTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageToDataTransformer.m; sourceTree = "<group>"; };
+		8DFEEA74128CFE0800AEADFD /* SpeciesSelectionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SpeciesSelectionVC.xib; sourceTree = "<group>"; };
+		8DFEEAFC128D0F4000AEADFD /* SpeciesWriteInVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeciesWriteInVC.h; sourceTree = "<group>"; };
+		8DFEEAFD128D0F4000AEADFD /* SpeciesWriteInVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeciesWriteInVC.m; sourceTree = "<group>"; };
+		8DFEEB0A128D159900AEADFD /* EditableTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditableTableViewCell.h; sourceTree = "<group>"; };
+		8DFEEB0B128D159900AEADFD /* EditableTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditableTableViewCell.m; sourceTree = "<group>"; };
+		8DFEEB0D128D159900AEADFD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/EditableTableViewCell.xib; sourceTree = "<group>"; };
+		8DFEEB4E128D1A0700AEADFD /* PreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewViewController.h; sourceTree = "<group>"; };
+		8DFEEB4F128D1A0700AEADFD /* PreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewViewController.m; sourceTree = "<group>"; };
+		8DFEEB50128D1A0700AEADFD /* PreviewViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = PreviewViewController.xib; path = Classes/PreviewViewController.xib; sourceTree = "<group>"; };
+		8DFEF81E12906C2C00AEADFD /* GenericContact.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GenericContact.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +210,8 @@
 			children = (
 				7B0FE26612820349009AED15 /* ObservationEntryController.h */,
 				7B0FE26712820349009AED15 /* ObservationEntryController.m */,
+				88BC05F2128A4D2D0021FDEB /* CameraViewController.m */,
+				88BC05F3128A4D2D0021FDEB /* CameraViewController.h */,
 				1D3623240D0F684500981E51 /* RoadKillAppDelegate.h */,
 				1D3623250D0F684500981E51 /* RoadKillAppDelegate.m */,
 				28C286DF0D94DF7D0034E888 /* HalsRootViewController.h */,
@@ -198,8 +222,14 @@
 				8D88BBA5127CDDE1002A7029 /* SpeciesCategorySelectionVC.m */,
 				8D88C14D127E2BB2002A7029 /* SpeciesSelectionVC.h */,
 				8D88C14E127E2BB2002A7029 /* SpeciesSelectionVC.m */,
+				8DFEEAFC128D0F4000AEADFD /* SpeciesWriteInVC.h */,
+				8DFEEAFD128D0F4000AEADFD /* SpeciesWriteInVC.m */,
+				8DFEEB0A128D159900AEADFD /* EditableTableViewCell.h */,
+				8DFEEB0B128D159900AEADFD /* EditableTableViewCell.m */,
 				8D88C7B5127F5D8B002A7029 /* ExistingReportsVC.h */,
 				8D88C7B6127F5D8B002A7029 /* ExistingReportsVC.m */,
+				8DFEEB4E128D1A0700AEADFD /* PreviewViewController.h */,
+				8DFEEB4F128D1A0700AEADFD /* PreviewViewController.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -247,11 +277,13 @@
 				7B0FE28512820403009AED15 /* Default.png */,
 				7B0FE26412820339009AED15 /* ObservationEntryController.xib */,
 				2899E55F0DE3E45000AC0155 /* RootViewController.xib */,
-				8D88BBA0127CDCCA002A7029 /* SpeciesCategorySelectionVC.xib */,
-				8D88C137127E2B66002A7029 /* SpeciesSelectionVC.xib */,
 				28AD735F0D9D9599002E5188 /* MainWindow.xib */,
+				8DFEEA74128CFE0800AEADFD /* SpeciesSelectionVC.xib */,
+				8DFEEB0C128D159900AEADFD /* EditableTableViewCell.xib */,
+				8DFEEB50128D1A0700AEADFD /* PreviewViewController.xib */,
 				8D1107310486CEB800E47090 /* RoadKill-Info.plist */,
 				2B088E831271425B00ECC691 /* demoSkunk.jpg */,
+				8DFEF81E12906C2C00AEADFD /* GenericContact.png */,
 				2B244431125BE720005152E6 /* Icon.png */,
 				2B244432125BE720005152E6 /* Icon@2x.png */,
 			);
@@ -340,6 +372,8 @@
 		2B9327E312656C8100BADFA7 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				8DFEE4AE128A422300AEADFD /* Photo.h */,
+				8DFEE4AF128A422300AEADFD /* Photo.m */,
 				2B9327BB126568FE00BADFA7 /* Observation.h */,
 				2B9327BC126568FE00BADFA7 /* Observation.m */,
 				2B7365D51269266E00E3CE18 /* State.h */,
@@ -351,6 +385,8 @@
 				8D8FE4BC126D1A4600336686 /* SpeciesCategory.h */,
 				8D8FE4BD126D1A4600336686 /* SpeciesCategory.m */,
 				28D3F201112F7DC200FD0661 /* RoadKill.xcdatamodeld */,
+				8DFEE4C3128A44C500AEADFD /* UIImageToDataTransformer.h */,
+				8DFEE4C4128A44C500AEADFD /* UIImageToDataTransformer.m */,
 			);
 			name = "Core Data";
 			path = Classes;
@@ -433,10 +469,12 @@
 				2B244433125BE720005152E6 /* Icon.png in Resources */,
 				2B244434125BE720005152E6 /* Icon@2x.png in Resources */,
 				2B088E841271425B00ECC691 /* demoSkunk.jpg in Resources */,
-				8D88BBA2127CDCCA002A7029 /* SpeciesCategorySelectionVC.xib in Resources */,
-				8D88C139127E2B66002A7029 /* SpeciesSelectionVC.xib in Resources */,
 				7B0FE26512820339009AED15 /* ObservationEntryController.xib in Resources */,
 				7B0FE28612820403009AED15 /* Default.png in Resources */,
+				8DFEEA75128CFE0800AEADFD /* SpeciesSelectionVC.xib in Resources */,
+				8DFEEB0F128D159900AEADFD /* EditableTableViewCell.xib in Resources */,
+				8DFEEB52128D1A0700AEADFD /* PreviewViewController.xib in Resources */,
+				8DFEF81F12906C2C00AEADFD /* GenericContact.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -493,6 +531,12 @@
 				8D88C682127F42BA002A7029 /* RootViewController.m in Sources */,
 				8D88C7B7127F5D8B002A7029 /* ExistingReportsVC.m in Sources */,
 				7B0FE2681282034A009AED15 /* ObservationEntryController.m in Sources */,
+				8DFEE4B0128A422300AEADFD /* Photo.m in Sources */,
+				8DFEE4C5128A44C500AEADFD /* UIImageToDataTransformer.m in Sources */,
+				88BC05F4128A4D2D0021FDEB /* CameraViewController.m in Sources */,
+				8DFEEAFE128D0F4000AEADFD /* SpeciesWriteInVC.m in Sources */,
+				8DFEEB0E128D159900AEADFD /* EditableTableViewCell.m in Sources */,
+				8DFEEB51128D1A0700AEADFD /* PreviewViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -521,6 +565,18 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		8DFEEB0C128D159900AEADFD /* EditableTableViewCell.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8DFEEB0D128D159900AEADFD /* en */,
+			);
+			name = EditableTableViewCell.xib;
+			path = Classes;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
