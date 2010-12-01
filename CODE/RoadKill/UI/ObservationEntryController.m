@@ -8,6 +8,7 @@
 
 #import "ObservationEntryController.h"
 #import "SpeciesCategorySelectionVC.h"
+#import "SpeciesSelectionVC.h"
 
 
 @implementation ObservationEntryController
@@ -159,7 +160,18 @@
 - (IBAction) doSpecies:(id)sender {
     UIViewController *speciesCategorySelectionVC = [[SpeciesCategorySelectionVC alloc] initWithStyle:UITableViewStyleGrouped];
     [self.navigationController pushViewController:speciesCategorySelectionVC animated:YES];
-    [speciesCategorySelectionVC release];
+    [speciesCategorySelectionVC release]; speciesCategorySelectionVC = nil;
+    if (![[speciesButton titleForState:UIControlStateNormal] isEqualToString:@"Species"]) {
+        SpeciesSelectionVC *speciesSelectionVC = [[SpeciesSelectionVC alloc] initWithNibName:@"SpeciesSelectionVC" bundle:nil];
+        /*
+            TODO: Need to formalize how to inform SpeciesSelectionVC of a category
+        */
+        speciesSelectionVC.selectedCategoryString = @"Bird"; // hack!!!
+        [self.navigationController pushViewController:speciesSelectionVC
+                                             animated:YES];
+        [speciesSelectionVC release]; speciesSelectionVC = nil;
+    }
+    
     
 }
 
@@ -171,6 +183,7 @@
 - (void)dealloc {
     [super dealloc];
 }
+
 
 
 @end

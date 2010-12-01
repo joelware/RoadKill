@@ -11,6 +11,7 @@
 
 @interface ObservationEntryController : UIViewController {
 
+    IBOutlet UIButton *speciesButton;
 }
 
 
