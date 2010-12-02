@@ -10,6 +10,7 @@
 #import "ObservationEntryController.h"
 #import "SpeciesCategorySelectionVC.h"
 #import "SpeciesSelectionVC.h"
+#import "CameraViewController.h"
 
 
 @implementation ObservationEntryController
@@ -174,9 +175,16 @@
                                              animated:YES];
         [speciesSelectionVC release]; speciesSelectionVC = nil;
     }
-    
-    
 }
+
+
+- (IBAction) doCamera:(id)sender {
+    CameraViewController *cameraVC = [[CameraViewController alloc] init];
+    [self.navigationController pushViewController:cameraVC animated:YES];
+    [cameraVC release]; cameraVC = nil;
+}
+
+
 
 - (IBAction) doDone:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
