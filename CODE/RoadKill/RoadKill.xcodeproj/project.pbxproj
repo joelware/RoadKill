@@ -156,6 +156,7 @@
 		7B3CE09012A616EE0010D821 /* SpeciesSelectionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpeciesSelectionVC.m; path = UI/SpeciesSelectionVC.m; sourceTree = "<group>"; };
 		7B3CE09112A616EE0010D821 /* SpeciesWriteInVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpeciesWriteInVC.h; path = UI/SpeciesWriteInVC.h; sourceTree = "<group>"; };
 		7B3CE09212A616EE0010D821 /* SpeciesWriteInVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpeciesWriteInVC.m; path = UI/SpeciesWriteInVC.m; sourceTree = "<group>"; };
+		7B381FDF12AF409800469823 /* Debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Debug.h; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* RoadKill-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RoadKill-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		8D88C7B5127F5D8B002A7029 /* ExistingReportsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExistingReportsVC.h; sourceTree = "<group>"; };
 		8D88C7B6127F5D8B002A7029 /* ExistingReportsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExistingReportsVC.m; sourceTree = "<group>"; };
@@ -249,6 +250,7 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				7B381FDF12AF409800469823 /* Debug.h */,
 				2B647284125A8E5100ED5161 /* RKConstants.h */,
 				28A0AAE50D9B0CCF005BE974 /* RoadKill_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
