@@ -1,0 +1,16 @@
+//
+//  main.m
+//  ShowAddr
+//
+//  Created by John Roersma on 10/4/10.
+//
+
+#import <UIKit/UIKit.h>
+
+int main(int argc, char *argv[])
+{
+    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+    int retVal = UIApplicationMain(argc, argv, nil, nil);
+    [pool release];
+    return retVal;
+}
