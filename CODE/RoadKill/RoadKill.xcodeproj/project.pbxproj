@@ -69,6 +69,8 @@
 		7B3CE09812A616EE0010D821 /* SpeciesCategorySelectionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3CE08E12A616EE0010D821 /* SpeciesCategorySelectionVC.m */; };
 		7B3CE09912A616EE0010D821 /* SpeciesSelectionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3CE09012A616EE0010D821 /* SpeciesSelectionVC.m */; };
 		7B3CE09A12A616EE0010D821 /* SpeciesWriteInVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3CE09212A616EE0010D821 /* SpeciesWriteInVC.m */; };
+		8D21738712AC49D300EDBC10 /* PickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D21738512AC49D300EDBC10 /* PickerViewController.m */; };
+		8D21738812AC49D300EDBC10 /* PickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D21738612AC49D300EDBC10 /* PickerViewController.xib */; };
 		8D88C7B7127F5D8B002A7029 /* ExistingReportsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D88C7B6127F5D8B002A7029 /* ExistingReportsVC.m */; };
 		8D8FE372126BFA4700336686 /* Species.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8FE370126BFA4700336686 /* Species.m */; };
 		8D8FE4BE126D1A4600336686 /* SpeciesCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8FE4BD126D1A4600336686 /* SpeciesCategory.m */; };
@@ -157,6 +159,9 @@
 		7B3CE09112A616EE0010D821 /* SpeciesWriteInVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpeciesWriteInVC.h; path = UI/SpeciesWriteInVC.h; sourceTree = "<group>"; };
 		7B3CE09212A616EE0010D821 /* SpeciesWriteInVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpeciesWriteInVC.m; path = UI/SpeciesWriteInVC.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* RoadKill-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RoadKill-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		8D21738412AC49D300EDBC10 /* PickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickerViewController.h; sourceTree = "<group>"; };
+		8D21738512AC49D300EDBC10 /* PickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickerViewController.m; sourceTree = "<group>"; };
+		8D21738612AC49D300EDBC10 /* PickerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PickerViewController.xib; sourceTree = "<group>"; };
 		8D88C7B5127F5D8B002A7029 /* ExistingReportsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExistingReportsVC.h; sourceTree = "<group>"; };
 		8D88C7B6127F5D8B002A7029 /* ExistingReportsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExistingReportsVC.m; sourceTree = "<group>"; };
 		8D8FE36F126BFA4700336686 /* Species.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Species.h; sourceTree = "<group>"; };
@@ -266,6 +271,7 @@
 				8DFEEA74128CFE0800AEADFD /* SpeciesSelectionVC.xib */,
 				8DFEEB0C128D159900AEADFD /* EditableTableViewCell.xib */,
 				8DFEEB50128D1A0700AEADFD /* PreviewViewController.xib */,
+				8D21738612AC49D300EDBC10 /* PickerViewController.xib */,
 				8D1107310486CEB800E47090 /* RoadKill-Info.plist */,
 				2B088E831271425B00ECC691 /* demoSkunk.jpg */,
 				8DFEF81E12906C2C00AEADFD /* GenericContact.png */,
@@ -386,8 +392,6 @@
 				7B3CE08612A616EE0010D821 /* EditableTableViewCell.m */,
 				7B3CE08712A616EE0010D821 /* ObservationEntryController.h */,
 				7B3CE08812A616EE0010D821 /* ObservationEntryController.m */,
-				7B3CE08912A616EE0010D821 /* PreviewViewController.h */,
-				7B3CE08A12A616EE0010D821 /* PreviewViewController.m */,
 				7B3CE08B12A616EE0010D821 /* RootViewController.h */,
 				7B3CE08C12A616EE0010D821 /* RootViewController.m */,
 				7B3CE08D12A616EE0010D821 /* SpeciesCategorySelectionVC.h */,
@@ -396,6 +400,10 @@
 				7B3CE09012A616EE0010D821 /* SpeciesSelectionVC.m */,
 				7B3CE09112A616EE0010D821 /* SpeciesWriteInVC.h */,
 				7B3CE09212A616EE0010D821 /* SpeciesWriteInVC.m */,
+				7B3CE08912A616EE0010D821 /* PreviewViewController.h */,
+				7B3CE08A12A616EE0010D821 /* PreviewViewController.m */,
+				8D21738412AC49D300EDBC10 /* PickerViewController.h */,
+				8D21738512AC49D300EDBC10 /* PickerViewController.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -483,6 +491,7 @@
 				8DFEEB0F128D159900AEADFD /* EditableTableViewCell.xib in Resources */,
 				8DFEEB52128D1A0700AEADFD /* PreviewViewController.xib in Resources */,
 				8DFEF81F12906C2C00AEADFD /* GenericContact.png in Resources */,
+				8D21738812AC49D300EDBC10 /* PickerViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -545,6 +554,7 @@
 				7B3CE09812A616EE0010D821 /* SpeciesCategorySelectionVC.m in Sources */,
 				7B3CE09912A616EE0010D821 /* SpeciesSelectionVC.m in Sources */,
 				7B3CE09A12A616EE0010D821 /* SpeciesWriteInVC.m in Sources */,
+				8D21738712AC49D300EDBC10 /* PickerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

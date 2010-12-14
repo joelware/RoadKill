@@ -15,9 +15,12 @@
 #import "RoadKillAppDelegate.h"
 #import "Observation.h"
 #import "Species.h"
+#import "SpeciesCategory.h"
+#import "SpeciesCategorySelectionVC.h"
 #import "RootViewController.h"
 #import "SpeciesWriteInVC.h"
 #import "PreviewViewController.h"
+#import "PickerViewController.h"
 
 
 	//a category to prepare for the index table view style (using alphabetical headers and fast index scroller)
@@ -51,13 +54,14 @@
 @implementation SpeciesSelectionVC
 
 @synthesize headerView = headerView_;
+@synthesize button = button_;
 @synthesize searchBar = searchBar_;
-	//@synthesize writeInLabel = writeInLabel_;
 @synthesize observation = observation_, species = species_;
 @synthesize lastIndexPath = lastIndexPath_; 
 @synthesize selectedSpeciesString = selectedSpeciesString_, selectedCategoryString = selectedCategoryString_;
 @synthesize managedObjectContext = managedObjectContext_, fetchedResultsController=fetchedResultsController_;
 @synthesize filteredListContent = filteredListContent_, savedSearchTerm = savedSearchTerm_, searchWasActive = searchWasActive_;
+@synthesize clearTheList = clearTheList_;
 @synthesize observationEntryVC;
 
 
@@ -68,12 +72,22 @@
 - (void)viewDidLoad 
 {
     [super viewDidLoad];
-		// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-		// self.navigationItem.rightBarButtonItem = self.editButtonItem;
-	self.navigationItem.title = self.selectedCategoryString;	
+	
+	self.navigationItem.title = self.selectedCategoryString;
+	
+		//configure the clear button
+	UIBarButtonItem *clearSelectionButton = [[UIBarButtonItem alloc] initWithTitle:@"Clear" 
+																			 style:UIBarButtonItemStyleBordered 
+																			target:self 
+																			action:@selector(clearSelection:)];
+	self.navigationItem.rightBarButtonItem = clearSelectionButton;
+	[clearSelectionButton release];
+	
+		//start in this mode so checkmarks may be made
+	self.clearTheList = NO;
 	
 		// create a filtered list that will contain results for the search results table.
-	self.filteredListContent = [NSMutableArray arrayWithCapacity:[[[self fetchedResultsController] fetchedObjects] count]];
+	self.filteredListContent = [NSMutableArray arrayWithCapacity:[[[self fetchedResultsController] fetchedObjects] count]];	
 	
 		// restore search settings if they were saved in didReceiveMemoryWarning.
 	/*
@@ -88,24 +102,78 @@
 	self.tableView.scrollEnabled = YES;
 }
 
+- (void)clearSelection:(id)sender 
+{	
+		//the checkmarks are cleared in configureCell:
+	self.clearTheList = YES;
+	
+		//needed for checkmarks to be up to date
+	[self.tableView reloadData];
+	
+		//clear the species selection
+	self.observation.species = nil;
+	
+	/*
+	 Save the managed object context
+	 */
+	NSError *error = nil;
+	if (![self.managedObjectContext save:&error]) 
+	{
+		/*
+		 Replace this implementation with code to handle the error appropriately.
+		 
+		 abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
+		 */
+		RKLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		abort();
+	}
+}
+
 
 - (void)viewWillAppear:(BOOL)animated 
 {	
-	[super viewWillAppear:animated];
+	[super viewWillAppear:animated];	
 	[self.tableView reloadData];
 	
 		// hide the pull-down search bar under the navigation bar
 	[self.tableView setContentOffset:CGPointMake(0,40)];
 	
+		// hide both the pull-down search bar AND the Species Write-In under the navigation bar
+		//[self.tableView setContentOffset:CGPointMake(0,100)];
+	
 		//use the next line to deactivate or cancel search
 	[self.searchDisplayController setActive:NO animated: YES];
 	
-		//FIXME: the view needs to scroll to return to the selected cell in the list when popped back from deeper view controller
-		//right now the view returns with the table placed at the top. If a selection was made, the table should return to where it was left
-		//https://devforums.apple.com/message/325662#325662
-	[self.tableView scrollToNearestSelectedRowAtScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+	if ((!self.observation.freeText) || ([self.observation.freeText length] == 0))
+	{
+		[self.button setTitle:@"Tap for Species or Comment Write-In" forState:UIControlStateNormal];
+	}
+	else 
+	{
+		[self.button setTitle:[self.observation valueForKey:@"freeText"] forState:UIControlStateNormal];
+	}
+	
+		//FIXME: see the note in  postNotificationName: in didSelectRowAtIndexPath:
+	
+		//scroll and display at the selected row in the list
+		//See the very bottom of https://devforums.apple.com/message/325662
+		//with thanks for help from Greg Anderson and Steve Baker
+	if (self.lastIndexPath) 
+	{
+		[self performSelector:@selector(displayRowAtSelectedIndexPath:) 
+				   withObject:self.lastIndexPath 
+				   afterDelay:0.0];
+	}
 }
 
+
+- (void)displayRowAtSelectedIndexPath:(NSIndexPath *)indexPath 
+{
+    if (indexPath == self.lastIndexPath) 
+	{
+        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+    }
+}
 
 /*
  - (void)viewDidAppear:(BOOL)animated {
@@ -171,8 +239,8 @@
 
 
 	// Customize the appearance of table view cells.
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath 
+{
     static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -189,19 +257,12 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath 
 {	
+		//TODO: find out: ARE BOTH FREE-TEXT *AND* SPECIES ALLOWED? I think so.....
+		//this question is also in a TODO comment in RootViewController's configureCell:
+	
 		// See also Apress Beginning iPhone 3 Chapter 9 - Project 09 Nav: see CheckListController files
 	
 	self.species = nil;
-	
-		//FIXME: need to clear any checkmark from the list if a write-in is made
-		//might have to add a BOOL attribute for isChecked to Species in the data model?
-		//or call viewDidLoad to start view over?
-		//FIXME: be sure that any existing write-in is cleared if a selection is made from the list
-	if (self.observation.freeText != nil)
-	{
-		cell.accessoryType = UITableViewCellAccessoryNone;
-		[self.tableView reloadData];
-	}
 	
 	if (self.searchWasActive)
 	{
@@ -210,15 +271,20 @@
 	else
 	{
 		self.species = [self.fetchedResultsController objectAtIndexPath:indexPath];
+			//TODO: when do I need to do typing? 
 			//self.species = (Species *) [self.fetchedResultsController objectAtIndexPath:indexPath];
 	}
 	
 	cell.textLabel.text = [self.species valueForKey:@"commonName"];
 	cell.accessoryType = UITableViewCellAccessoryNone;
 	
-	if (self.selectedSpeciesString != nil && self.selectedSpeciesString == cell.textLabel.text) 
+	if (self.selectedSpeciesString != nil && self.selectedSpeciesString == cell.textLabel.text && self.clearTheList == NO) 
 	{
 		cell.accessoryType = UITableViewCellAccessoryCheckmark;
+	}
+	else if	(self.clearTheList == YES) // this clears the checkmarks
+	{
+		cell.accessoryType = UITableViewCellAccessoryNone;
 	}
 	else 
 	{
@@ -273,52 +339,20 @@
 }
 
 
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
- 
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
- }   
- else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }   
- }
- */
-
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
- }
- */
-
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
-
-
 #pragma mark -
 #pragma mark Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
 {		
 	RKLog(@"BEFORE species selection: %@", self.selectedSpeciesString);
+	
+		//ensure that this mode is NO so new selections may be made
+	self.clearTheList = NO;
+	
+		//will get a value for selectedSpeciesString later in this method, through [selectedObject valueForKey:@"commonName"] instead of through selectedCell.textLabel.text
+		//but either way may be OK?
+		//UITableViewCell *selectedCell = [self.tableView cellForRowAtIndexPath:self.lastIndexPath];
+		//self.selectedSpeciesString = selectedCell.textLabel.text;
 	
 	Species *selectedObject = nil;
 	
@@ -328,6 +362,7 @@
 			//if (self.searchWasActive)
 	{
 		selectedObject = [[self filteredListContent] objectAtIndex:[indexPath row]];
+			//TODO: when do I need to do typing? 
 			//selectedObject = (Species *) [[self filteredListContent] objectAtIndex:[indexPath row]];
 		
 			//http://www.iphonedevsdk.com/forum/iphone-sdk-development/41522-searchdisplaycontroller-hide-results.html
@@ -341,7 +376,8 @@
 	}
 	else
 	{
-		selectedObject = [[self fetchedResultsController] objectAtIndexPath:indexPath];		
+		selectedObject = [[self fetchedResultsController] objectAtIndexPath:indexPath];	
+			//TODO: when do I need to do typing? 
 			//selectedObject = (Species *) [[self fetchedResultsController] objectAtIndexPath:indexPath];
 	}
 	
@@ -360,10 +396,9 @@
 		
 		UITableViewCell *oldCell = [tableView cellForRowAtIndexPath:self.lastIndexPath]; 
 		oldCell.accessoryType = UITableViewCellAccessoryNone;
-		self.lastIndexPath = indexPath;		
+		self.lastIndexPath = indexPath;	
 	}
-#endif
-	
+#endif	
 	
 #if 0	
 		// Or use this code from the Apple doc Table View Programming Guide for iPhone OS?
@@ -390,56 +425,51 @@
 #endif	
 	
 		//remember the species selected so it can be passed to the next view
-		//FIXME: need to persist this selection for the new observation. Need to persist all data...
 	
+	self.species = selectedObject;
+	self.observation.species = selectedObject;	
 	self.selectedSpeciesString = [selectedObject valueForKey:@"commonName"];
+	
 	RKLog(@"AFTER species selection: %@", self.selectedSpeciesString);
 	
 		//needed for checkmarks to be up to date
 	[self.tableView reloadData];
 	
-	// Pop to the observation entry controller
-    [self.navigationController popToViewController:self.observationEntryVC
-                                          animated:YES];
-    
-    // Send notification of selection
-    NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithObject:selectedObject
-                                                                       forKey:@"species"];
-    [[NSNotificationCenter defaultCenter] postNotificationName:RKSpeciesSelectedNotification
-                                                        object:self
-                                                      userInfo:userInfo];
-}
-
-
-#pragma mark -
-#pragma mark Action methods
-
-- (IBAction)speciesWriteInButton:(id)sender
-{
-	UIViewController *nextViewController = nil;
-	
-	nextViewController = [[SpeciesWriteInVC alloc] initWithStyle:UITableViewStyleGrouped];
-		//TODO: this should pass the information about the observation to the next view
-	((SpeciesWriteInVC *)nextViewController).observation = self.observation;
-	
-		// If we got a new view controller, push it .
-	if (nextViewController) 
+	/*
+	 Save the managed object context when the row is tapped
+	 */
+	NSError *error = nil;
+	if (![self.managedObjectContext save:&error]) 
 	{
-		[self.navigationController pushViewController:nextViewController animated:YES];
-		[nextViewController release];
+		/*
+		 Replace this implementation with code to handle the error appropriately.
+		 
+		 abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
+		 */
+		RKLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		abort();
 	}
+	
+		//FIXME: if the species was selected using search, the index path is for the *filtered* list, so scrolling to the selection later (in the full list) doesn't work, and may crash. So for now, selections made using search will not have scrolling-to-selection enabled.
+	
+	if (tableView == self.searchDisplayController.searchResultsTableView)
+			//if (self.searchWasActive)
+	{
+		RKLog(@"Scroll to selection doesn't work yet if species was selected by using search");
+	}
+	else
+	{
+		NSDictionary* dict = [NSDictionary dictionaryWithObject:self.lastIndexPath 
+														 forKey:self.lastIndexPath];
+		
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"SpeciesSelectionVCDidSelect"
+															object:self
+														  userInfo:dict];	
+	}
+	
+		//[self.navigationController popViewControllerAnimated:YES]; //only goes back one level
+	[self.navigationController popToViewController:[[self.navigationController viewControllers] objectAtIndex:1] animated:YES];
 }
-
-
-
-#pragma mark -
-#pragma mark Accessors
-
-- (void)setReturnToVC:(UIViewController *) viewController {
-    self.observationEntryVC = viewController;
-    [self.observationEntryVC retain];
-}
-
 
 
 #pragma mark -
@@ -447,72 +477,67 @@
 	//see Apress More iPhone 3 Development
 
 - (NSFetchedResultsController *)fetchedResultsController 
-{	
-    if (fetchedResultsController_ != nil) 
+{			  
+	if (fetchedResultsController_ != nil)
 	{
-        return fetchedResultsController_;
-    }
-    
-    /*
-     Set up the fetched results controller.
-	 */
-	
-		//TODO: is this the best way to pass the MOC? Ideally I probably don't want to query the app delegate for the MOC?	
-	if (managedObjectContext_ == nil) 
-	{ 
-		self.managedObjectContext = [(RoadKillAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext]; 
+		return fetchedResultsController_;
 	}
 	
+	/*
+	 Set up the fetched results controller.
+	 */
+	
 		// Create the fetch request for the entity.
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
 	NSEntityDescription *entity = [NSEntityDescription entityForName:RKSpeciesEntity 
 											  inManagedObjectContext:self.managedObjectContext];
-    [fetchRequest setEntity:entity];
+	[fetchRequest setEntity:entity];
 	
 		//create the predicate to filter by the chosen category
+	
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"speciesCategory.name CONTAINS[cd] %@", self.selectedCategoryString];
 	
 		//http://stackoverflow.com/questions/2709768/nsfetchedresultscontroller-crashing-on-performfetch-when-using-a-cache
-		//if the cache is not cleared, the app will crash with an error: "You have illegally mutated the NSFetchedResultsController's fetch request, its predicate, or its sort descriptor without either disabling caching or using +deleteCacheWithName:"
+		//!!! WARNING: if the cache is not cleared, the app will crash with an error: "You have illegally mutated the NSFetchedResultsController's fetch request, its predicate, or its sort descriptor without either disabling caching or using +deleteCacheWithName:"
 	[NSFetchedResultsController deleteCacheWithName:@"Species"];
 	[fetchRequest setPredicate:predicate];
 	
 		// Set the batch size to a suitable number.
-    [fetchRequest setFetchBatchSize:20];
-    
+	[fetchRequest setFetchBatchSize:20];
+	
 		// Edit the sort key as appropriate.
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"commonName" ascending:YES];
-    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
-    
-    [fetchRequest setSortDescriptors:sortDescriptors];
-    
+	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+	
+	[fetchRequest setSortDescriptors:sortDescriptors];
+	
 		// Edit the section name key path and cache name if appropriate.
 		// nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest 
+	NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest 
 																								managedObjectContext:self.managedObjectContext  
 																								  sectionNameKeyPath:@"uppercaseFirstLetterOfName" 
 																										   cacheName:@"Species"];
-    aFetchedResultsController.delegate = self;
-    self.fetchedResultsController = aFetchedResultsController;
+	aFetchedResultsController.delegate = self;
+	self.fetchedResultsController = aFetchedResultsController;
 	
 		//[aFetchedResultsController release], aFetchedResultsController = nil;
 	[aFetchedResultsController release];
-    [fetchRequest release];
-    [sortDescriptor release];
-    [sortDescriptors release];
+	[fetchRequest release];
+	[sortDescriptor release];
+	[sortDescriptors release];
 	
 	NSError *error = nil;
-    if (![fetchedResultsController_ performFetch:&error]) 
+	if (![fetchedResultsController_ performFetch:&error]) 
 	{
-        /*
-         Replace this implementation with code to handle the error appropriately.
-         
-         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
-         */
-        RKLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }
-    return fetchedResultsController_;
+		/*
+		 Replace this implementation with code to handle the error appropriately.
+		 
+		 abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
+		 */
+		RKLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		abort();
+	}
+	return fetchedResultsController_;
 }
 
 #pragma mark -
@@ -522,29 +547,24 @@
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
 	if ([self.searchDisplayController isActive])
 	{
-		RKLog(@"THE searchDisplayController IS ACTIVE");
 		return;
 	}
 	else 
 	{
-		RKLog(@"THE searchDisplayController IS NOT ACTIVE");
 		[self.tableView beginUpdates];
 	}
 }
 
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
-           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type 
+		   atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type 
 {
 	if ([self.searchDisplayController isActive])
 	{
-		RKLog(@"THE searchDisplayController IS ACTIVE");
 		return;
 	}
 	else 
-	{
-		RKLog(@"THE searchDisplayController IS NOT ACTIVE");
-		
+	{		
 		switch(type) 
 		{
 			case NSFetchedResultsChangeInsert:
@@ -555,23 +575,20 @@
 				[self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
 				break;
 		}
-    }
+	}
 }
 
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
-       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
-      newIndexPath:(NSIndexPath *)newIndexPath 
+	   atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
+	  newIndexPath:(NSIndexPath *)newIndexPath 
 {
 	if ([self.searchDisplayController isActive])
 	{
-		RKLog(@"THE searchDisplayController IS ACTIVE");
 		return;
 	}
 	else
-	{
-		RKLog(@"THE searchDisplayController IS NOT ACTIVE");
-		
+	{		
 		UITableView *tableView = self.tableView;
 		
 		switch(type) 
@@ -594,23 +611,19 @@
 				[tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
 				break;
 		}
-    }
+	}
 }
 
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller 
 {
 	if ([self.searchDisplayController isActive]) 
-	{
-		RKLog(@"THE searchDisplayController IS ACTIVE");
-		
+	{		
 		[self searchDisplayController:[self searchDisplayController] shouldReloadTableForSearchString:[[[self searchDisplayController] searchBar] text]];
 		[self.searchDisplayController.searchResultsTableView reloadData];
 	}
 	else 
-	{
-		RKLog(@"THE searchDisplayController IS NOT ACTIVE");
-		
+	{		
 		[self.tableView endUpdates];
 	}
 }
@@ -652,21 +665,21 @@
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {	
-    [self filterContentForSearchText:searchString scope:
+	[self filterContentForSearchText:searchString scope:
 	 [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:
 	  [self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
 	
-    return YES;
+	return YES;
 }
 
 	//Not using scopeButtonTitles right now
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption
 {	
-    [self filterContentForSearchText:[self.searchDisplayController.searchBar text] scope:
+	[self filterContentForSearchText:[self.searchDisplayController.searchBar text] scope:
 	 [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:searchOption]];
 	
-    return YES;
+	return YES;
 }
 
 - (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller 
@@ -682,7 +695,28 @@
 	[self.tableView reloadData];	
 }
 
+#pragma mark -
+#pragma mark Actions
 
+
+- (IBAction)speciesWriteIn:(id)sender
+{	
+	SpeciesWriteInVC *nextViewController = [[SpeciesWriteInVC alloc] initWithStyle:UITableViewStyleGrouped];
+	
+		//pass the MOC to the nextViewController
+	nextViewController.managedObjectContext = self.managedObjectContext;
+	
+		//and pass the observation
+	nextViewController.observation = self.observation;
+	
+		// If we got a new view controller, push it .
+	if (nextViewController) 
+	{
+		[self.navigationController pushViewController:nextViewController animated:YES];
+	}
+	
+	[nextViewController release], nextViewController = nil;
+}
 
 
 #pragma mark -
@@ -700,8 +734,8 @@
 		// Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
 		// For example: self.myOutlet = nil;
 	self.headerView = nil;
-		//self.writeInLabel = nil;
 	self.searchBar = nil;
+	self.button = nil;
 	self.filteredListContent = nil;
 }
 
@@ -710,7 +744,7 @@
 {
 	[headerView_ release], headerView_ = nil;
 	[searchBar_ release], searchBar_ = nil;
-		//[writeInLabel_ release], writeInLabel_ = nil;
+	[button_ release], button_ = nil;
 	[observation_ release], observation_ = nil;
 	[species_ release], species_ = nil;
 	[lastIndexPath_ release], lastIndexPath_ = nil;
@@ -720,7 +754,7 @@
 	[fetchedResultsController_ release], fetchedResultsController_ = nil;
 	[filteredListContent_ release], filteredListContent_ = nil;
 	[savedSearchTerm_ release], savedSearchTerm_ = nil;
-    [self.observationEntryVC release]; self.observationEntryVC = nil;
+	[self.observationEntryVC release]; self.observationEntryVC = nil;
 	
 	[super dealloc];
 }

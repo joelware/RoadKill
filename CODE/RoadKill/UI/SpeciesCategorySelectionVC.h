@@ -8,21 +8,24 @@
 
 	//#import are found in the Prefix file
 
+@class Observation;
 @class SpeciesCategory;
 
 @interface SpeciesCategorySelectionVC : UITableViewController <NSFetchedResultsControllerDelegate>
 {
+	Observation *observation_;
 	SpeciesCategory *category_;
-
+	
 	NSIndexPath * lastIndexPath_;
 	NSString *selectedCategoryString_;
 	
     UIViewController *observationEntryVC;
 
 	NSManagedObjectContext *managedObjectContext_;
-	NSFetchedResultsController *fetchedResultsController_;
+	NSFetchedResultsController *fetchedResultsController_;		
 }
 
+@property (nonatomic, retain) Observation *observation;
 @property (nonatomic, retain) SpeciesCategory *category;
 @property (nonatomic, retain) NSIndexPath * lastIndexPath;
 @property (nonatomic, retain) NSString *selectedCategoryString;
@@ -32,4 +35,7 @@
 
 - (void)setReturnToVC:(UIViewController *) viewController;
 
+
 @end
+
+

@@ -9,19 +9,30 @@
 	//#import are found in the Prefix file
 
 
-@class Observation;
+	//@class Observation;
 
 
-@interface RootViewController : UITableViewController 
+@interface RootViewController : UITableViewController <NSFetchedResultsControllerDelegate>
 {
-	Observation *testObservation_;
+		//Apple sample code tends to not use a managed object ivar in the rootViewController
+		//Observation *observation_;
+	UIView *headerView_; //for IB
+	
+	NSIndexPath * selectedSpeciesIndexPath_;
 	
 	NSFetchedResultsController *fetchedResultsController_;
     NSManagedObjectContext *managedObjectContext_;
 }
 
-@property (nonatomic, retain) Observation *testObservation;
+	//@property (nonatomic, retain) Observation *observation;
+@property (nonatomic, retain) IBOutlet UIView *headerView;
+@property (nonatomic, retain) NSIndexPath * selectedSpeciesIndexPath;
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
+
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+- (IBAction)addObservation:(id)sender;
+
+
 
 @end

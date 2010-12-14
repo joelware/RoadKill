@@ -21,10 +21,10 @@
 #define RKUserEntity @"User"
 
 // observation sent status
-#define kRKNotReady @"not ready"
-#define kRKReady @"ready"
-#define kRKQueued @"queued"
-#define kRKComplete @"complete"
+#define kRKNotReady @"Not ready"
+#define kRKReady @"Ready"
+#define kRKQueued @"Queued"
+#define kRKComplete @"Complete"
 
 //observation confidence levels
 #define kRK100PercentCertain @"100% Certain"

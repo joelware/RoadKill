@@ -46,17 +46,22 @@ NSString *RKIsFirstLaunchKey = @"isFirstLaunch";
     }
     return self;
 }
-
+/*
 - (void)awakeFromNib {    
+ 
+ //put this in didFinishLaunchingWithOptions: instead
  
     RootViewController *rootViewController = (RootViewController *)[navigationController topViewController];
     rootViewController.managedObjectContext = self.managedObjectContext;
 }
-
+*/
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     
     // Override point for customization after application launch.
+	
+	RootViewController *rootViewController = (RootViewController *)[navigationController topViewController];
+    rootViewController.managedObjectContext = self.managedObjectContext;
 
     // Add the navigation controller's view to the window and display.
     [window addSubview:navigationController.view];
@@ -73,12 +78,16 @@ NSString *RKIsFirstLaunchKey = @"isFirstLaunch";
 											   object:nil];
 	[[NSUserDefaults standardUserDefaults] setBool:NO
 											forKey:RKIsFirstLaunchKey];
-											
-    UIViewController *entryVC = [[ObservationEntryController alloc] initWithNibName:@"ObservationEntryController" 
-                                                                             bundle:nil];
-    [navigationController pushViewController:entryVC animated:YES];
-	[entryVC release]; entryVC = nil;
-                                                                          
+	
+	/*	
+	 //temporarily during testing, not using Gerard's VC
+	 
+	 UIViewController *entryVC = [[ObservationEntryController alloc] initWithNibName:@"ObservationEntryController" 
+	 bundle:nil];
+	 [navigationController pushViewController:entryVC animated:YES];
+	 [entryVC release]; entryVC = nil;
+     */ 
+                                                                    
     return YES;
 }
 
