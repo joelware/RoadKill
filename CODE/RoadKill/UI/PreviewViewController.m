@@ -228,82 +228,109 @@
 	
 	switch (indexPath.row) 
 	{
-		case 0: 
+		case 0: //this is the date row
 		{
-				//this is the date field
-			self.nextViewController = [[PickerViewController alloc] initWithNibName:@"PickerViewController" bundle:nil];
+			PickerViewController *theController = [[PickerViewController alloc] initWithNibName:@"PickerViewController" bundle:nil];
+
 				//pass the observation
-			((PickerViewController *)nextViewController_).observation = self.observation;
-				//and the MOC 
-			((PickerViewController *)nextViewController_).managedObjectContext = self.managedObjectContext;
-			((PickerViewController *)nextViewController_).editingDate = YES;
-			((PickerViewController *)nextViewController_).editingTimeOfImpact = NO;
-			((PickerViewController *)nextViewController_).editingTravelInfo = NO;
+			theController.observation = self.observation;
+				//pass the MOC 
+			theController.managedObjectContext = self.managedObjectContext;
+			theController.editingDate = YES;
+			theController.editingTimeOfImpact = NO;
+			theController.editingTravelInfo = NO;
+			
+			self.nextViewController = theController;
+
+			[theController release];
 		}
 			break;
-		case 1:
+		case 1:	//this is the location row
 		{
-				//this is the location field
 				//TODO: add location code
 			[tableView deselectRowAtIndexPath:indexPath animated:YES];
 			RKLog(@"LOCATION CODE NEEDS TO BE ADDED");
 			return;
 		}
 			break;
-		case 2:
+		case 2:	//this is the species category row
 		{
-				//this is the species category field
-			self.nextViewController = [[SpeciesCategorySelectionVC alloc] initWithStyle:UITableViewStyleGrouped];
+			SpeciesCategorySelectionVC *theController = [[SpeciesCategorySelectionVC alloc] initWithStyle:UITableViewStyleGrouped];
+			
 				//pass the observation: SpeciesCategorySelectionVC doesn't change the observation, it only selects a selectedCategoryString and passes it to SpeciesSelectionVC. But it needs the observation so it can pass it on to SpeciesSelectionVC?
-			((SpeciesCategorySelectionVC *)nextViewController_).observation = self.observation;
-			((SpeciesCategorySelectionVC *)nextViewController_).managedObjectContext = self.managedObjectContext;
+			theController.observation = self.observation;
+				//pass the MOC 
+			theController.managedObjectContext = self.managedObjectContext;
 				//pass the category name back to the VC so it can put a checkmark by the name
-			((SpeciesCategorySelectionVC *)nextViewController_).selectedCategoryString = self.observation.species.speciesCategory.name;
+			theController.selectedCategoryString = self.observation.species.speciesCategory.name;
+			
+			self.nextViewController = theController;
+			
+			[theController release];
 		}
 			break;
-		case 3:
+		case 3:	//this is the species row
 		{	
-				//if there's no species yet, pass them the category so they can start there
+				//but if there's no species yet, pass them the category so they can start there instead
 			if (!self.observation.species) 
 			{
-				self.nextViewController = [[SpeciesCategorySelectionVC alloc] initWithStyle:UITableViewStyleGrouped];
+				SpeciesCategorySelectionVC *theController = [[SpeciesCategorySelectionVC alloc] initWithStyle:UITableViewStyleGrouped];
+
 					//pass the observation
-				((SpeciesCategorySelectionVC *)nextViewController_).observation = self.observation;
-				((SpeciesCategorySelectionVC *)nextViewController_).managedObjectContext = self.managedObjectContext;
+				theController.observation = self.observation;
+					//pass the MOC 
+				theController.managedObjectContext = self.managedObjectContext;
+				
+				self.nextViewController = theController;
+
+				[theController release];
 			}
 			else 
 			{
-					//this is the species field
-				self.nextViewController = [[SpeciesSelectionVC alloc] initWithNibName:@"SpeciesSelectionVC" bundle:nil];
+				SpeciesSelectionVC *theController = [[SpeciesSelectionVC alloc] initWithNibName:@"SpeciesSelectionVC" bundle:nil];
+
 					//pass the observation
-				((SpeciesSelectionVC *)nextViewController_).observation = self.observation;
-				((SpeciesSelectionVC *)nextViewController_).managedObjectContext = self.managedObjectContext;
-				((SpeciesSelectionVC *)nextViewController_).selectedCategoryString = self.observation.species.speciesCategory.name;
-				((SpeciesSelectionVC *)nextViewController_).selectedSpeciesString = self.observation.species.commonName;
+				theController.observation = self.observation;
+					//pass the MOC 
+				theController.managedObjectContext = self.managedObjectContext;
+				theController.selectedCategoryString = self.observation.species.speciesCategory.name;
+				theController.selectedSpeciesString = self.observation.species.commonName;
 				
 					//send the indexPath so the species view will scroll to the species row
-				((SpeciesSelectionVC *)nextViewController_).lastIndexPath = self.selectedSpeciesIndexPath;
+				theController.lastIndexPath = self.selectedSpeciesIndexPath;
+				
+				self.nextViewController = theController;
+
+				[theController release];
 			}
 		}
 			break;
-		case 4:
+		case 4:	//this is the free text row
 		{	
-				//this is the free text field
-			self.nextViewController = [[SpeciesWriteInVC alloc] initWithStyle:UITableViewStyleGrouped];
+			SpeciesWriteInVC *theController = [[SpeciesWriteInVC alloc] initWithStyle:UITableViewStyleGrouped];
+
 				//pass the observation
-			((SpeciesWriteInVC *)nextViewController_).observation = self.observation;
-			((SpeciesWriteInVC *)nextViewController_).managedObjectContext = self.managedObjectContext;
+			theController.observation = self.observation;
+				//pass the MOC 
+			theController.managedObjectContext = self.managedObjectContext;
+			
+			self.nextViewController = theController;
+
+			[theController release];
 		}
 			break;
-		case 5:
+		case 5:	//this is the date since impact row
 		{	
-				//this is the date since impact field
-			self.nextViewController = [[PickerViewController alloc] initWithNibName:@"PickerViewController" bundle:nil];
-			((PickerViewController *)nextViewController_).observation = self.observation;
-			((PickerViewController *)nextViewController_).managedObjectContext = self.managedObjectContext;
-			((PickerViewController *)nextViewController_).editingDate = NO;
-			((PickerViewController *)nextViewController_).editingTimeOfImpact = YES;
-			((PickerViewController *)nextViewController_).editingTravelInfo = NO;
+			PickerViewController *theController = [[PickerViewController alloc] initWithNibName:@"PickerViewController" bundle:nil];
+			theController.observation = self.observation;
+			theController.managedObjectContext = self.managedObjectContext;
+			theController.editingDate = NO;
+			theController.editingTimeOfImpact = YES;
+			theController.editingTravelInfo = NO;
+			
+			self.nextViewController = theController;
+
+			[theController release];
 		}
 			break;
 	}

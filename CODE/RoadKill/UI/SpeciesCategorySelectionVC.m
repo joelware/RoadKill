@@ -158,7 +158,7 @@
 		//Is it *only* necessary to save the selectedCategoryString (done further down here) because that's what's passed to SpeciesSelectionVC?
 	
 		//selectedObject = [[self fetchedResultsController] objectAtIndexPath:indexPath];		
-	selectedObject = (SpeciesCategory *) [[self fetchedResultsController] objectAtIndexPath:indexPath];	
+		selectedObject = (SpeciesCategory *) [[self fetchedResultsController] objectAtIndexPath:indexPath];	
 	
 	self.category = selectedObject;
 	
