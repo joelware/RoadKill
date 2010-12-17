@@ -257,22 +257,19 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath 
 {	
-		//TODO: find out: ARE BOTH FREE-TEXT *AND* SPECIES ALLOWED? I think so.....
-		//this question is also in a TODO comment in RootViewController's configureCell:
-	
 		// See also Apress Beginning iPhone 3 Chapter 9 - Project 09 Nav: see CheckListController files
 	
 	self.species = nil;
 	
 	if (self.searchWasActive)
 	{
-		self.species = [self.filteredListContent objectAtIndex:indexPath.row];
+		self.species = (Species *)[self.filteredListContent objectAtIndex:indexPath.row];
+			//self.species = [self.filteredListContent objectAtIndex:indexPath.row];
 	}
 	else
 	{
-		self.species = [self.fetchedResultsController objectAtIndexPath:indexPath];
-			//TODO: when do I need to do typing? 
-			//self.species = (Species *) [self.fetchedResultsController objectAtIndexPath:indexPath];
+		self.species = (Species *)[self.fetchedResultsController objectAtIndexPath:indexPath];
+			//self.species = [self.fetchedResultsController objectAtIndexPath:indexPath];
 	}
 	
 	cell.textLabel.text = [self.species valueForKey:@"commonName"];
@@ -361,9 +358,8 @@
 	if (tableView == self.searchDisplayController.searchResultsTableView)
 			//if (self.searchWasActive)
 	{
-		selectedObject = [[self filteredListContent] objectAtIndex:[indexPath row]];
-			//TODO: when do I need to do typing? 
-			//selectedObject = (Species *) [[self filteredListContent] objectAtIndex:[indexPath row]];
+			//selectedObject = [[self filteredListContent] objectAtIndex:[indexPath row]];
+		selectedObject = (Species *) [[self filteredListContent] objectAtIndex:[indexPath row]];
 		
 			//http://www.iphonedevsdk.com/forum/iphone-sdk-development/41522-searchdisplaycontroller-hide-results.html
 			//use the next line to deactivate or cancel search automatically after selecting a row from the filtered selections
@@ -376,9 +372,8 @@
 	}
 	else
 	{
-		selectedObject = [[self fetchedResultsController] objectAtIndexPath:indexPath];	
-			//TODO: when do I need to do typing? 
-			//selectedObject = (Species *) [[self fetchedResultsController] objectAtIndexPath:indexPath];
+			//selectedObject = [[self fetchedResultsController] objectAtIndexPath:indexPath];	
+		selectedObject = (Species *) [[self fetchedResultsController] objectAtIndexPath:indexPath];
 	}
 	
 		// Be sure the list is exclusive

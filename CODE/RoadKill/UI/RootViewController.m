@@ -181,9 +181,6 @@
 	
 	cell.textLabel.text = [dateFormatter stringFromDate:observation.observationTimestamp];
 	
-		//TODO: find out - both freeText and species name are allowed? It's not one or the other?
-		//this question is also in a TODO comment in SpeciesSelectionVC's configureCell:
-	
 		//this displays only the species name
 		//cell.detailTextLabel.text = observation.species.commonName;
 	
