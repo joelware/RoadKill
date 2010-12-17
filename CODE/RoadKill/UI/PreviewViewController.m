@@ -415,7 +415,9 @@
 
 
 - (void)dealloc 
-{
+{	
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+
 	[headerView_ release], headerView_ = nil;
 	[footerView_ release], footerView_ = nil;
 	[observation_ release], observation_ = nil;
