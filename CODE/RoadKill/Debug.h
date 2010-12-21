@@ -33,7 +33,7 @@
 
 /* debugging statements */
 
-#define DEBUG(cntl,stmt)     #ifdef cntl  stmt  #endif
+#define DLOG(cntl,stmt)     #ifdef cntl  stmt  #endif
 
 
 #endif
@@ -41,7 +41,7 @@
 
 #else  
 
-#define DEBUG(cntl,stmt) 
+#define DLOG(cntl,stmt) 
 
 
 #endif
