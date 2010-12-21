@@ -140,6 +140,7 @@
 		2B9327BC126568FE00BADFA7 /* Observation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Observation.m; sourceTree = "<group>"; };
 		7B0FE26412820339009AED15 /* ObservationEntryController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ObservationEntryController.xib; path = Resources/ObservationEntryController.xib; sourceTree = "<group>"; };
 		7B0FE28512820403009AED15 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Resources/Default.png; sourceTree = "<group>"; };
+		7B381FDF12AF409800469823 /* Debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Debug.h; sourceTree = "<group>"; };
 		7B3CE08312A616EE0010D821 /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraViewController.h; path = UI/CameraViewController.h; sourceTree = "<group>"; };
 		7B3CE08412A616EE0010D821 /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CameraViewController.m; path = UI/CameraViewController.m; sourceTree = "<group>"; };
 		7B3CE08512A616EE0010D821 /* EditableTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditableTableViewCell.h; path = UI/EditableTableViewCell.h; sourceTree = "<group>"; };
@@ -156,7 +157,6 @@
 		7B3CE09012A616EE0010D821 /* SpeciesSelectionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpeciesSelectionVC.m; path = UI/SpeciesSelectionVC.m; sourceTree = "<group>"; };
 		7B3CE09112A616EE0010D821 /* SpeciesWriteInVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpeciesWriteInVC.h; path = UI/SpeciesWriteInVC.h; sourceTree = "<group>"; };
 		7B3CE09212A616EE0010D821 /* SpeciesWriteInVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpeciesWriteInVC.m; path = UI/SpeciesWriteInVC.m; sourceTree = "<group>"; };
-		7B381FDF12AF409800469823 /* Debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Debug.h; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* RoadKill-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RoadKill-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		8D88C7B5127F5D8B002A7029 /* ExistingReportsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExistingReportsVC.h; sourceTree = "<group>"; };
 		8D88C7B6127F5D8B002A7029 /* ExistingReportsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExistingReportsVC.m; sourceTree = "<group>"; };
@@ -690,7 +690,10 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				OTHER_CFLAGS = "-D__IPHONE_OS_VERSION_MIN_REQUIRED=040100";
+				OTHER_CFLAGS = (
+					"-DDEBUG",
+					"-D__IPHONE_OS_VERSION_MIN_REQUIRED=040100",
+				);
 				PREBINDING = NO;
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos4.1;

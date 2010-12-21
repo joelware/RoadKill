@@ -21,11 +21,11 @@
     all the different modules. 
 *********************************************************/
 
-#define  CALLS                    1
+#define  CALLS                    0
 #define  MESG                     0
 
 
-#define UI                        0
+#define  UIDEV                    1
 
 
 
@@ -33,7 +33,7 @@
 
 /* debugging statements */
 
-#define DEBUG(cntl,stmt)     #ifdef cntl  stmt  #endif
+#define DLOG(cntl,stmt...)    if (cntl == 1) { stmt; }
 
 
 #endif
@@ -41,7 +41,7 @@
 
 #else  
 
-#define DEBUG(cntl,stmt) 
+#define DLOG(cntl,stmt...) 
 
 
 #endif

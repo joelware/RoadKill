@@ -160,6 +160,8 @@
 
 
 - (IBAction) doSpecies:(id)sender {
+    NSLog(@"vals %d %d", UIDEV, CALLS);
+    DLOG(UIDEV&&CALLS,LogMethod());
     UIViewController *speciesCategorySelectionVC = [[SpeciesCategorySelectionVC alloc] initWithStyle:UITableViewStyleGrouped];
     [speciesCategorySelectionVC setReturnToVC:self];
     [self.navigationController pushViewController:speciesCategorySelectionVC animated:YES];
