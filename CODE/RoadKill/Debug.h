@@ -26,21 +26,21 @@
     
     
         #define UI                        0
-    
+        #define WEBTRANS                  1
     
     
     
     
         /* debugging statements */
-        #define DLOG(cntl,args...)   if (cntl == 1) { RKLog(args) } 
-        #define DLogMethod(cntl)     if (cntl == 1) { LogMethod() }
+        #define DRKLog(cntl,args...)  if (cntl == 1) { RKLog(args); } 
+        #define DLogMethod(cntl)      if (cntl == 1) { LogMethod(); }
     
     #endif
 
 
 #else  
 
-    #define DLOG(cntl,args...)
+    #define DRKLog(cntl,args...)
     #define DLogMethod(cntl)
 
 #endif
