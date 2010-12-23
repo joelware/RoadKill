@@ -73,5 +73,6 @@
 	// per Dave Waetjen's request 1 November:
 	self.latitude = [NSNumber numberWithDouble:38.];
 	self.longitude = [NSNumber numberWithDouble:-120.];
+
 }
 @end
