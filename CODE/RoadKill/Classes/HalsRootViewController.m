@@ -215,6 +215,7 @@
      */
 	
 	CameraViewController* detailViewController = [[CameraViewController alloc]init];
+	detailViewController.observation=obs;
 	[self.navigationController pushViewController:detailViewController animated:YES];
 	[detailViewController release];
 	

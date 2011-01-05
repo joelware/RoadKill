@@ -10,7 +10,7 @@
 
 
 @implementation CameraViewController
-@synthesize imagePickerController,myButton;
+@synthesize imagePickerController,myButton,observation;
 
 
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -95,13 +95,21 @@
 #pragma mark -
 #pragma mark UIImagePickerControllerDelegate
 
-// this get called when an image has been chosen from the library or taken from the camera
+// this gets called when an image has been chosen from the library or taken from the camera
 //
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-	NSLog(@"Got image %@", image);
 	
+	Photo * photo = (Photo*)[NSEntityDescription insertNewObjectForEntityForName:RKPhotoEntity
+								  inManagedObjectContext:[observation managedObjectContext]];
+	
+	photo.image=image;
+	NSLog(@"Photos size %d",[self.observation.photos count]);
+
+	[self.observation addPhotosObject:photo];
+	
+	NSLog(@"Photos size %d",[self.observation.photos count]);
 	// wow, you can't animate this
 	// http://stackoverflow.com/questions/1298893/calling-poptorootviewcontrolleranimated-after-uiimagepicker-finish-or-cancel-ip
 	

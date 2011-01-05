@@ -19,6 +19,7 @@
 #define RKSpeciesCategoryEntity @"SpeciesCategory"
 #define RKStateEntity @"State"
 #define RKUserEntity @"User"
+#define RKPhotoEntity @"Photo"
 
 // observation sent status
 #define kRKNotReady @"not ready"
