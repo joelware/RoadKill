@@ -237,15 +237,6 @@
 					<int key="connectionID">19</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">doSpecies:</string>
-						<reference key="source" ref="551409630"/>
-						<reference key="destination" ref="372490531"/>
-						<int key="IBEventType">7</int>
-					</object>
-					<int key="connectionID">20</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">speciesButton</string>
 						<reference key="source" ref="372490531"/>
@@ -261,6 +252,15 @@
 						<int key="IBEventType">7</int>
 					</object>
 					<int key="connectionID">22</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">doSpeciesSelection:</string>
+						<reference key="source" ref="551409630"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">23</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -386,7 +386,7 @@
 					<object class="NSAffineTransform">
 						<bytes key="NSTransformStruct">P4AAAL+AAABDTQAAw8QAAA</bytes>
 					</object>
-					<string>{{474, 458}, {320, 480}}</string>
+					<string>{{118, 425}, {320, 480}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<object class="NSAffineTransform">
@@ -410,7 +410,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">22</int>
+			<int key="maxID">23</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -424,7 +424,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>doCamera:</string>
 							<string>doDone:</string>
-							<string>doSpecies:</string>
+							<string>doSpeciesSelection:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -439,7 +439,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>doCamera:</string>
 							<string>doDone:</string>
-							<string>doSpecies:</string>
+							<string>doSpeciesSelection:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -452,7 +452,7 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">doSpecies:</string>
+								<string key="name">doSpeciesSelection:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 						</object>

@@ -11,6 +11,8 @@
 #import "RoadKillAppDelegate.h"
 #import "SpeciesCategory.h"
 #import "SpeciesSelectionVC.h"
+#import "UIViewController+NavShortCircuit.h"
+
 
 @interface SpeciesCategorySelectionVC ()
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
@@ -200,13 +202,16 @@
 			//RKLog(@"PASSED to the next view: %@", testVC.selectedCategoryString);
 			
 			// Set the view controller to return to
-        [newViewController setReturnToVC:self.observationEntryVC];
+        //[newViewController setReturnToVC:self.observationEntryVC];
 		
 		[self.navigationController pushViewController:newViewController animated:YES];
 	}	
 	[newViewController release];
 }
 
+- (UIViewController *) popToController {
+    return self;
+}
 
 #pragma mark -
 #pragma mark Accessors

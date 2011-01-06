@@ -15,7 +15,7 @@
 }
 
 
-- (IBAction) doSpecies:(id)sender;
+- (IBAction) doSpeciesSelection:(id)sender;
 - (IBAction) doCamera:(id)sender;
 - (IBAction) doDone:(id)sender;
 

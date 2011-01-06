@@ -21,8 +21,8 @@
     all the different modules. 
 *********************************************************/
 
-#define  CALLS                    0
-#define  MESG                     0
+#define  CALLS                    1
+#define  MESG                     1
 
 
 #define  UIDEV                    1

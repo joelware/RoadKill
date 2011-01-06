@@ -18,6 +18,7 @@
 #import "RootViewController.h"
 #import "SpeciesWriteInVC.h"
 #import "PreviewViewController.h"
+#import "UIViewController+NavShortCircuit.h"
 
 
 	//a category to prepare for the index table view style (using alphabetical headers and fast index scroller)
@@ -399,7 +400,10 @@
 	[self.tableView reloadData];
 	
 	// Pop to the observation entry controller
-    [self.navigationController popToViewController:self.observationEntryVC
+    RKLog(@"Trying to call popToController");
+    UIViewController *vc = [self popToController];
+    RKLog(@"vc = %@", vc);
+    [self.navigationController popToViewController:vc
                                           animated:YES];
     
     // Send notification of selection

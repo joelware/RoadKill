@@ -11,6 +11,7 @@
 #import "SpeciesCategorySelectionVC.h"
 #import "SpeciesSelectionVC.h"
 #import "CameraViewController.h"
+#import "UIViewController+NavShortCircuit.h"
 
 
 @implementation ObservationEntryController
@@ -159,11 +160,16 @@
 }
 
 
-- (IBAction) doSpecies:(id)sender {
-    NSLog(@"vals %d %d", UIDEV, CALLS);
+- (UIViewController *) popToController {
+    RKLog(@"ObservationEntryController");
+    return self;
+}
+
+
+- (IBAction) doSpeciesSelection:(id)sender {
     DLOG(UIDEV&&CALLS,LogMethod());
     UIViewController *speciesCategorySelectionVC = [[SpeciesCategorySelectionVC alloc] initWithStyle:UITableViewStyleGrouped];
-    [speciesCategorySelectionVC setReturnToVC:self];
+    //[speciesCategorySelectionVC setReturnToVC:self];
     [self.navigationController pushViewController:speciesCategorySelectionVC animated:YES];
     [speciesCategorySelectionVC release]; speciesCategorySelectionVC = nil;
     if (![[speciesButton titleForState:UIControlStateNormal] isEqualToString:@"Species"]) {
@@ -172,7 +178,7 @@
             TODO: Need to formalize how to inform SpeciesSelectionVC of a category
         */
         speciesSelectionVC.selectedCategoryString = @"Bird"; // hack!!!
-        [speciesCategorySelectionVC setReturnToVC:self];
+        //[speciesCategorySelectionVC setReturnToVC:self];
         [self.navigationController pushViewController:speciesSelectionVC
                                              animated:YES];
         [speciesSelectionVC release]; speciesSelectionVC = nil;

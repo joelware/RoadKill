@@ -69,6 +69,7 @@
 		7B3CE09812A616EE0010D821 /* SpeciesCategorySelectionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3CE08E12A616EE0010D821 /* SpeciesCategorySelectionVC.m */; };
 		7B3CE09912A616EE0010D821 /* SpeciesSelectionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3CE09012A616EE0010D821 /* SpeciesSelectionVC.m */; };
 		7B3CE09A12A616EE0010D821 /* SpeciesWriteInVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3CE09212A616EE0010D821 /* SpeciesWriteInVC.m */; };
+		7B8748CC12D451E700F6F5B0 /* UIViewController+NavShortCircuit.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B8748CB12D451E700F6F5B0 /* UIViewController+NavShortCircuit.m */; };
 		8D88C7B7127F5D8B002A7029 /* ExistingReportsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D88C7B6127F5D8B002A7029 /* ExistingReportsVC.m */; };
 		8D8FE372126BFA4700336686 /* Species.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8FE370126BFA4700336686 /* Species.m */; };
 		8D8FE4BE126D1A4600336686 /* SpeciesCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8FE4BD126D1A4600336686 /* SpeciesCategory.m */; };
@@ -157,6 +158,8 @@
 		7B3CE09012A616EE0010D821 /* SpeciesSelectionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpeciesSelectionVC.m; path = UI/SpeciesSelectionVC.m; sourceTree = "<group>"; };
 		7B3CE09112A616EE0010D821 /* SpeciesWriteInVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpeciesWriteInVC.h; path = UI/SpeciesWriteInVC.h; sourceTree = "<group>"; };
 		7B3CE09212A616EE0010D821 /* SpeciesWriteInVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpeciesWriteInVC.m; path = UI/SpeciesWriteInVC.m; sourceTree = "<group>"; };
+		7B8748CA12D451E700F6F5B0 /* UIViewController+NavShortCircuit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+NavShortCircuit.h"; path = "UI/UIViewController+NavShortCircuit.h"; sourceTree = "<group>"; };
+		7B8748CB12D451E700F6F5B0 /* UIViewController+NavShortCircuit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+NavShortCircuit.m"; path = "UI/UIViewController+NavShortCircuit.m"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* RoadKill-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RoadKill-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		8D88C7B5127F5D8B002A7029 /* ExistingReportsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExistingReportsVC.h; sourceTree = "<group>"; };
 		8D88C7B6127F5D8B002A7029 /* ExistingReportsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExistingReportsVC.m; sourceTree = "<group>"; };
@@ -398,6 +401,8 @@
 				7B3CE09012A616EE0010D821 /* SpeciesSelectionVC.m */,
 				7B3CE09112A616EE0010D821 /* SpeciesWriteInVC.h */,
 				7B3CE09212A616EE0010D821 /* SpeciesWriteInVC.m */,
+				7B8748CA12D451E700F6F5B0 /* UIViewController+NavShortCircuit.h */,
+				7B8748CB12D451E700F6F5B0 /* UIViewController+NavShortCircuit.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -547,6 +552,7 @@
 				7B3CE09812A616EE0010D821 /* SpeciesCategorySelectionVC.m in Sources */,
 				7B3CE09912A616EE0010D821 /* SpeciesSelectionVC.m in Sources */,
 				7B3CE09A12A616EE0010D821 /* SpeciesWriteInVC.m in Sources */,
+				7B8748CC12D451E700F6F5B0 /* UIViewController+NavShortCircuit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
