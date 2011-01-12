@@ -14,7 +14,7 @@
 
 - (UIViewController *) popToController {
     RKLog(@"popToController called: %@", [self description]);
-    UIViewController *vc = [[self parentViewController] popToController];
+    UIViewController *vc = [self.parentViewController popToController];
     return vc;
 }
 
