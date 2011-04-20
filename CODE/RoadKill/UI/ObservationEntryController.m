@@ -1,42 +1,31 @@
 //
-//  PreviewViewController.m
+//  ObservationEntryController.m
 //  RoadKill
 //
-//  Created by Pamela on 11/11/10.
+//  Created by Gerard Hickey on 11/2/10.
 //  Copyright 2010 Seattle RoadKill Team. All rights reserved.
 //
-//  based on Apple sample code, HeaderFooter
+
+#import "RKConstants.h"
+#import "ObservationEntryController.h"
+#import "SpeciesCategorySelectionVC.h"
+#import "SpeciesSelectionVC.h"
 
 
-#import "PreviewViewController.h"
-#import "Observation.h"
-#import "Species.h"
-
-
-@implementation PreviewViewController
-
-@synthesize headerView = headerView_, footerView = footerView_;
-@synthesize selectedSpeciesString = selectedSpeciesString_;
-@synthesize observation = observation_;
-@synthesize species = species_;
+@implementation ObservationEntryController
 
 
 #pragma mark -
 #pragma mark View lifecycle
 
-
-- (void)viewDidLoad 
-{
+/*
+- (void)viewDidLoad {
     [super viewDidLoad];
 
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-	self.navigationItem.title = @"Preview";
-
-	self.tableView.tableHeaderView = self.headerView;	
-	self.tableView.tableFooterView = self.footerView;
 }
-
+*/
 
 /*
 - (void)viewWillAppear:(BOOL)animated {
@@ -48,11 +37,11 @@
     [super viewDidAppear:animated];
 }
 */
-
+/*
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
 }
-
+*/
 /*
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
@@ -72,13 +61,12 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-    return 1;
+    return 3;
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-	//TODO: implement this
     return 5;
 }
 
@@ -153,24 +141,6 @@
 	 */
 }
 
-#pragma mark -
-#pragma mark Action methods
-
-- (IBAction)submitNow:(id)sender
-{
-	
-}
-
-- (IBAction)saveForLater:(id)sender
-{
-	
-}
-
-- (IBAction)addInfo:(id)sender
-{
-	
-}
-
 
 #pragma mark -
 #pragma mark Memory management
@@ -185,20 +155,38 @@
 - (void)viewDidUnload {
     // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
     // For example: self.myOutlet = nil;
-	self.headerView = nil;
-	self.footerView  = nil;
 }
 
 
-- (void)dealloc 
-{
-	[headerView_ release], headerView_ = nil;
-	[footerView_ release], footerView_ = nil;
-	[observation_ release], observation_ = nil;
-	[selectedSpeciesString_ release], selectedSpeciesString_ = nil;
-	[species_ release], species_ = nil;
+- (IBAction) doSpecies:(id)sender {
+    SpeciesCategorySelectionVC *speciesCategorySelectionVC = [[SpeciesCategorySelectionVC alloc] initWithStyle:UITableViewStyleGrouped];
+    [speciesCategorySelectionVC setReturnToVC:self];
+    [self.navigationController pushViewController:speciesCategorySelectionVC animated:YES];
+    [speciesCategorySelectionVC release]; speciesCategorySelectionVC = nil;
+    if (![[speciesButton titleForState:UIControlStateNormal] isEqualToString:@"Species"]) {
+        SpeciesSelectionVC *speciesSelectionVC = [[SpeciesSelectionVC alloc] initWithNibName:@"SpeciesSelectionVC" bundle:nil];
+        /*
+            TODO: Need to formalize how to inform SpeciesSelectionVC of a category
+        */
+        speciesSelectionVC.selectedCategoryString = @"Bird"; // hack!!!
+        [speciesCategorySelectionVC setReturnToVC:self];
+        [self.navigationController pushViewController:speciesSelectionVC
+                                             animated:YES];
+        [speciesSelectionVC release]; speciesSelectionVC = nil;
+    }
+    
+    
+}
+
+- (IBAction) doDone:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+- (void)dealloc {
     [super dealloc];
 }
+
 
 
 @end

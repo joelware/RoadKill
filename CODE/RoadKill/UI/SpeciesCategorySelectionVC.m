@@ -9,6 +9,8 @@
 #import "SpeciesCategorySelectionVC.h"
 #import "RKConstants.h"
 #import "RoadKillAppDelegate.h"
+#import "Observation.h"
+#import "Species.h"
 #import "SpeciesCategory.h"
 #import "SpeciesSelectionVC.h"
 
@@ -19,11 +21,12 @@
 
 @implementation SpeciesCategorySelectionVC
 
+@synthesize observation = observation_;
 @synthesize category = category_;
 @synthesize lastIndexPath = lastIndexPath_;
 @synthesize selectedCategoryString = selectedCategoryString_;
 @synthesize managedObjectContext = managedObjectContext_, fetchedResultsController=fetchedResultsController_;
-
+@synthesize observationEntryVC;
 
 #pragma mark -
 #pragma mark View lifecycle
@@ -38,10 +41,11 @@
 	self.navigationItem.title = @"Species Category";
 }
 
-
 /*
- - (void)viewWillAppear:(BOOL)animated {
+ - (void)viewWillAppear:(BOOL)animated 
+ {
  [super viewWillAppear:animated];
+ [self.tableView reloadData];
  }
  */
 /*
@@ -89,7 +93,8 @@
     static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
+    if (cell == nil) 
+	{
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     
@@ -99,6 +104,27 @@
     return cell;
 }
 
+#if 1
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath 
+{	
+	self.category = nil;
+	self.category = (SpeciesCategory *) [self.fetchedResultsController objectAtIndexPath:indexPath];
+	
+	cell.textLabel.text = [self.category valueForKey:@"name"];
+	cell.accessoryType = UITableViewCellAccessoryNone;
+	
+	if (self.selectedCategoryString != nil && self.selectedCategoryString == cell.textLabel.text) 
+	{
+		cell.accessoryType = UITableViewCellAccessoryCheckmark;
+	}
+	else 
+	{
+		cell.accessoryType = UITableViewCellAccessoryNone;
+	}
+}
+#endif
+#if 0
+	//this doesn't seem to be working - use the other one
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath 
 {	
 		//Apress Beginning iPhone 3 Chapter 9 - Project 09 Nav: see CheckListController files
@@ -110,50 +136,13 @@
 	self.category = (SpeciesCategory *) [self.fetchedResultsController objectAtIndexPath:indexPath];
 	
 	cell.textLabel.text = [self.category valueForKey:@"name"];
+	cell.accessoryType = UITableViewCellAccessoryNone;
 	
 	cell.accessoryType = (row == oldRow && self.lastIndexPath != nil) ? 
-    UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+	UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;	
+	
 }
-
-
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
- 
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
- }   
- else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }   
- }
- */
-
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
- }
- */
-
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
+#endif
 
 
 #pragma mark -
@@ -161,14 +150,25 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
-{		
+{	
+	SpeciesCategory *selectedObject = nil;
+	[tableView deselectRowAtIndexPath:indexPath animated:YES];	
+	
+		//TODO: is it not necessary to save the category?
+		//Is it *only* necessary to save the selectedCategoryString (done further down here) because that's what's passed to SpeciesSelectionVC?
+	
+		//selectedObject = [[self fetchedResultsController] objectAtIndexPath:indexPath];		
+		selectedObject = (SpeciesCategory *) [[self fetchedResultsController] objectAtIndexPath:indexPath];	
+	
+	self.category = selectedObject;
+	
 		//http://stackoverflow.com/questions/974170/uitableview-having-problems-changing-accessory-when-selected
 		//http://developer.apple.com/library/ios/#documentation/userexperience/conceptual/TableView_iPhone/ManageSelections/ManageSelections.html see listing 6-3  Managing a selection list—exclusive list
 		//Apress Beginning iPhone 3 Chapter 9 - Project 09 Nav: see CheckListController files
 	
 		//Be sure the list is exclusive
 	
-		//RKLog(@"BEFORE category selection: %@", self.selectedCategoryString);
+	RKLog(@"BEFORE category selection: %@", self.selectedCategoryString);
 	
 	int newRow = [indexPath row];
     int oldRow = (self.lastIndexPath != nil) ? [self.lastIndexPath row] : -1;
@@ -185,25 +185,64 @@
 	
 		//remember the category selected so the next view will filter for species members of that category
     UITableViewCell *selectedCell = [self.tableView cellForRowAtIndexPath:self.lastIndexPath];
+	
+		//set the string so it can be passed to Preview
     self.selectedCategoryString = selectedCell.textLabel.text;
 	
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+		//needed for checkmarks to be up to date
+	[self.tableView reloadData];
 	
-		//RKLog(@"AFTER category selection: %@", self.selectedCategoryString);
+	RKLog(@"AFTER category selection: %@", self.selectedCategoryString);
 	
-		//push the SpeciesSelectionVC when a category is selected
-	SpeciesSelectionVC *newViewController = [[SpeciesSelectionVC alloc] initWithNibName:@"SpeciesSelectionVC" bundle:nil];
-	if (newViewController) 
+	/*
+	 Save the managed object context when the row is tapped
+	 */
+	NSError *error = nil;
+	if (![managedObjectContext_ save:&error]) 
 	{
-			//pass the selection to the next view
-		newViewController.selectedCategoryString = self.selectedCategoryString;
-			//RKLog(@"PASSED to the next view: %@", testVC.selectedCategoryString);
 		
-		[self.navigationController pushViewController:newViewController animated:YES];
+		/*
+		 Replace this implementation with code to handle the error appropriately.
+		 
+		 abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
+		 */
+		RKLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		abort();
+	}
+	
+		//when a category is selected, create the SpeciesSelectionVC and get ready to push 
+	SpeciesSelectionVC *nextViewController = [[SpeciesSelectionVC alloc] initWithNibName:@"SpeciesSelectionVC" bundle:nil];
+	
+		//pass the MOC to the nextViewController
+	nextViewController.managedObjectContext = self.managedObjectContext;
+	
+		//pass the observation to the nextViewController
+	nextViewController.observation = self.observation;
+	
+		//pass the selectedCategoryString to the next view
+	nextViewController.selectedCategoryString = self.selectedCategoryString;
+	
+	if (nextViewController) 
+	{
+			//during testing, not using this right now
+			// Set the view controller to return to
+			// [newViewController setReturnToVC:self.observationEntryVC];
+		
+		[self.navigationController pushViewController:nextViewController animated:YES];
 	}	
-	[newViewController release];
+	[nextViewController release], nextViewController = nil;
+	
 }
 
+
+ #pragma mark -
+ #pragma mark Accessors
+ 
+ - (void)setReturnToVC:(UIViewController *) viewController {
+ self.observationEntryVC = viewController;
+ [self.observationEntryVC retain];
+ }
+ 
 
 #pragma mark -
 #pragma mark Fetched results controller
@@ -211,62 +250,57 @@
 
 - (NSFetchedResultsController *)fetchedResultsController 
 {	
-    if (fetchedResultsController_ != nil) 
+	if (fetchedResultsController_ != nil) 
 	{
-        return fetchedResultsController_;
-    }
-    
-    /*
-     Set up the fetched results controller.
-	 */
-	
-		//TODO: is this the best way to pass the MOC? Ideally I probably don't want to query the app delegate for the MOC?	
-	if (managedObjectContext_ == nil) 
-	{ 
-		self.managedObjectContext = [(RoadKillAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext]; 
+		return fetchedResultsController_;
 	}
 	
+	/*
+	 Set up the fetched results controller.
+	 */
+	
 		// Create the fetch request for the entity.
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-	NSEntityDescription *entity = [NSEntityDescription entityForName:RKSpeciesCategoryEntity inManagedObjectContext:self.managedObjectContext ];
-    [fetchRequest setEntity:entity];
-    
+	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+	NSEntityDescription *entity = [NSEntityDescription entityForName:RKSpeciesCategoryEntity 
+											  inManagedObjectContext:self.managedObjectContext ];
+	[fetchRequest setEntity:entity];
+	
 		// Set the batch size to a suitable number.
-    [fetchRequest setFetchBatchSize:20];
-    
+	[fetchRequest setFetchBatchSize:20];
+	
 		// Edit the sort key as appropriate.
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
-    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
-    
-    [fetchRequest setSortDescriptors:sortDescriptors];
-    
+	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+	
+	[fetchRequest setSortDescriptors:sortDescriptors];
+	
 		// Edit the section name key path and cache name if appropriate.
 		// nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest 
+	NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest 
 																								managedObjectContext:self.managedObjectContext  
 																								  sectionNameKeyPath:nil 
 																										   cacheName:@"Category"];
-    aFetchedResultsController.delegate = self;
-    self.fetchedResultsController = aFetchedResultsController;
+	aFetchedResultsController.delegate = self;
+	self.fetchedResultsController = aFetchedResultsController;
 	
 		//[aFetchedResultsController release], aFetchedResultsController = nil;
 	[aFetchedResultsController release];
-    [fetchRequest release];
-    [sortDescriptor release];
-    [sortDescriptors release];
+	[fetchRequest release];
+	[sortDescriptor release];
+	[sortDescriptors release];
 	
 	NSError *error = nil;
-    if (![fetchedResultsController_ performFetch:&error]) 
+	if (![fetchedResultsController_ performFetch:&error]) 
 	{
-        /*
-         Replace this implementation with code to handle the error appropriately.
-         
-         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
-         */
-        RKLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }
-    return fetchedResultsController_;
+		/*
+		 Replace this implementation with code to handle the error appropriately.
+		 
+		 abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
+		 */
+		RKLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		abort();
+	}
+	return fetchedResultsController_;
 }
 
 #pragma mark -
@@ -274,12 +308,12 @@
 
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
-    [self.tableView beginUpdates];
+	[self.tableView beginUpdates];
 }
 
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
-           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
+		   atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
     
     switch(type) {
         case NSFetchedResultsChangeInsert:
@@ -294,8 +328,8 @@
 
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
-       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
-      newIndexPath:(NSIndexPath *)newIndexPath {
+	   atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
+	  newIndexPath:(NSIndexPath *)newIndexPath {
     
     UITableView *tableView = self.tableView;
     
@@ -322,7 +356,7 @@
 
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-    [self.tableView endUpdates];
+	[self.tableView endUpdates];
 }
 
 
@@ -341,8 +375,8 @@
 
 - (void)didReceiveMemoryWarning {
 		// Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
+	[super didReceiveMemoryWarning];
+	
 		// Relinquish ownership any cached data, images, etc that aren't in use.
 }
 
@@ -354,13 +388,15 @@
 
 - (void)dealloc 
 {
+	[observation_ release], observation_ = nil;
 	[category_ release], category_ = nil;
 	[lastIndexPath_ release], lastIndexPath_ = nil;
 	[selectedCategoryString_ release], selectedCategoryString_ = nil;
 	[managedObjectContext_ release], managedObjectContext_ = nil;
 	[fetchedResultsController_ release], fetchedResultsController_ = nil;
+	[self.observationEntryVC release]; self.observationEntryVC = nil;
 	
-    [super dealloc];
+	[super dealloc];
 }
 
 
