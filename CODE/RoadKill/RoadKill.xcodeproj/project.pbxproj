@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,8 +11,8 @@
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
-		28860BE50F44EE6400985440 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28860BE40F44EE6400985440 /* CoreData.framework */; };
-		2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */; };
+		28860BE50F44EE6400985440 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28860BE40F44EE6400985440 /* CoreData.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		2899E5600DE3E45000AC0155 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E55F0DE3E45000AC0155 /* RootViewController.xib */; };
 		28AD73600D9D9599002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD735F0D9D9599002E5188 /* MainWindow.xib */; };
 		28C286E10D94DF7D0034E888 /* HalsRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C286E00D94DF7D0034E888 /* HalsRootViewController.m */; };
@@ -31,7 +31,7 @@
 		2B088D1312711EBB00ECC691 /* ASIHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B088CBA12711EBB00ECC691 /* ASIHTTPRequest.m */; };
 		2B088D1412711EBB00ECC691 /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B088CBC12711EBB00ECC691 /* ASINetworkQueue.m */; };
 		2B088D1512711EBB00ECC691 /* ASIDownloadCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B088CBE12711EBB00ECC691 /* ASIDownloadCache.m */; };
-		2B088D3F12711FF800ECC691 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B088D3E12711FF800ECC691 /* CFNetwork.framework */; };
+		2B088D3F12711FF800ECC691 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B088D3E12711FF800ECC691 /* CFNetwork.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		2B088D431271200400ECC691 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B088D421271200400ECC691 /* SystemConfiguration.framework */; };
 		2B088D471271200B00ECC691 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B088D461271200B00ECC691 /* MobileCoreServices.framework */; };
 		2B088D4B1271202200ECC691 /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B088D4A1271202200ECC691 /* libz.1.2.3.dylib */; };
@@ -59,20 +59,25 @@
 		2BA80DE112720FBA0071E8A3 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B088D461271200B00ECC691 /* MobileCoreServices.framework */; };
 		2BA80DE212720FBB0071E8A3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B088D421271200400ECC691 /* SystemConfiguration.framework */; };
 		2BA80DE512720FC90071E8A3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */; };
-		88BC05F4128A4D2D0021FDEB /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BC05F2128A4D2D0021FDEB /* CameraViewController.m */; };
-		8D88BBA6127CDDE1002A7029 /* SpeciesCategorySelectionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D88BBA5127CDDE1002A7029 /* SpeciesCategorySelectionVC.m */; };
-		8D88C14F127E2BB2002A7029 /* SpeciesSelectionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D88C14E127E2BB2002A7029 /* SpeciesSelectionVC.m */; };
-		8D88C682127F42BA002A7029 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D88C681127F42BA002A7029 /* RootViewController.m */; };
+		7B0FE26512820339009AED15 /* ObservationEntryController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7B0FE26412820339009AED15 /* ObservationEntryController.xib */; };
+		7B0FE28612820403009AED15 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B0FE28512820403009AED15 /* Default.png */; };
+		7B3CE09312A616EE0010D821 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3CE08412A616EE0010D821 /* CameraViewController.m */; };
+		7B3CE09412A616EE0010D821 /* EditableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3CE08612A616EE0010D821 /* EditableTableViewCell.m */; };
+		7B3CE09512A616EE0010D821 /* ObservationEntryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3CE08812A616EE0010D821 /* ObservationEntryController.m */; };
+		7B3CE09612A616EE0010D821 /* PreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3CE08A12A616EE0010D821 /* PreviewViewController.m */; };
+		7B3CE09712A616EE0010D821 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3CE08C12A616EE0010D821 /* RootViewController.m */; };
+		7B3CE09812A616EE0010D821 /* SpeciesCategorySelectionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3CE08E12A616EE0010D821 /* SpeciesCategorySelectionVC.m */; };
+		7B3CE09912A616EE0010D821 /* SpeciesSelectionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3CE09012A616EE0010D821 /* SpeciesSelectionVC.m */; };
+		7B3CE09A12A616EE0010D821 /* SpeciesWriteInVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3CE09212A616EE0010D821 /* SpeciesWriteInVC.m */; };
+		8D21738712AC49D300EDBC10 /* PickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D21738512AC49D300EDBC10 /* PickerViewController.m */; };
+		8D21738812AC49D300EDBC10 /* PickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D21738612AC49D300EDBC10 /* PickerViewController.xib */; };
 		8D88C7B7127F5D8B002A7029 /* ExistingReportsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D88C7B6127F5D8B002A7029 /* ExistingReportsVC.m */; };
 		8D8FE372126BFA4700336686 /* Species.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8FE370126BFA4700336686 /* Species.m */; };
 		8D8FE4BE126D1A4600336686 /* SpeciesCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8FE4BD126D1A4600336686 /* SpeciesCategory.m */; };
 		8DFEE4B0128A422300AEADFD /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFEE4AF128A422300AEADFD /* Photo.m */; };
 		8DFEE4C5128A44C500AEADFD /* UIImageToDataTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFEE4C4128A44C500AEADFD /* UIImageToDataTransformer.m */; };
 		8DFEEA75128CFE0800AEADFD /* SpeciesSelectionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DFEEA74128CFE0800AEADFD /* SpeciesSelectionVC.xib */; };
-		8DFEEAFE128D0F4000AEADFD /* SpeciesWriteInVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFEEAFD128D0F4000AEADFD /* SpeciesWriteInVC.m */; };
-		8DFEEB0E128D159900AEADFD /* EditableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFEEB0B128D159900AEADFD /* EditableTableViewCell.m */; };
 		8DFEEB0F128D159900AEADFD /* EditableTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DFEEB0C128D159900AEADFD /* EditableTableViewCell.xib */; };
-		8DFEEB51128D1A0700AEADFD /* PreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFEEB4F128D1A0700AEADFD /* PreviewViewController.m */; };
 		8DFEEB52128D1A0700AEADFD /* PreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DFEEB50128D1A0700AEADFD /* PreviewViewController.xib */; };
 		8DFEF81F12906C2C00AEADFD /* GenericContact.png in Resources */ = {isa = PBXBuildFile; fileRef = 8DFEF81E12906C2C00AEADFD /* GenericContact.png */; };
 /* End PBXBuildFile section */
@@ -135,15 +140,28 @@
 		2B790BA1125AA00F00EB101D /* RKCROSSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKCROSSession.m; sourceTree = "<group>"; };
 		2B9327BB126568FE00BADFA7 /* Observation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Observation.h; sourceTree = "<group>"; };
 		2B9327BC126568FE00BADFA7 /* Observation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Observation.m; sourceTree = "<group>"; };
-		88BC05F2128A4D2D0021FDEB /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
-		88BC05F3128A4D2D0021FDEB /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
+		7B0FE26412820339009AED15 /* ObservationEntryController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ObservationEntryController.xib; path = Resources/ObservationEntryController.xib; sourceTree = "<group>"; };
+		7B0FE28512820403009AED15 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Resources/Default.png; sourceTree = "<group>"; };
+		7B3CE08312A616EE0010D821 /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraViewController.h; path = UI/CameraViewController.h; sourceTree = "<group>"; };
+		7B3CE08412A616EE0010D821 /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CameraViewController.m; path = UI/CameraViewController.m; sourceTree = "<group>"; };
+		7B3CE08512A616EE0010D821 /* EditableTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditableTableViewCell.h; path = UI/EditableTableViewCell.h; sourceTree = "<group>"; };
+		7B3CE08612A616EE0010D821 /* EditableTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EditableTableViewCell.m; path = UI/EditableTableViewCell.m; sourceTree = "<group>"; };
+		7B3CE08712A616EE0010D821 /* ObservationEntryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObservationEntryController.h; path = UI/ObservationEntryController.h; sourceTree = "<group>"; };
+		7B3CE08812A616EE0010D821 /* ObservationEntryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObservationEntryController.m; path = UI/ObservationEntryController.m; sourceTree = "<group>"; };
+		7B3CE08912A616EE0010D821 /* PreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreviewViewController.h; path = UI/PreviewViewController.h; sourceTree = "<group>"; };
+		7B3CE08A12A616EE0010D821 /* PreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PreviewViewController.m; path = UI/PreviewViewController.m; sourceTree = "<group>"; };
+		7B3CE08B12A616EE0010D821 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootViewController.h; path = UI/RootViewController.h; sourceTree = "<group>"; };
+		7B3CE08C12A616EE0010D821 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootViewController.m; path = UI/RootViewController.m; sourceTree = "<group>"; };
+		7B3CE08D12A616EE0010D821 /* SpeciesCategorySelectionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpeciesCategorySelectionVC.h; path = UI/SpeciesCategorySelectionVC.h; sourceTree = "<group>"; };
+		7B3CE08E12A616EE0010D821 /* SpeciesCategorySelectionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpeciesCategorySelectionVC.m; path = UI/SpeciesCategorySelectionVC.m; sourceTree = "<group>"; };
+		7B3CE08F12A616EE0010D821 /* SpeciesSelectionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpeciesSelectionVC.h; path = UI/SpeciesSelectionVC.h; sourceTree = "<group>"; };
+		7B3CE09012A616EE0010D821 /* SpeciesSelectionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpeciesSelectionVC.m; path = UI/SpeciesSelectionVC.m; sourceTree = "<group>"; };
+		7B3CE09112A616EE0010D821 /* SpeciesWriteInVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpeciesWriteInVC.h; path = UI/SpeciesWriteInVC.h; sourceTree = "<group>"; };
+		7B3CE09212A616EE0010D821 /* SpeciesWriteInVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpeciesWriteInVC.m; path = UI/SpeciesWriteInVC.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* RoadKill-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RoadKill-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
-		8D88BBA4127CDDE1002A7029 /* SpeciesCategorySelectionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeciesCategorySelectionVC.h; sourceTree = "<group>"; };
-		8D88BBA5127CDDE1002A7029 /* SpeciesCategorySelectionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeciesCategorySelectionVC.m; sourceTree = "<group>"; };
-		8D88C14D127E2BB2002A7029 /* SpeciesSelectionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeciesSelectionVC.h; sourceTree = "<group>"; };
-		8D88C14E127E2BB2002A7029 /* SpeciesSelectionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeciesSelectionVC.m; sourceTree = "<group>"; };
-		8D88C680127F42BA002A7029 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
-		8D88C681127F42BA002A7029 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		8D21738412AC49D300EDBC10 /* PickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickerViewController.h; sourceTree = "<group>"; };
+		8D21738512AC49D300EDBC10 /* PickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickerViewController.m; sourceTree = "<group>"; };
+		8D21738612AC49D300EDBC10 /* PickerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PickerViewController.xib; sourceTree = "<group>"; };
 		8D88C7B5127F5D8B002A7029 /* ExistingReportsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExistingReportsVC.h; sourceTree = "<group>"; };
 		8D88C7B6127F5D8B002A7029 /* ExistingReportsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExistingReportsVC.m; sourceTree = "<group>"; };
 		8D8FE36F126BFA4700336686 /* Species.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Species.h; sourceTree = "<group>"; };
@@ -155,13 +173,7 @@
 		8DFEE4C3128A44C500AEADFD /* UIImageToDataTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageToDataTransformer.h; sourceTree = "<group>"; };
 		8DFEE4C4128A44C500AEADFD /* UIImageToDataTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageToDataTransformer.m; sourceTree = "<group>"; };
 		8DFEEA74128CFE0800AEADFD /* SpeciesSelectionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SpeciesSelectionVC.xib; sourceTree = "<group>"; };
-		8DFEEAFC128D0F4000AEADFD /* SpeciesWriteInVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeciesWriteInVC.h; sourceTree = "<group>"; };
-		8DFEEAFD128D0F4000AEADFD /* SpeciesWriteInVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeciesWriteInVC.m; sourceTree = "<group>"; };
-		8DFEEB0A128D159900AEADFD /* EditableTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditableTableViewCell.h; sourceTree = "<group>"; };
-		8DFEEB0B128D159900AEADFD /* EditableTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditableTableViewCell.m; sourceTree = "<group>"; };
 		8DFEEB0D128D159900AEADFD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/EditableTableViewCell.xib; sourceTree = "<group>"; };
-		8DFEEB4E128D1A0700AEADFD /* PreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewViewController.h; sourceTree = "<group>"; };
-		8DFEEB4F128D1A0700AEADFD /* PreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewViewController.m; sourceTree = "<group>"; };
 		8DFEEB50128D1A0700AEADFD /* PreviewViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = PreviewViewController.xib; path = Classes/PreviewViewController.xib; sourceTree = "<group>"; };
 		8DFEF81E12906C2C00AEADFD /* GenericContact.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GenericContact.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -201,26 +213,12 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				88BC05F2128A4D2D0021FDEB /* CameraViewController.m */,
-				88BC05F3128A4D2D0021FDEB /* CameraViewController.h */,
 				1D3623240D0F684500981E51 /* RoadKillAppDelegate.h */,
 				1D3623250D0F684500981E51 /* RoadKillAppDelegate.m */,
 				28C286DF0D94DF7D0034E888 /* HalsRootViewController.h */,
 				28C286E00D94DF7D0034E888 /* HalsRootViewController.m */,
-				8D88C680127F42BA002A7029 /* RootViewController.h */,
-				8D88C681127F42BA002A7029 /* RootViewController.m */,
-				8D88BBA4127CDDE1002A7029 /* SpeciesCategorySelectionVC.h */,
-				8D88BBA5127CDDE1002A7029 /* SpeciesCategorySelectionVC.m */,
-				8D88C14D127E2BB2002A7029 /* SpeciesSelectionVC.h */,
-				8D88C14E127E2BB2002A7029 /* SpeciesSelectionVC.m */,
-				8DFEEAFC128D0F4000AEADFD /* SpeciesWriteInVC.h */,
-				8DFEEAFD128D0F4000AEADFD /* SpeciesWriteInVC.m */,
-				8DFEEB0A128D159900AEADFD /* EditableTableViewCell.h */,
-				8DFEEB0B128D159900AEADFD /* EditableTableViewCell.m */,
 				8D88C7B5127F5D8B002A7029 /* ExistingReportsVC.h */,
 				8D88C7B6127F5D8B002A7029 /* ExistingReportsVC.m */,
-				8DFEEB4E128D1A0700AEADFD /* PreviewViewController.h */,
-				8DFEEB4F128D1A0700AEADFD /* PreviewViewController.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -237,6 +235,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				7B3CE05712A611800010D821 /* UI */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				2B9327E312656C8100BADFA7 /* Core Data */,
 				2B647342125A9F9300ED5161 /* Web Transactions */,
@@ -265,11 +264,14 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7B0FE28512820403009AED15 /* Default.png */,
+				7B0FE26412820339009AED15 /* ObservationEntryController.xib */,
 				2899E55F0DE3E45000AC0155 /* RootViewController.xib */,
 				28AD735F0D9D9599002E5188 /* MainWindow.xib */,
 				8DFEEA74128CFE0800AEADFD /* SpeciesSelectionVC.xib */,
 				8DFEEB0C128D159900AEADFD /* EditableTableViewCell.xib */,
 				8DFEEB50128D1A0700AEADFD /* PreviewViewController.xib */,
+				8D21738612AC49D300EDBC10 /* PickerViewController.xib */,
 				8D1107310486CEB800E47090 /* RoadKill-Info.plist */,
 				2B088E831271425B00ECC691 /* demoSkunk.jpg */,
 				8DFEF81E12906C2C00AEADFD /* GenericContact.png */,
@@ -381,6 +383,31 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
+		7B3CE05712A611800010D821 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				7B3CE08312A616EE0010D821 /* CameraViewController.h */,
+				7B3CE08412A616EE0010D821 /* CameraViewController.m */,
+				7B3CE08512A616EE0010D821 /* EditableTableViewCell.h */,
+				7B3CE08612A616EE0010D821 /* EditableTableViewCell.m */,
+				7B3CE08712A616EE0010D821 /* ObservationEntryController.h */,
+				7B3CE08812A616EE0010D821 /* ObservationEntryController.m */,
+				7B3CE08B12A616EE0010D821 /* RootViewController.h */,
+				7B3CE08C12A616EE0010D821 /* RootViewController.m */,
+				7B3CE08D12A616EE0010D821 /* SpeciesCategorySelectionVC.h */,
+				7B3CE08E12A616EE0010D821 /* SpeciesCategorySelectionVC.m */,
+				7B3CE08F12A616EE0010D821 /* SpeciesSelectionVC.h */,
+				7B3CE09012A616EE0010D821 /* SpeciesSelectionVC.m */,
+				7B3CE09112A616EE0010D821 /* SpeciesWriteInVC.h */,
+				7B3CE09212A616EE0010D821 /* SpeciesWriteInVC.m */,
+				7B3CE08912A616EE0010D821 /* PreviewViewController.h */,
+				7B3CE08A12A616EE0010D821 /* PreviewViewController.m */,
+				8D21738412AC49D300EDBC10 /* PickerViewController.h */,
+				8D21738512AC49D300EDBC10 /* PickerViewController.m */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -428,7 +455,7 @@
 				ORGANIZATIONNAME = "Seattle RoadKill Team";
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "RoadKill" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -458,10 +485,13 @@
 				2B244433125BE720005152E6 /* Icon.png in Resources */,
 				2B244434125BE720005152E6 /* Icon@2x.png in Resources */,
 				2B088E841271425B00ECC691 /* demoSkunk.jpg in Resources */,
+				7B0FE26512820339009AED15 /* ObservationEntryController.xib in Resources */,
+				7B0FE28612820403009AED15 /* Default.png in Resources */,
 				8DFEEA75128CFE0800AEADFD /* SpeciesSelectionVC.xib in Resources */,
 				8DFEEB0F128D159900AEADFD /* EditableTableViewCell.xib in Resources */,
 				8DFEEB52128D1A0700AEADFD /* PreviewViewController.xib in Resources */,
 				8DFEF81F12906C2C00AEADFD /* GenericContact.png in Resources */,
+				8D21738812AC49D300EDBC10 /* PickerViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -513,16 +543,18 @@
 				2B088CF612711EBB00ECC691 /* ASINetworkQueue.m in Sources */,
 				2B088CF712711EBB00ECC691 /* ASIDownloadCache.m in Sources */,
 				2B64215D1277A867005BFC0C /* CSVParser.m in Sources */,
-				8D88BBA6127CDDE1002A7029 /* SpeciesCategorySelectionVC.m in Sources */,
-				8D88C14F127E2BB2002A7029 /* SpeciesSelectionVC.m in Sources */,
-				8D88C682127F42BA002A7029 /* RootViewController.m in Sources */,
 				8D88C7B7127F5D8B002A7029 /* ExistingReportsVC.m in Sources */,
 				8DFEE4B0128A422300AEADFD /* Photo.m in Sources */,
 				8DFEE4C5128A44C500AEADFD /* UIImageToDataTransformer.m in Sources */,
-				88BC05F4128A4D2D0021FDEB /* CameraViewController.m in Sources */,
-				8DFEEAFE128D0F4000AEADFD /* SpeciesWriteInVC.m in Sources */,
-				8DFEEB0E128D159900AEADFD /* EditableTableViewCell.m in Sources */,
-				8DFEEB51128D1A0700AEADFD /* PreviewViewController.m in Sources */,
+				7B3CE09312A616EE0010D821 /* CameraViewController.m in Sources */,
+				7B3CE09412A616EE0010D821 /* EditableTableViewCell.m in Sources */,
+				7B3CE09512A616EE0010D821 /* ObservationEntryController.m in Sources */,
+				7B3CE09612A616EE0010D821 /* PreviewViewController.m in Sources */,
+				7B3CE09712A616EE0010D821 /* RootViewController.m in Sources */,
+				7B3CE09812A616EE0010D821 /* SpeciesCategorySelectionVC.m in Sources */,
+				7B3CE09912A616EE0010D821 /* SpeciesSelectionVC.m in Sources */,
+				7B3CE09A12A616EE0010D821 /* SpeciesWriteInVC.m in Sources */,
+				8D21738712AC49D300EDBC10 /* PickerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -666,10 +698,11 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0.2;
 				OTHER_CFLAGS = "-D__IPHONE_OS_VERSION_MIN_REQUIRED=040100";
 				PREBINDING = NO;
 				RUN_CLANG_STATIC_ANALYZER = YES;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Debug;
@@ -684,10 +717,11 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0.2;
 				OTHER_CFLAGS = "-D__IPHONE_OS_VERSION_MIN_REQUIRED=040100";
 				PREBINDING = NO;
 				RUN_CLANG_STATIC_ANALYZER = YES;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

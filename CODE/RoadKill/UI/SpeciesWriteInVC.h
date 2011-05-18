@@ -8,6 +8,7 @@
 
 	//#import are found in the Prefix file
 
+
 @class Observation;
 @class EditableTableViewCell;
 
@@ -17,7 +18,7 @@
 	Observation *observation_;
 	EditableTableViewCell *editableTableViewCell_;
 
-	NSManagedObjectContext *managedObjectContext_;
+	NSManagedObjectContext *managedObjectContext_;	
 }
 
 @property (nonatomic, retain) Observation *observation;
@@ -25,4 +26,10 @@
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 
 
+- (void)cancel:(id)sender;
+- (void)save:(id)sender;
+
+
 @end
+
+
