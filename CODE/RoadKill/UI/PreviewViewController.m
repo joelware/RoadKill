@@ -168,7 +168,7 @@
 			cell.detailTextLabel.text = self.observation.species.commonName;
 			break;	
 		case 4:
-			cell.textLabel.text = @"Free text";
+			cell.textLabel.text = @"Species Write-In";
 			cell.detailTextLabel.text = self.observation.freeText;
 			break;
 		case 5:
