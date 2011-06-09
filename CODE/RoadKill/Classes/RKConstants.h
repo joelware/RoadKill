@@ -41,6 +41,9 @@
 
 #define kNinetyDaysInSeconds 90.*24.*60.*60.
 
+// default location coordinates for testing purposes
+#define kDefaultLatitude     38.0
+#define kDefaultLongitude  -120.0
 
 // Notification message constants
 #define RKSpeciesSelectedNotification      @"RKSpeciesSelected"

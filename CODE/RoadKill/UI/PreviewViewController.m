@@ -17,6 +17,7 @@
 #import "SpeciesSelectionVC.h"
 #import "SpeciesCategorySelectionVC.h"
 #import "SpeciesWriteInVC.h"
+#import "LocatorViewController.h"
 #import "RKConstants.h"
 
 
@@ -153,9 +154,9 @@
 			break;
 		case 1:
 			cell.textLabel.text = @"Location";
-			cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %@", 
-										 self.observation.latitude, 
-										 self.observation.longitude];
+			cell.detailTextLabel.text = [NSString stringWithFormat:@"%.4f, %.4f", 
+										 [self.observation.latitude doubleValue], 
+										 [self.observation.longitude doubleValue]];
 			break;
 		case 2:
 			cell.textLabel.text = @"Category";
@@ -247,10 +248,14 @@
 			break;
 		case 1:	//this is the location row
 		{
-				//TODO: add location code
-			[tableView deselectRowAtIndexPath:indexPath animated:YES];
-			RKLog(@"LOCATION CODE NEEDS TO BE ADDED");
-			return;
+			LocatorViewController *theController = [[LocatorViewController alloc] initWithNibName:@"LocatorViewController" bundle:nil];
+
+			// pass the observation
+			theController.observation = self.observation;
+
+			self.nextViewController = theController;
+			
+			[theController release];
 		}
 			break;
 		case 2:	//this is the species category row

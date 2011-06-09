@@ -2,6 +2,7 @@
 build/
 joelware.*
 hickey.*
+JR.*
 *.pbxuser
 *.perspectivev3
 *~

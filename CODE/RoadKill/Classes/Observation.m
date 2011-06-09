@@ -49,8 +49,8 @@
 	self.observerName = @"Loudon Wainwright III";
 
 	// per Dave Waetjen's request 1 November:
-	self.latitude = [NSNumber numberWithDouble:38.];
-	self.longitude = [NSNumber numberWithDouble:-120.];
+	self.latitude = [NSNumber numberWithDouble:kDefaultLatitude];  //!!!: need to preserve these values if in test mode
+	self.longitude = [NSNumber numberWithDouble:kDefaultLongitude];
 }
 
 - (BOOL)isValidForSubmission
@@ -71,8 +71,8 @@
 {
 	self.sentStatus = kRKNotReady;
 	// per Dave Waetjen's request 1 November:
-	self.latitude = [NSNumber numberWithDouble:38.];
-	self.longitude = [NSNumber numberWithDouble:-120.];
+	self.latitude = [NSNumber numberWithDouble:kDefaultLatitude];
+	self.longitude = [NSNumber numberWithDouble:kDefaultLongitude];
 
 }
 @end
