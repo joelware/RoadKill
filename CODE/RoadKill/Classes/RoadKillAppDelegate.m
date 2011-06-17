@@ -25,17 +25,32 @@
 @synthesize navigationController;
 @synthesize activeWebTransactions;
 
-NSString *RKIsFirstLaunchKey = @"isFirstLaunch";
 
 #pragma mark -
 #pragma mark Application lifecycle
 
-- (void)initializeDefaults {
+- (void)initializeDefaults
+{
 	NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
-    
 	[defaultValues setValue:[NSNumber numberWithBool:YES] forKey:RKIsFirstLaunchKey];
-
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
+	
+	// Read default settings from Root.plist and register them with NSUserDefaults
+	NSString *path = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Settings.bundle/Root.plist"];
+	NSDictionary *plist = [NSDictionary dictionaryWithContentsOfFile:path];
+	NSMutableArray *prefsArray = [plist objectForKey:@"PreferenceSpecifiers"];
+	NSMutableDictionary *regDictionary = [NSMutableDictionary dictionary];
+	
+	for (NSDictionary *dict in prefsArray)
+	{
+		NSString *key = [dict objectForKey:@"Key"];
+		if (key)
+		{
+			id value = [dict objectForKey:@"DefaultValue"];
+			[regDictionary setObject:value forKey:key];
+		}
+	}
+	[[NSUserDefaults standardUserDefaults] registerDefaults:regDictionary];
 }	
 
 - (id)init
@@ -67,6 +82,12 @@ NSString *RKIsFirstLaunchKey = @"isFirstLaunch";
     [window addSubview:navigationController.view];
     [window makeKeyAndVisible];
 
+	// Register observer for user settings changes when the app is suspended
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(noteUserDefaultsDidChange:)
+												 name:NSUserDefaultsDidChangeNotification
+											   object:nil];
+	
 	[self populateInitialDatastoreIfNeeded];
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(noteDeactivatedTransaction:)
@@ -87,7 +108,7 @@ NSString *RKIsFirstLaunchKey = @"isFirstLaunch";
 	 [navigationController pushViewController:entryVC animated:YES];
 	 [entryVC release]; entryVC = nil;
      */ 
-                                                                    
+
     return YES;
 }
 
@@ -107,6 +128,8 @@ NSString *RKIsFirstLaunchKey = @"isFirstLaunch";
      */
 	[[NSUserDefaults standardUserDefaults] synchronize];
 
+	//TODO: shut down LocatorViewController stuff as necessary (for ex: [reverseGeocoder_ cancel])
+	
     NSError *error = nil;
     if (managedObjectContext_ != nil) {
         if ([managedObjectContext_ hasChanges] && ![managedObjectContext_ save:&error]) {
@@ -329,11 +352,24 @@ NSString *RKIsFirstLaunchKey = @"isFirstLaunch";
 	}
 }
 
+
 - (void)noteDeactivatedTransaction:(NSNotification *)notification
 {
 	LogMethod();
 	[self.activeWebTransactions removeObject:notification.object];
 }
+
+
+- (void)noteUserDefaultsDidChange:(NSNotification *)notification
+{
+	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+	
+	RKLog(@"\n=== user defaults changed:");
+	RKLog(@"Username  = %@", [userDefaults stringForKey:RKSettingsUsernameKey]);
+	RKLog(@"Password  = %@", [userDefaults stringForKey:RKSettingsPasswordKey]);
+	RKLog(@"TestMode  = %d", [userDefaults boolForKey:RKSettingsIsTestModeKey]);
+}
+
 
 - (void)dealloc {
     

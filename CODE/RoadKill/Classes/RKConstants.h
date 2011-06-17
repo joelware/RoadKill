@@ -8,10 +8,18 @@
 
 #define RKWebServer @"www.wildlifecrossing.net"
 
+// constants used for accessing application Settings
+#define RKIsFirstLaunchKey		@"isFirstLaunch"
+#define RKSettingsUsernameKey	@"username"
+#define RKSettingsPasswordKey	@"password"
+#define RKSettingsIsTestModeKey @"isTestMode"
+
 // test account
-#define RKTestUsername @"halmueller"
-#define RKCorrectTestPassword @"JhPs3rtYtU"
-#define RKFailingTestPassword @"xyzzy"
+//#define RKTestUsername @"halmueller"		  // note: now using Settings to store this, retrieve as follows:
+											  //    [[NSUserDefaults standardUserDefaults] stringForKey:RKSettingsUsernameKey]
+//#define RKCorrectTestPassword @"JhPs3rtYtU" // note: now using Settings to store this, retrieve as follows:
+											  //    [[NSUserDefaults standardUserDefaults] stringForKey:RKSettingsPasswordKey]
+//#define RKFailingTestPassword @"xyzzy"	  // note: this wasn't being used
 
 // Core Data entities
 #define RKObservationEntity @"Observation"
