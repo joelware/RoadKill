@@ -45,23 +45,9 @@
 	IBOutlet UIActivityIndicatorView *activityIndicator_;
 	IBOutlet UITextView *addressView_;
 	IBOutlet UIButton *showAddressButton_;
-	
-//TODO: move preferences/settings into main app
-//	// RoadKill ivars for demo of user settings
-//	NSString *host_web_url;
-//	NSString *user_name;
-//	NSString *user_password;
-//	bool delete_once_uploaded;
-//	bool debug_mode;
-//	bool test_data_mode;
 }
 
-
 @property (nonatomic, retain) Observation *observation;
-
-//@property (nonatomic, copy) NSString *host_web_url;
-//@property (nonatomic, copy) NSString *user_name;
-//@property (nonatomic, copy) NSString *user_password;
 
 
 - (IBAction)mapTypeChanged:(id)sender;

@@ -17,12 +17,6 @@
 
 @synthesize observation = observation_;
 
-//TODO: move preferences/settings into main app
-//@synthesize host_web_url;
-//@synthesize user_name;
-//@synthesize user_password;
-
-
 
 - (void)viewDidLoad
 {
@@ -43,10 +37,7 @@
 																				action:@selector(addPinAndSave)];
 	self.navigationItem.rightBarButtonItem = saveButton;
 	[saveButton release];
-	
-	//TODO: move preferences/settings into main app
-	//[self handleDefaultSettings];
-	
+
 	// create & configure the location manager object
 	locationManager_ = [[CLLocationManager alloc] init];
 	[locationManager_ setDelegate:self];	
@@ -189,9 +180,18 @@
 	[self addPinAtCenter:nil];
 	
 	CLLocationCoordinate2D coordinateToSave = [mapView_ centerCoordinate];
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:RKSettingsIsTestModeKey])
+	{
+		// make sure that we only send the default lat & long values to the server when in test mode!
+		//TODO: move this checking of test mode to submitNow: in PreviewViewController, once implemented
+		RKLog(@"note: saving default coordinates, as we're in test mode!");
+		coordinateToSave.latitude = kDefaultLatitude;
+		coordinateToSave.longitude = kDefaultLongitude;
+	}
+	
+	RKLog(@"saving: lat=%f, long=%f", coordinateToSave.latitude, coordinateToSave.longitude);
 	self.observation.latitude = [NSNumber numberWithDouble:coordinateToSave.latitude];
 	self.observation.longitude = [NSNumber numberWithDouble:coordinateToSave.longitude];
-	RKLog(@" * saving: lat=%f, long=%f", coordinateToSave.latitude, coordinateToSave.longitude);
 	
 	// pop back one view after a short delay so the user can see the pin drop
 	[self performSelector:@selector(popController) withObject:nil afterDelay:exitDelay];
@@ -213,15 +213,6 @@
 	[locationManager_ startUpdatingLocation];
 	[activityIndicator_ startAnimating];
 	[addressView_ setText:kAssistanceText];
-	
-//TODO: move preferences/settings into main app
-//	RKLog(@"\n===== RoadKill ivars =====");
-//	RKLog(@"host_web_url  = %@", host_web_url);
-//	RKLog(@"user_name     = %@", user_name);
-//	RKLog(@"user_password = %@", user_password);
-//	RKLog(@"delete_once_uploaded = %d", delete_once_uploaded);
-//	RKLog(@"debug_mode           = %d", debug_mode);
-//	RKLog(@"test_data_mode       = %d", test_data_mode);
 }
 
 
