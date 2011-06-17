@@ -58,8 +58,8 @@
 
 - (void)dontTestSessionAuthentication
 {
-	NSMutableURLRequest *request = [RKCROSSession authenticationRequestWithUsername:RKTestUsername
-																		   password:RKCorrectTestPassword];
+	NSMutableURLRequest *request = [RKCROSSession authenticationRequestWithUsername:[[NSUserDefaults standardUserDefaults] stringForKey:RKSettingsUsernameKey]
+																		   password:[[NSUserDefaults standardUserDefaults] stringForKey:RKSettingsPasswordKey]];
 	RKCROSSession *session = [[[RKCROSSession alloc] init] autorelease];
 	
 	NSHTTPURLResponse *response;
@@ -81,8 +81,8 @@
 
 - (void)testObtainFormToken
 {
-	NSMutableURLRequest *request = [RKCROSSession authenticationRequestWithUsername:RKTestUsername
-																		   password:RKCorrectTestPassword];
+	NSMutableURLRequest *request = [RKCROSSession authenticationRequestWithUsername:[[NSUserDefaults standardUserDefaults] stringForKey:RKSettingsUsernameKey]
+																		   password:[[NSUserDefaults standardUserDefaults] stringForKey:RKSettingsPasswordKey]];
 	RKCROSSession *session = [[[RKCROSSession alloc] init] autorelease];
 	
 	NSHTTPURLResponse *response;
