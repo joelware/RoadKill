@@ -203,8 +203,8 @@
 	else if ([obs isValidForSubmission]) {
 		[[(RoadKillAppDelegate *)[[UIApplication sharedApplication] delegate] activeWebTransactions]
 		 addObject:[RKCROSSession submissionForObservation:obs
-											  withUsername:RKTestUsername 
-												  password:RKCorrectTestPassword 
+											  withUsername:[[NSUserDefaults standardUserDefaults] stringForKey:RKSettingsUsernameKey]
+												  password:[[NSUserDefaults standardUserDefaults] stringForKey:RKSettingsPasswordKey]
 													 start:YES]];
 	}
 	

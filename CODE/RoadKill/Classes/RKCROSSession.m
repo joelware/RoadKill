@@ -244,8 +244,8 @@ NSString *RKCROSSessionFailedNotification = @"RKCROSSessionFailedNotification";
 	LogMethod();
 	self.isAsynchronous = async;
 	
-	self.asiHTTPRequest = [[self class] authenticationRequestWithUsername:RKTestUsername
-																 password:RKCorrectTestPassword];
+	self.asiHTTPRequest = [[self class] authenticationRequestWithUsername:[[NSUserDefaults standardUserDefaults] stringForKey:RKSettingsUsernameKey]
+																 password:[[NSUserDefaults standardUserDefaults] stringForKey:RKSettingsPasswordKey]];
 	self.sessionState = RKCROSSessionConnecting;
 	
 	if (self.isAsynchronous) {

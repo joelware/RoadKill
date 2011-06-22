@@ -34,9 +34,6 @@
 - (NSString *)applicationDocumentsDirectory;
 - (void)populateInitialDatastoreIfNeeded;
 
-// User Defaults
-
-extern NSString *RKIsFirstLaunchKey;
 
 @end
 
