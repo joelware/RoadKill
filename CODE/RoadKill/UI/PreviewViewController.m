@@ -19,6 +19,10 @@
 #import "SpeciesWriteInVC.h"
 #import "LocatorViewController.h"
 #import "RKConstants.h"
+	// jw4 inte
+#import "RoadKillAppDelegate.h"
+#import "RKCROSSession.h"
+	//
 
 
 @implementation PreviewViewController
@@ -353,8 +357,20 @@
 
 - (IBAction)submitNow:(id)sender
 {
-		//TODO: consider using validForUpdate: here? Or Observation's isValidForSubmission?
-	RKLog(@"CODE NEEDS TO BE WRITTEN");
+		//TODO: consider using validForUpdate: here? Or Observation's isValidForSubmission? (jw4 inte:done)
+	RKLog(@"submitNow: CODE TO SUBMIT OBSERVATION NOW RUNNING..");
+		// jw4 inte
+	if ([observation_ isValidForSubmission]) {
+		[[(RoadKillAppDelegate *)[[UIApplication sharedApplication] delegate] activeWebTransactions]
+		 addObject:[RKCROSSession submissionForObservation:observation_ 
+											  withUsername:[[NSUserDefaults standardUserDefaults] stringForKey:RKSettingsUsernameKey]
+												  password:[[NSUserDefaults standardUserDefaults] stringForKey:RKSettingsPasswordKey]
+													 start:YES]];
+	}
+		//pop back to the RootViewController if observation was submitted?
+		// fixme: need to mark it as submitted if it succeeds, and post an error dialog if it does not
+		//[self.navigationController popToRootViewControllerAnimated:YES];
+		//
 }
 
 - (void)determineStatus
@@ -397,7 +413,7 @@
 
 - (IBAction)addInfo:(id)sender
 {
-	RKLog(@"CODE NEEDS TO BE WRITTEN");
+	RKLog(@"addInfo: CODE NEEDS TO BE WRITTEN at addInfo:(id)sender");
 }
 
 

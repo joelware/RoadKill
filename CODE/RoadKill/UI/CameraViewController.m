@@ -35,23 +35,34 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	self.title=@"Camera";
+	 
+		// JW4 inte   (Hack? or feature?)
+		[self setupDismissButton];
 	
-	//UIImagePickerControllerSourceType sourceType=UIImagePickerControllerSourceTypeCamera;
+		// uncomment-NC ? Was this to force a camera to be present? Does not work.   JW4 inte
+		// UIImagePickerControllerSourceType sourceType=UIImagePickerControllerSourceTypeCamera;
 	
-	if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+		if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
     {
-		
+		// IF there is a camera available, then do the camera-specific code below      
+		// jw4 inte
 		self.imagePickerController.delegate = self;
 		self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
 	    [self presentModalViewController:self.imagePickerController animated:YES];
     }
-	else {
+		else 
+		{
 		self.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
 		self.imagePickerController.delegate = self;
 	    [self presentModalViewController:self.imagePickerController animated:YES];
 		
 	}
 
+		// jw4 inte
+		// get rid of extraneous white screen?
+		// [self.navigationController popViewControllerAnimated:YES];
+	
+	
 }
 
 /**  *************   TEST CODE DELETE EVENTUALLY ***********************/
@@ -60,17 +71,15 @@
 	CGRect rect = CGRectMake(50,300,200,80);
 	//	//UIButton *button = [[UIButton alloc] initWithFrame:rect];
 	//	
-	//	//myButton = [[UIButton buttonWithType:UIButtonTypeRoundedRect]retain] ;
+	// myButton = [[UIButton buttonWithType:UIButtonTypeRoundedRect]retain] ;
 	myButton = [[UIButton alloc]initWithFrame:rect];
-	[myButton setTitle:@"And a button" forState:UIControlStateNormal];
-	[myButton setTitle:@"Alert  " forState:UIControlEventTouchDown];
+	[myButton setTitle:@"Click to continue." forState:UIControlStateNormal];   // jw4
+	[myButton setTitle:@"CLICK!" forState:UIControlEventTouchDown];             // jw4
 	[myButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 	myButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
 	myButton.backgroundColor = [UIColor clearColor];
 	[myButton addTarget:self action:@selector(buttonAction) forControlEvents:UIControlEventTouchUpInside];
-	[self.view addSubview:myButton]; 
-	
-
+	[self.view addSubview:myButton];
 }
 
 -(void)buttonAction{
@@ -101,7 +110,7 @@
 {
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
 	
-	Photo * photo = (Photo*)[NSEntityDescription insertNewObjectForEntityForName:RKPhotoEntity
+	Photo *photo = (Photo*)[NSEntityDescription insertNewObjectForEntityForName:RKPhotoEntity
 								  inManagedObjectContext:[observation managedObjectContext]];
 	
 	photo.image=image;

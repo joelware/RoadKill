@@ -333,6 +333,15 @@
         abort();
     }
 	
+		// Take a photo  (JW4 inte)
+		
+	
+	CameraViewController* detailViewController = [[CameraViewController alloc]init];
+	detailViewController.observation=observation;
+	[self.navigationController pushViewController:detailViewController animated:YES];
+	[detailViewController release];
+	
+		//
 		//push to the Preview where data will be collected
 	
 	PreviewViewController *nextViewController = [[PreviewViewController alloc] initWithNibName:@"PreviewViewController" bundle:nil];

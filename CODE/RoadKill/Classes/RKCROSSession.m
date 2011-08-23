@@ -79,7 +79,7 @@ NSString *RKCROSSessionFailedNotification = @"RKCROSSessionFailedNotification";
 {
 	// FIXME: this submits only the bare minimum required form info
 	if (![self.observation isValidForSubmission]) {
-		RKLog(@"observation %@ not valid for submission");
+		RKLog(@"RKCROSSESSion:Observation %@ not valid for submission");
 		NSAssert(NO, @"observation not valid for submission");
 		return nil;
 	}
@@ -180,7 +180,7 @@ NSString *RKCROSSessionFailedNotification = @"RKCROSSessionFailedNotification";
 		self.formToken = theToken;
 		return YES;
 	}
-	RKLog(@"form token not found");
+	RKLog(@"RKCROSSESSion:Error:In extractFormTokenFromReceivedString, Form token not found in responseString.");
 	return NO;
 }
 
@@ -254,19 +254,19 @@ NSString *RKCROSSessionFailedNotification = @"RKCROSSessionFailedNotification";
 		return YES;
 	}
 	else {
-		RKLog(@"sending authentication request");
+		RKLog(@"RKCROSSESSion:Sending authentication request");
 		[self.asiHTTPRequest startSynchronous];
 		if (![self.asiHTTPRequest error]) {
 			self.sessionState = RKCROSSessionAuthenticated;
 			self.asiHTTPRequest = [self formTokenRequest];
-			RKLog(@"sending form token request");
+			RKLog(@"RKCROSSESSion:Sending form token request");
 			[self.asiHTTPRequest startSynchronous];
 			if (![self.asiHTTPRequest error]) {
 				if ([self extractFormTokenFromReceivedString]) {
 					self.sessionState = RKCROSSessionFormTokenObtained;
 					self.asiHTTPRequest = [self observationSubmissionRequest];
 					self.sessionState = RKCROSSessionObservationSubmitted;
-					RKLog(@"sending submission request");
+					RKLog(@"RKCROSSESSion:Sending submission request");
 					[self.asiHTTPRequest startSynchronous];
 					if (![self.asiHTTPRequest error]) {
 						NSString *theObservationID = [self observationIDFromResponseHeaders:self.asiHTTPRequest.responseHeaders];
@@ -284,13 +284,13 @@ NSString *RKCROSSessionFailedNotification = @"RKCROSSessionFailedNotification";
 								 
 								 abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
 								 */
-								RKLog(@"Unresolved error %@, %@", error, [error userInfo]);
+								RKLog(@"RKCROSSESSion:Unresolved error %@, %@", error, [error userInfo]);
 								abort();
 							}
 							return YES;
 						}
 						else {
-							RKLog(@"observation submission shows unsuccessful submission");
+							RKLog(@"RKCROSSESSion:Observation submission shows unsuccessful submission");
 							[[NSNotificationCenter defaultCenter] postNotificationName:RKCROSSessionFailedNotification
 																				object:self];
 						}
@@ -301,11 +301,11 @@ NSString *RKCROSSessionFailedNotification = @"RKCROSSessionFailedNotification";
 					RKLog(@"%d %@", asiHTTPRequest.responseStatusCode, asiHTTPRequest.responseHeaders);
 				}
 				else {
-					RKLog(@"form token response contained no token");
+					RKLog(@"RKCROSSESSion:Form token response contained no token");
 				}
 			}
 			else {
-				RKLog(@"form token request failed");
+				RKLog(@"RKCROSSESSion:Form token request failed");
 			}
 		}
 	}
@@ -318,16 +318,16 @@ NSString *RKCROSSessionFailedNotification = @"RKCROSSessionFailedNotification";
 	 <div class="messages status">
 	 Observation <em>roadkill/review</em> has been created.</div>
 	 */
-	RKLog(@"response string %@", self.asiHTTPRequest.responseString);
-	NSRange searchResults = [self.asiHTTPRequest.responseString rangeOfString:@"Observation <em>roadkill/review</em> has been created."];
+	RKLog(@"RKCROSSESSion:Response string %@", self.asiHTTPRequest.responseString);
+	NSRange searchResults = [self.asiHTTPRequest.responseString rangeOfString:@"RKCROSSESSion:Observation <em>roadkill/review</em> has been created."];
 	return (searchResults.location != NSNotFound);
 }
 
 - (NSString *)observationIDFromResponseHeaders:(NSDictionary *)headers
 {
-	RKLog(@"response headers %@", headers);
+	RKLog(@"RKCROSSESSion:Response headers %@", headers);
 	NSString *serverLocationString = [headers objectForKey:@"Location"];
-	RKLog(@"location %@", serverLocationString);
+	RKLog(@"RKCROSSESSion:Location %@", serverLocationString);
 	return [[serverLocationString componentsSeparatedByString:@"/"] lastObject];
 }
 
@@ -348,7 +348,7 @@ NSString *RKCROSSessionFailedNotification = @"RKCROSSessionFailedNotification";
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
 	LogMethod();
-	NSAssert(self.observation, @"observation cannot be null");
+	NSAssert(self.observation, @"RKCROSSESSion:Observation cannot be null");
 	switch (self.sessionState) {
 		case RKCROSSessionConnecting:
 			self.sessionState = RKCROSSessionAuthenticated;
@@ -363,18 +363,18 @@ NSString *RKCROSSessionFailedNotification = @"RKCROSSessionFailedNotification";
 				self.sessionState = RKCROSSessionFormTokenObtained;
 				self.asiHTTPRequest = [self observationSubmissionRequest];
 				self.asiHTTPRequest.delegate = self;
-				RKLog(@"authenticated headers %@", self.asiHTTPRequest.responseHeaders);
+				RKLog(@"RKCROSSESSion:Authenticated headers %@", self.asiHTTPRequest.responseHeaders);
 				self.sessionState = RKCROSSessionObservationSubmitted;
 				self.observation.sentStatus = kRKQueued;
 				[self.asiHTTPRequest startAsynchronous];
 			}
 			break;
 		case RKCROSSessionObservationSubmitted:
-			RKLog(@"final headers %@", self.asiHTTPRequest.responseHeaders);
+			RKLog(@"RKCROSSESSion:Final headers %@", self.asiHTTPRequest.responseHeaders);
 			if ([self receivedStringShowsSuccessfulSubmission] ||
 				[self observationIDFromResponseHeaders:request.responseHeaders]) {
 				self.sessionState = RKCROSSessionObservationComplete;
-				RKLog(@"observation successfully submitted");
+				RKLog(@"RKCROSSession: Observation successfully submitted");
 				self.observation.sentStatus = kRKComplete;
 				NSError *error = nil;
 				if (![self.observation.managedObjectContext save:&error]) {
@@ -383,7 +383,7 @@ NSString *RKCROSSessionFailedNotification = @"RKCROSSessionFailedNotification";
 					 
 					 abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
 					 */
-					RKLog(@"Unresolved error %@, %@", error, [error userInfo]);
+					RKLog(@"RKCROSSESSion:Unresolved error %@, %@", error, [error userInfo]);
 					abort();
 				}
 				[[NSNotificationCenter defaultCenter] postNotificationName:RKCROSSessionSucceededNotification
@@ -391,7 +391,7 @@ NSString *RKCROSSessionFailedNotification = @"RKCROSSessionFailedNotification";
 			}
 			else {
 				self.sessionState = RKCROSSessionAuthenticated;
-				RKLog(@"observation failed");
+				RKLog(@"RKCROSSession: Observation failed");
 				[[NSNotificationCenter defaultCenter] postNotificationName:RKCROSSessionFailedNotification
 																	object:self];
 			}
