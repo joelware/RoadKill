@@ -15,7 +15,6 @@
 #import "ASIFormDataRequest.h"
 
 @interface RKCROSSession ()
-+ (ASIHTTPRequest *)authenticationRequestWithUsername:(NSString *)username password:(NSString *)password;
 - (void)authenticateWithUsername:(NSString *)username password:(NSString *)password;
 - (ASIHTTPRequest *)formTokenRequest;
 - (void)obtainFormToken;
@@ -56,9 +55,14 @@ NSString *RKCROSSessionFailedNotification = @"RKCROSSessionFailedNotification";
 
 + (ASIHTTPRequest *)authenticationRequestWithUsername:(NSString *)username password:(NSString *)password
 {
+		//
+	    RKLog (@"ASIHTTPRequest: Using Username= %@", username);
+		RKLog (@"Password=%@", password);
+		//
 	NSURL *url = [[[NSURL alloc] initWithScheme:@"http" 
 										   host:RKWebServer 
 										   path:@"/california/node"] autorelease];
+	RKLog(@"URL=@", url);
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	request.shouldRedirect = NO;
 	NSMutableDictionary *arguments = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -155,7 +159,7 @@ NSString *RKCROSSessionFailedNotification = @"RKCROSSessionFailedNotification";
 
 - (void)obtainFormToken
 {
-	NSAssert((self.sessionState == RKCROSSessionAuthenticated), @"session not authenticated");
+	NSAssert((self.sessionState == RKCROSSessionAuthenticated), @"RKCROSSessio:Session not authenticated");
 	self.asiHTTPRequest = [self formTokenRequest];
 	self.asiHTTPRequest.delegate = self;
 	[self.asiHTTPRequest startAsynchronous];
@@ -297,7 +301,7 @@ NSString *RKCROSSessionFailedNotification = @"RKCROSSessionFailedNotification";
 					}
 					[[NSNotificationCenter defaultCenter] postNotificationName:RKCROSSessionFailedNotification
 																		object:self];
-					RKLog(@"observation submission request failed");
+					RKLog(@"RKCROSSESSion:Observation submission request failed");
 					RKLog(@"%d %@", asiHTTPRequest.responseStatusCode, asiHTTPRequest.responseHeaders);
 				}
 				else {
@@ -327,7 +331,7 @@ NSString *RKCROSSessionFailedNotification = @"RKCROSSessionFailedNotification";
 {
 	RKLog(@"RKCROSSESSion:Response headers %@", headers);
 	NSString *serverLocationString = [headers objectForKey:@"Location"];
-	RKLog(@"RKCROSSESSion:Location %@", serverLocationString);
+	RKLog(@"RKCROSSESSion:serverLocationString %@", serverLocationString);
 	return [[serverLocationString componentsSeparatedByString:@"/"] lastObject];
 }
 

@@ -10,8 +10,8 @@
 
 // constants used for accessing application Settings
 #define RKIsFirstLaunchKey		@"isFirstLaunch"
-#define RKSettingsUsernameKey	@"username"
-#define RKSettingsPasswordKey	@"password"
+#define RKSettingsUsernameKey	@"RoadKill"
+#define RKSettingsPasswordKey	@"Testuser1."
 #define RKSettingsIsTestModeKey @"isTestMode"
 
 // test account

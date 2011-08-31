@@ -51,4 +51,6 @@ extern NSString *RKCROSSessionFailedNotification;
 - (void)startAsynchronously;
 - (void)startSynchronously;
 - (void)cancel;
++ (ASIHTTPRequest *)authenticationRequestWithUsername:(NSString *)username password:(NSString *)password;
+
 @end

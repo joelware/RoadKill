@@ -358,15 +358,25 @@
 - (IBAction)submitNow:(id)sender
 {
 		//TODO: consider using validForUpdate: here? Or Observation's isValidForSubmission? (jw4 inte:done)
+	NSAssert(observation_, @"observation_ must not be null");
 	RKLog(@"submitNow: CODE TO SUBMIT OBSERVATION NOW RUNNING..");
 		// jw4 inte
 	if ([observation_ isValidForSubmission]) {
 		[[(RoadKillAppDelegate *)[[UIApplication sharedApplication] delegate] activeWebTransactions]
 		 addObject:[RKCROSSession submissionForObservation:observation_ 
-											  withUsername:[[NSUserDefaults standardUserDefaults] stringForKey:RKSettingsUsernameKey]
-												  password:[[NSUserDefaults standardUserDefaults] stringForKey:RKSettingsPasswordKey]
+					// withUsername:[[NSUserDefaults standardUserDefaults] stringForKey:RKSettingsUsernameKey]
+					//						  password:[[NSUserDefaults standardUserDefaults] stringForKey:
+					//							  RKSettingsPasswordKey]
+											  withUsername:@"RoadKill"
+												  password:@"Testuser1."
 													 start:YES]];
 	}
+	else {
+		RKLog(@"submitNow did not submit; %@ is not valid for submission", observation_);
+	}
+	RKLog(@"%d active transactions: %@", [[(RoadKillAppDelegate *)[[UIApplication sharedApplication] delegate] activeWebTransactions] count],
+		  [(RoadKillAppDelegate *)[[UIApplication sharedApplication] delegate] activeWebTransactions]);
+
 		//pop back to the RootViewController if observation was submitted?
 		// fixme: need to mark it as submitted if it succeeds, and post an error dialog if it does not
 		//[self.navigationController popToRootViewControllerAnimated:YES];

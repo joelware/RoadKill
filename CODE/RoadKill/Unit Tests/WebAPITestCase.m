@@ -56,10 +56,12 @@
 	STAssertTrue((wildcardResults.length >0), @"wildcard download returned empty string");
 }
 
-- (void)dontTestSessionAuthentication
+- (void)testSessionAuthentication
 {
-	NSMutableURLRequest *request = [RKCROSSession authenticationRequestWithUsername:[[NSUserDefaults standardUserDefaults] stringForKey:RKSettingsUsernameKey]
-																		   password:[[NSUserDefaults standardUserDefaults] stringForKey:RKSettingsPasswordKey]];
+	ASIHTTPRequest *request = 
+	[RKCROSSession 
+	 authenticationRequestWithUsername:[[NSUserDefaults standardUserDefaults] stringForKey:RKSettingsUsernameKey]
+	 password:[[NSUserDefaults standardUserDefaults]  stringForKey:RKSettingsPasswordKey]];
 	RKCROSSession *session = [[[RKCROSSession alloc] init] autorelease];
 	
 	NSHTTPURLResponse *response;
